@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./Components/Genral purpose/Header";
 import Footer from "./Components/Genral purpose/Footer";
@@ -11,7 +10,7 @@ import SearchPage from "./Components/pages/Search/Search.index";
 
 function App() {
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden bg-Tan">
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

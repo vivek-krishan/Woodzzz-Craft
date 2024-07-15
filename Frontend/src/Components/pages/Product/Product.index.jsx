@@ -127,7 +127,7 @@ const Product = () => {
           </h1>
         </div>
         <div className="grid grid-cols-4 m-10">
-          <Banner images={32} start={1} details={true} width={"7vw"} />
+          <Banner images={32} start={1} details={true}  />
         </div>
       </div>
       <div className="ViewAll_btn flex justify-center m-20">

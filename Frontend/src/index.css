@@ -1,19 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer utilities {
-    @variants responsive {
-      /* Hide scrollbar for Chrome, Safari, and Opera */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-  
-  
-      /* Hide scrollbar for IE, Edge, and Firefox */
-      .no-scrollbar {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
-      }
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari, and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge, and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
     }
   }
+}
+
+@layer components {
+  .bg-Tan {
+    @apply bg-[#d2b48c];
+  }
+  .bg-green {
+    @apply bg-[#386641];
+  }
+  .bg-Lgreen {
+    @apply bg-[#568a66];
+  }
+  .txt-green {
+    @apply text-[#386641];
+  }
+  .txt-Gray {
+    @apply text-[#333];
+  }
+}

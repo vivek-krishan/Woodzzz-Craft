@@ -1,4 +1,5 @@
 import Data from "../../Utils/Data.json";
+import { Products } from "../../Utils/productImg";
 
 const ProductCard = ({ index, start }) => {
   const items =
@@ -6,26 +7,25 @@ const ProductCard = ({ index, start }) => {
       ?.items;
 
   return (
-    <div className="">
-      <div className="w-full">
+    <div className="w-full h-full">
+      <div className="w-full h-full overflow-hidden">
         <img
           key={index + "img"}
-          src={items[index + start]?.image}
+          src={Products[index]?.img}
           alt="Banner"
-          className="slide h-full mx-3 transition duration-200 rounded-xl"
+          className="slide w-full  transition duration-200 rounded-xl"
         />
-
-        <div className="details m-2 flex justify-evenly">
-          <div>
-            <h5 className="text-xs">
-              Rating : {items[index + start]?.rating?.averageRating}
-            </h5>
-          </div>
-          <div>
-            <h5 className="text-xs">
-              Price :- {items[index + start]?.priceInfo?.linePrice}
-            </h5>
-          </div>
+      </div>
+      <div className="details m-2 flex justify-evenly">
+        <div>
+          <h5 className="text-xs">
+            Rating : {items[index + start]?.rating?.averageRating}
+          </h5>
+        </div>
+        <div>
+          <h5 className="text-xs">
+            Price :- {items[index + start]?.priceInfo?.linePrice}
+          </h5>
         </div>
       </div>
     </div>

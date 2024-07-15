@@ -1,7 +1,14 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Youtube, Facebook, Instagram, Twitter, Search } from "lucide-react";
+import {
+  Youtube,
+  Facebook,
+  Instagram,
+  Twitter,
+  Search,
+  AlignJustify,
+} from "lucide-react";
 
 const Header = () => {
   // Variables
@@ -12,6 +19,8 @@ const Header = () => {
   // const Cart = useSelector((store) => store.CartInfo.cart.cartItems);
   const dispatch = useDispatch();
   const buttonDesign = useRef("");
+
+  const [activeMenu, setActiveMenu] = useState(false);
 
   // functions
   const HandelSubmit = (e) => {
@@ -32,12 +41,18 @@ const Header = () => {
     navigate(`/`);
   };
 
+  const setMenuVisible = () => {
+    setActiveMenu(!activeMenu);
+  };
+
   return (
     <div key={"1111"} className="mt-5">
-      <div className="Logo flex justify-evenly items-center" key={1113}>
-        <Link to={"/"} className="LOGO " key={1112}>
+      <div className="Logo flex justify-between items-center" key={1113}>
+        <Link to={"/"} className="LOGO mx-40" key={1112}>
           {/* <img src={Logo} alt="Logo" className="w-28" key={1114} /> */}
-          <h1 className="font-serif font-semibold text-xl">Woodzzz Craft</h1>
+          <h1 className=" font-[700] text-3xl txt-green font-Caveat">
+            Woodzzz Craft
+          </h1>
         </Link>
         {user != null ? (
           <div className="flex flex-col">
@@ -52,11 +67,8 @@ const Header = () => {
             </button>
           </div>
         ) : (
-          <div className="border border-black p-2 h-fit rounded-lg flex bg-[#000080] ">
-            <button
-              className="text-white"
-                onClick={HandelRegister}
-            >
+          <div className="p-3 px-4 h-fit m-2 mx-20 rounded-full flex bg-green drop-shadow-lg  hover:scale-110 hover:drop-shadow-2xl hover:bg-Lgreen transition duration-200 ease-in-out">
+            <button className="text-white" onClick={HandelRegister}>
               Sign Up/ Sign In
             </button>
           </div>
@@ -67,33 +79,33 @@ const Header = () => {
           <nav className="w-full flex justify-evenly items-center">
             <Link
               to={"/"}
-              className="font-light hover:font-medium hover:scale-110 transition duration-100 ease-in-out "
+              className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
             >
               Home
             </Link>
             <Link
               to={"/all-products"}
-              className="font-light hover:font-medium hover:scale-110 transition duration-100 ease-in-out "
+              className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
             >
               Collection
             </Link>
             <Link
               to={"/about"}
-              className="font-light hover:font-medium hover:scale-110 transition duration-100 ease-in-out "
+              className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
             >
               About us
             </Link>
             <Link
               to={"/cart"}
-              className="font-light hover:font-medium hover:scale-110 transition duration-100 ease-in-out "
+              className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
             >
               Cart
             </Link>
           </nav>
         </div>
-        <div className="SearchBar flex items-center">
+        <div className="SearchBar relative flex items-center">
           <input
-            className="bg-white rounded-md h-8"
+            className="bg-transparent border border-gray-500 rounded-full h-8 w-60 p-2 "
             placeholder="Search"
             value={searchText}
             name={"searchBar"}
@@ -103,14 +115,15 @@ const Header = () => {
             onSubmit={HandelSubmit}
           />
           <button
-          onClick={() => {
-            HandelSubmit();
-          }}
+            onClick={() => {
+              HandelSubmit();
+            }}
+            className="relative -left-7"
           >
-            <Search />
+            <Search width={20} />
           </button>
         </div>
-        <div className="SocialMedia w-1/6 flex justify-evenly m-3">
+        <div className="SocialMedia w-1/6 flex justify-evenly mx-3">
           <Link
             to={""}
             className="hover:scale-110 transition duration-100 ease-in-out"
@@ -135,6 +148,43 @@ const Header = () => {
           >
             <Youtube />
           </Link>
+        </div>
+
+        {/* Hamburger for Smaller devices */}
+        <div className="Hamburger md:hidden flex flex-col items-end">
+          <button onClick={setMenuVisible}>
+            <AlignJustify />
+          </button>
+          {activeMenu && (
+            <div className="HamBurgerContent w-[10vw] h-fit bg-gray-400 bg-opacity-30 rounded-xl">
+              <nav className="w-full flex flex-col justify-evenly items-center">
+                <Link
+                  to={"/"}
+                  className="font-light hover:font-medium hover:scale-110 transition duration-100 ease-in-out p-2 "
+                >
+                  Home
+                </Link>
+                <Link
+                  to={"/all-products"}
+                  className="font-light hover:font-medium hover:scale-110 transition duration-100 ease-in-out p-2 "
+                >
+                  Collection
+                </Link>
+                <Link
+                  to={"/about"}
+                  className="font-light hover:font-medium hover:scale-110 transition duration-100 ease-in-out p-2 "
+                >
+                  About us
+                </Link>
+                <Link
+                  to={"/cart"}
+                  className="font-light hover:font-medium hover:scale-110 transition duration-100 ease-in-out p-2 "
+                >
+                  Cart
+                </Link>
+              </nav>
+            </div>
+          )}
         </div>
       </div>
     </div>

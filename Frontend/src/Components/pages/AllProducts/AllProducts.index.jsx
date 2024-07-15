@@ -32,8 +32,6 @@ const AllProducts = ({ data }) => {
               images={40}
               start={0}
               details={true}
-              width={"7vw"}
-              data={data}
             />
           </div>
         </div>
