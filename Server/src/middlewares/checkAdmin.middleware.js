@@ -3,7 +3,7 @@ import ApiError from "../utils/ApiError.js";
 import asyncHandeler from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 
-export const VerifyUser = asyncHandeler(async (req, res, next) => {
+export const VerifyAdmin = asyncHandeler(async (req, res, next) => {
     try {
         // console.log(req.cookies);
         const token =
@@ -22,6 +22,9 @@ export const VerifyUser = asyncHandeler(async (req, res, next) => {
         );
 
         if (!user) throw new ApiError(400, "Invalid Token");
+
+        if (!user.admin)
+            throw new ApiError(401, "Unauthorized request by the user");
 
         req.user = user;
         next();

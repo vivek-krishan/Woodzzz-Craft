@@ -1,31 +1,40 @@
+import { IndianRupee } from "lucide-react";
 import Data from "../../Utils/Data.json";
 import { Products } from "../../Utils/productImg";
 
-const ProductCard = ({ index, start }) => {
-  const items =
-    Data.item?.props?.pageProps?.initialData?.searchResult?.itemStacks[0]
-      ?.items;
+const ProductCard = ({ index, width, height }) => {
+  // console.log(height);
+  // console.log(typeof height);
 
   return (
-    <div className="w-full h-full">
-      <div className="w-full h-full overflow-hidden">
+    <div className="w-full h-full flex flex-col justify-center items-center  ">
+      <div
+        //  height ? height : "20vh"
+        className={`w-[${width}]  h-[${height}] rounded-xl     overflow-hidden`}
+      >
         <img
           key={index + "img"}
           src={Products[index]?.img}
           alt="Banner"
-          className="slide w-full  transition duration-200 rounded-xl"
+          className={`slide w-full  transition duration-200 rounded-xl`}
         />
       </div>
-      <div className="details m-2 flex justify-evenly">
-        <div>
-          <h5 className="text-xs">
-            Rating : {items[index + start]?.rating?.averageRating}
+      <div className="details m-2 flex flex-wrap justify-evenly">
+        <div className="w-full">
+          <h5 className="text-lg font-bold text-center">
+            {Products[index]?.name}
           </h5>
         </div>
-        <div>
-          <h5 className="text-xs">
-            Price :- {items[index + start]?.priceInfo?.linePrice}
-          </h5>
+        <div className="flex w-full justify-between">
+          <div className=" w-12 rounded-lg bg-green">
+            <h5 className="text-center text-white">
+              {Products[index]?.rating}
+            </h5>
+          </div>
+          <div className="flex">
+            <IndianRupee width={15} />
+            <h5 className="text-md">{Products[index]?.price}</h5>
+          </div>
         </div>
       </div>
     </div>

@@ -11,12 +11,10 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // routers
-import userRouter from "./routes/User.route.js";
-import videoRouter from "./routes/video.routes.js";
-import subscriptionRouter from "./routes/subscription.routes.js"
+import userRouter from "./routes/user.routes.js";
+import productRouter from "./routes/product.routes.js";
 
 app.use("/api/v1/user", userRouter);
-app.use("/api/v1/videos", videoRouter);
-app.use("/api/v1/subscription", subscriptionRouter);
+app.use("/api/v1/products", productRouter);
 
 export { app };

@@ -1,26 +1,22 @@
 import mongoose, { Schema } from "mongoose";
 
-const likeSchema = new Schema(
+const cartSchema = new Schema(
   {
-    likedBy: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    video: {
+    cartProduct: {
       type: Schema.Types.ObjectId,
-      ref: "Video",
+      ref: "Product",
     },
-    comment: {
+    likedProduct: {
       type: Schema.Types.ObjectId,
-      ref: "Comment",
-    },
-    tweet: {
-      type: Schema.Types.ObjectId,
-      ref: "Tweet",
+      ref: "Product",
     },
   },
   { timestamps: true }
 );
 
-export const Like = mongoose.model("Like", likeSchema);
+export const Cart = new mongoose.model("Cart", cartSchema);

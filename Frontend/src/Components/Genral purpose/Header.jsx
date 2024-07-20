@@ -31,7 +31,7 @@ const Header = () => {
   };
 
   const HandelRegister = () => {
-    navigate(`/register`);
+    navigate(`/authentication`);
   };
 
   const HandelLogOut = async () => {

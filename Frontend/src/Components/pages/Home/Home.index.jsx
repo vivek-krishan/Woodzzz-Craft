@@ -69,14 +69,20 @@ function Home() {
             </h1>
           </div>
         </div>
-        <div className="Players overflow-hidden overflow-x-scroll no-scrollbar flex flex-col  before:absolute before:left-0 before:z-40 before:w-44 before:h-60  before:bg-gradient-to-r from-[#f4f4f5] to-transparent ">
-          <div className="flex felx-col h-40 min-w-40 m-10  ">
-            <Banner images={10} start={10} details={true} />
+        <div className="Players overflow-hidden overflow-x-scroll no-scrollbar flex flex-col  before:absolute before:left-0 before:z-40 before:w-44 before:h-60  before:bg-gradient-to-r from-[#d2b48c] to-transparent ">
+          <div className="flex h-64 min-w-40 m-10  ">
+            <Banner
+              images={10}
+              start={10}
+              details={true}
+              width={"10vw"}
+              height={"20vh"}
+            />
           </div>
         </div>
       </div>
       <div className="ViewAll_btn flex justify-center m-20">
-        <Link to={`/all`}>
+        <Link to={`/all-products`}>
           <button className=" bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
             View All products
           </button>

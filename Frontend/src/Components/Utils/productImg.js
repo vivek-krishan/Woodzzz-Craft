@@ -15,8 +15,11 @@ import item13 from "../../assets/Product Image/item(13).jpg";
 export const Products = [
   {
     img: item1,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -26,8 +29,11 @@ export const Products = [
   },
   {
     img: item2,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -37,8 +43,11 @@ export const Products = [
   },
   {
     img: item3,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -48,8 +57,11 @@ export const Products = [
   },
   {
     img: item4,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -59,8 +71,11 @@ export const Products = [
   },
   {
     img: item5,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -70,8 +85,11 @@ export const Products = [
   },
   {
     img: item6,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -81,8 +99,11 @@ export const Products = [
   },
   {
     img: item7,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -92,8 +113,11 @@ export const Products = [
   },
   {
     img: item8,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -103,8 +127,11 @@ export const Products = [
   },
   {
     img: item9,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -114,8 +141,11 @@ export const Products = [
   },
   {
     img: item10,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -125,8 +155,11 @@ export const Products = [
   },
   {
     img: item11,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -136,8 +169,11 @@ export const Products = [
   },
   {
     img: item12,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",
@@ -147,8 +183,11 @@ export const Products = [
   },
   {
     img: item13,
+    description: "This is a wooden lamp designed with great asthetics and it's a great product for home decoration. It looks great at the bed Room and dim lighing",
+    details:"",
     name: "Wooden lamp",
     price: 200,
+    wasPrice: 250,
     rating: "4.5",
     reviews: [
       "it looks great at the table for decoration purpose",

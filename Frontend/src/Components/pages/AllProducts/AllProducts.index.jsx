@@ -1,10 +1,11 @@
 import CheckBox from "./CheckBox";
 import Banner from "../../Genral purpose/Banner";
+import { Products } from "../../Utils/productImg";
 
 const AllProducts = ({ data }) => {
   return (
     <div className="flex justify-evenly h-fit mt-10">
-      <section className="Navbar relative  w-1/4 mr-10">
+      {/* <section className="Navbar relative  w-1/4 mr-10">
         <div className="Sort bg-gray-200 w-full h-[15vh] rounded-xl flex justify-evenly items-center">
           <select className="w-2/3 h-10 rounded-xl cursor-pointer bg-transparent border">
             <option value={""}>Choose the Option</option>
@@ -23,15 +24,16 @@ const AllProducts = ({ data }) => {
             <CheckBox />
           </div>
         </div>
-        {/* <div className="bg-red-400 blur-xl opacity-50 absolute w-full h-full top-0 z-0"></div> */}
-      </section>
-      <section className="Products w-3/5 h-fit ml-10 ">
+      </section> */}
+      <section className="Products w-4/5 h-fit ml-10 ">
         <div className="Recommendation">
-          <div className="grid grid-cols-4 m-5">
+          <div className="grid grid-cols-5 gap-24 m-10">
             <Banner
-              images={40}
+              images={Products.length}
               start={0}
               details={true}
+              width={"10vw"}
+              height={"20vh"}
             />
           </div>
         </div>

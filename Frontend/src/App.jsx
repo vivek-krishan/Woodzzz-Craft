@@ -6,6 +6,7 @@ import AllProducts from "./Components/pages/AllProducts/AllProducts.index";
 import Product from "./Components/pages/Product/Product.index";
 import Cart from "./Components/pages/Cart/Cart.index";
 import SearchPage from "./Components/pages/Search/Search.index";
+import Authentication from "./Components/pages/Register and Login/Authentication.index";
 // import Testing from "./Components/Testing";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/product/:index" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/search/:input" element={<SearchPage />} />
+        <Route path="/authentication" element={<Authentication />} />
       </Routes>
       <Footer />
     </div>
