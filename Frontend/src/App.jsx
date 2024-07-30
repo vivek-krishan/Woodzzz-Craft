@@ -7,7 +7,8 @@ import Product from "./Components/pages/Product/Product.index";
 import Cart from "./Components/pages/Cart/Cart.index";
 import SearchPage from "./Components/pages/Search/Search.index";
 import Authentication from "./Components/pages/Register and Login/Authentication.index";
-import Dashboard from "./Components/pages/Admin/layouts/dashboard";
+import AdminLayout from "./Components/pages/Admin/AdminLayout";
+// import Dashboard from "./Components/pages/Admin/layouts/dashboard";
 // import Testing from "./Components/Testing";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         {/* <Route path="/dashboard/*" element={<Dashboard />} /> */}
         <Route path="/search/:input" element={<SearchPage />} />
         <Route path="/authentication" element={<Authentication />} />
+        <Route path="/admin" element={<AdminLayout />} />
       </Routes>
       <Footer />
     </div>
