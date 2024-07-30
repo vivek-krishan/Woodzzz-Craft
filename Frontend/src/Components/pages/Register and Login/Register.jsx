@@ -1,9 +1,11 @@
-// import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { alertError, alertInfo } from "../../Utils/Alert";
+import { addUser, clearUser } from "../../Utils/Slices/UserInfoSlice";
 
 const Register = () => {
   // All Variables declaration for this components
-  const [avatar, setAvatar] = useState();
   const [user, setUser] = useState({
     fullName: "",
     email: "",
@@ -12,6 +14,8 @@ const Register = () => {
     address: Number,
     pinCode: Number,
   });
+  const navigate = useNavigate();
+  const Dispatch = useDispatch();
 
   // All function defination
 
@@ -21,25 +25,35 @@ const Register = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const HandelImage = (event) => {
-    console.log(event.target.files);
-    setAvatar(event.target.files);
-    console.log(avatar);
-  };
-
   const Register = async () => {
     try {
       const requestOptions = {
+        headers: {
+          "Content-Type": "application/json",
+        },
         method: "POST",
         body: JSON.stringify(user),
         redirect: "follow",
       };
 
-      console.log(requestOptions);
+      // console.log(requestOptions);
 
       fetch("http://localhost:3000/api/v1/user/register", requestOptions)
         .then((response) => response.json())
-        .then((result) => alertInfo(result.data.message))
+        .then((result) => {
+          console.log(result);
+          // Storing the tokens into browser's local storage
+          localStorage.setItem("AccessToken", result.data.AccessToken);
+          localStorage.setItem("RefreshToken", result.data.RefreshToken);
+
+          // Storing data inside redux store
+          Dispatch(clearUser());
+          Dispatch(addUser(result.data.User));
+
+          console.log("Dispatched actions");
+          alertInfo(result.message);
+          navigate("/");
+        })
         .catch((error) => console.error(error));
     } catch (error) {
       console.log(error);
@@ -158,11 +172,13 @@ const Register = () => {
         </form>
 
         <div className="Register-btn flex justify-center m-10">
-          <button className=" bg-green text-white p-3 px-7 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
+          <button
+            onClick={Register}
+            className=" bg-green text-white p-3 px-7 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
+          >
             Register
           </button>
         </div>
-
       </section>
     </div>
   );

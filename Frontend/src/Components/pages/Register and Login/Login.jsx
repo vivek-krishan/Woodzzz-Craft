@@ -1,41 +1,58 @@
-// import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import axios from "axios";
 import { alertError, alertInfo } from "../../Utils/Alert";
+import { addUser, clearUser } from "../../Utils/Slices/UserInfoSlice";
 
 const LogIn = () => {
   // Utility variables
 
   const [user, setUser] = useState({
-    username: "",
-    password: "",
+    email: "",
+    passkey: "",
   });
+
+  const navigate = useNavigate();
+  const Dispatch = useDispatch();
 
   // utility Functions
   const HandelInputChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-    // console.log(name, value);
     setUser({ ...user, [name]: value });
-    // console.log(user);
   };
 
   const LogInFn = async () => {
     try {
-      const data = JSON.stringify(user);
-      const url = "http://localhost:3000/api/v1/user/login";
-
-      const response = await axios.post(url, data, {
+      const requestOptions = {
         headers: {
           "Content-Type": "application/json",
         },
-      });
+        method: "POST",
+        body: JSON.stringify(user),
+        redirect: "follow",
+      };
 
-      alertInfo(response.data.message);
+      // console.log(requestOptions);
 
-      // Store tokens in local storage using correct property names
-      localStorage.setItem("AccessToken", response.data.data.AccessToken);
-      localStorage.setItem("RefreshToken", response.data.data.RefreshToken);
+      fetch("http://localhost:3000/api/v1/user/login", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          // Storing the tokens into browser's local storage
+          localStorage.setItem("AccessToken", result.data.AccessToken);
+          localStorage.setItem("RefreshToken", result.data.RefreshToken);
+
+          // Storing data inside redux store
+          Dispatch(clearUser());
+          Dispatch(addUser(result.data.User));
+
+          // console.log(result);
+          alertInfo(result.message);
+          navigate("/");
+        })
+        .catch((error) => console.error(error));
     } catch (error) {
       console.error(error);
       alertError(error.message);
@@ -65,8 +82,8 @@ const LogIn = () => {
               type="text"
               className="bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black "
               placeholder="Vivek"
-              name="username"
-              value={user.username}
+              name="email"
+              value={user.email}
               onChange={HandelInputChange}
               required
             />
@@ -91,7 +108,10 @@ const LogIn = () => {
         </form>
 
         <div className="Login-btn flex justify-center m-10">
-          <button className=" bg-green text-white p-3 px-7 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
+          <button
+            onClick={LogInFn}
+            className=" bg-green text-white p-3 px-7 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
+          >
             LogIn
           </button>
         </div>

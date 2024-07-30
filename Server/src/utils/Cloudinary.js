@@ -35,7 +35,6 @@ const DeleteFileFromCloudinary = async (publicId, type) => {
       resource_type: type,
     })
     .then(function (result) {
-      console.log("result from cloudinary file:", result);
       return result;
     })
     .catch((error) => {

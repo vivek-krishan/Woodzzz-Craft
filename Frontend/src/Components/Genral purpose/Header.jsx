@@ -9,16 +9,18 @@ import {
   Search,
   AlignJustify,
 } from "lucide-react";
+import { alertError, alertInfo } from "../Utils/Alert";
+import { clearUser } from "../Utils/Slices/UserInfoSlice";
 
 const Header = () => {
   // Variables
   const [searchText, setSearchText] = useState("");
   const [activePage, setActivePage] = useState("home");
-  const navigate = useNavigate();
   const user = useSelector((store) => store.UserInfo.user);
-  // const Cart = useSelector((store) => store.CartInfo.cart.cartItems);
+
+  // console.log(user);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const buttonDesign = useRef("");
 
   const [activeMenu, setActiveMenu] = useState(false);
 
@@ -34,15 +36,59 @@ const Header = () => {
     navigate(`/authentication`);
   };
 
-  const HandelLogOut = async () => {
-    await fetch("http://localhost:3000/logout");
-    dispatch(clearUser());
-    console.log(user);
-    navigate(`/`);
-  };
-
   const setMenuVisible = () => {
     setActiveMenu(!activeMenu);
+  };
+
+  const LogOutFn = async () => {
+    try {
+      // Retrieve tokens from local storage
+      const refreshToken = localStorage.getItem("RefreshToken");
+      const accessToken = localStorage.getItem("AccessToken");
+
+      if (!refreshToken || !accessToken) {
+        alertError("Tokens are missing from local storage");
+        throw new Error("Tokens are missing from local storage");
+      }
+
+      const requestOptions = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+          "x-refresh-token": refreshToken,
+        },
+        method: "POST",
+        credentials: "include", // This will include cookies in the request
+        body: JSON.stringify({}),
+        redirect: "follow",
+      };
+
+      console.log(requestOptions);
+      fetch("http://localhost:3000/api/v1/user/logout", requestOptions)
+        .then((response) => {
+          console.log(response);
+          response.json();
+        })
+        .then((result) => {
+          console.log(result);
+          // Clearing data from redux store
+          dispatch(clearUser());
+
+          // Clear tokens from local storage
+          // localStorage.removeItem("RefreshToken");
+          localStorage.removeItem("AccessToken");
+
+          alertInfo(result.message);
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error(error);
+          alertError("Failed to log out. Please try again.");
+        });
+    } catch (error) {
+      console.error(error);
+      alertError(error.message);
+    }
   };
 
   return (
@@ -55,13 +101,16 @@ const Header = () => {
           </h1>
         </Link>
         {user != null ? (
-          <div className="flex flex-col">
-            <h1 className="font-thin text-lg">
-              Hello {user[0]?.user?.username}{" "}
+          <div className="p-3 px-4 h-20 m-2 mx-20 rounded-full flex flex-col items-center justify-center  drop-shadow-lg  hover:scale-110 hover:drop-shadow-2xl transition duration-200 ease-in-out ">
+            <h1 className="font-thin text-sm text-white cursor-default">
+              Hello{" "}
+              <span className="text-2xl txt-green font-Caveat font-bold">
+                {user[0]?.fullName}
+              </span>
             </h1>
             <button
-              className="bg-gray-200 px-3 rounded-lg hover:bg-gray-500 hover:text-white transition duration-200 ease-in-out"
-              onClick={HandelLogOut}
+              className="bg-green px-3 rounded-lg text-white hover:bg-Lgreen transition duration-200 ease-in-out"
+              onClick={LogOutFn}
             >
               LogOut
             </button>
@@ -101,6 +150,14 @@ const Header = () => {
             >
               Cart
             </Link>
+            {user != null && user[0]?.admin && (
+              <Link
+                to={"/admin"}
+                className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
+              >
+                Admin
+              </Link>
+            )}
           </nav>
         </div>
         <div className="SearchBar relative flex items-center">

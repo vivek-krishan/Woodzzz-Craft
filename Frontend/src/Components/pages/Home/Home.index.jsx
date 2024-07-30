@@ -69,7 +69,7 @@ function Home() {
             </h1>
           </div>
         </div>
-        <div className="Players overflow-hidden overflow-x-scroll no-scrollbar flex flex-col  before:absolute before:left-0 before:z-40 before:w-44 before:h-60  before:bg-gradient-to-r from-[#d2b48c] to-transparent ">
+        <div className="Players overflow-hidden overflow-x-scroll no-scrollbar flex flex-col  before:absolute before:left-0 before:z-40 before:w-44 before:h-72  before:bg-gradient-to-r from-[#d2b48c] to-transparent ">
           <div className="flex h-64 min-w-40 m-10  ">
             <Banner
               images={10}
