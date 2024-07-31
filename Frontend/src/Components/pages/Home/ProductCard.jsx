@@ -10,13 +10,13 @@ const ProductCard = ({ index, width, height }) => {
     <div className="w-full h-full flex flex-col justify-center items-center  ">
       <div
         //  height ? height : "20vh"
-        className={`w-[${width}]  h-[${height}] rounded-xl     overflow-hidden`}
+        className={`w-[${width}]  h-[${height}] rounded-xl bg-white    overflow-hidden`}
       >
         <img
           key={index + "img"}
           src={Products[index]?.img}
           alt="Banner"
-          className={`slide w-full  transition duration-200 rounded-xl`}
+          className={`slide w-full drop-shadow-xl  transition duration-200 rounded-xl`}
         />
       </div>
       <div className="details m-2 flex flex-wrap justify-evenly">
