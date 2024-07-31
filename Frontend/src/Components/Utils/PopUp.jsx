@@ -2,10 +2,63 @@ import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
 
+const ImagePopUp = ({ onClose }) => {
+  const closeModel = (e) => {
+    if (modelRef.current === e.target) {
+      onClose();
+    }
+  };
+  const modelRef = useRef();
+
+  return (
+    <div
+      ref={modelRef}
+      onClick={closeModel}
+      className="fixed inset-0 flex justify-center items-center z-50 backdrop-blur-3xl bg-opacity-85 h-screen w-full "
+    >
+      <div className="flex bg-opacity-100 w-full items-center justify-center h-screen backdrop-blur-xl">
+        <div className="fixed w-full h-full rounded-md shadow-md flex flex-col justify-start items-center gap-28 backdrop-blur-2xl bg-neutral-900 pt-10">
+          <button
+            onClick={onClose}
+            className="py-2 px-4 rounded-xl bg-gray-400 text-white hover:bg-gray-500 w-fit"
+          >
+            Cancel
+          </button>
+          <div className="w-1/4 p-5 ">
+            <label className="m-1 text-white">
+              Product Image
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                name="productImage"
+                //   value={Form.address}
+                //   onChange={handleChange}
+                id="productImage"
+                required={true}
+                placeholder="Address"
+                className="px-3 py-2 rounded-xl text-black"
+              />
+            </label>
+          </div>
+          <button
+            onClick={onClose}
+            className="py-2 px-4 rounded-xl bg-green-400 text-white hover:bg-green-500 w-fit"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const PopUp = ({ onClose }) => {
+  const [showImagePopup, setImageShowPopup] = useState(false);
+
   const AddProductForm = () => {
     const formRef = useRef();
-    const [Form, setForm] = useState({});
+    // const [Form, setForm] = useState({});
 
     return (
       <form
@@ -13,20 +66,16 @@ const PopUp = ({ onClose }) => {
         className="flex flex-col justify-center items-center text-white text-lg"
       >
         <section className="flex justify-center items-center w-full">
-          <div className="w-1/4 p-5">
-            <label className="m-1 ">Product Image</label>
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              name="productImage"
-              //   value={Form.address}
-              //   onChange={handleChange}
-              id="productImage"
-              required={true}
-              placeholder="Address"
-              className="px-3 py-2 rounded-xl text-black"
-            />
+          <div className="w-1/4 p-5 flex justify-center items-center">
+            <button
+              onClick={() => setImageShowPopup(true)}
+              className="m-1 py-2 px-4 rounded-xl bg-green-400 text-white hover:bg-green-500 "
+            >
+              Upload Product Image
+            </button>
+            {showImagePopup && (
+              <ImagePopUp onClose={() => setImageShowPopup(false)} />
+            )}
           </div>
           <div className="w-3/4 flex flex-col p-5 ">
             <label className="m-1 ">Product Id</label>
@@ -113,7 +162,7 @@ const PopUp = ({ onClose }) => {
             type="submit"
             className="py-2 px-4 rounded-xl bg-green-400 text-white hover:bg-green-500"
           >
-            Add Product
+            Submit
           </button>
           <button
             onClick={() => formRef.current.reset()}
@@ -155,4 +204,4 @@ const PopUp = ({ onClose }) => {
   );
 };
 
-export default PopUp;
+export { PopUp, ImagePopUp };

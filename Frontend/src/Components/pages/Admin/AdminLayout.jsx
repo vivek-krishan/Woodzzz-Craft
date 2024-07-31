@@ -1,6 +1,6 @@
 import { Layers3 } from "lucide-react";
 import { useState } from "react";
-import PopUp from "../../Utils/PopUp";
+import { PopUp } from "../../Utils/PopUp";
 
 const AdminLayout = () => {
   const StampCard = ({ icon, title, variable }) => {
