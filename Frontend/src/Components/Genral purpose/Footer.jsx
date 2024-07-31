@@ -105,7 +105,9 @@ const Footer = () => {
           >
             Mumbai
           </Link>
-          <h3 className="m-2 text-xs font-base">and many more cities</h3>
+          <h3 className="m-2 text-xs font-base hidden lg:block">
+            and many more cities
+          </h3>
         </div>
       </section>
     </div>

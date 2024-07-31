@@ -1,4 +1,6 @@
 import { Layers3 } from "lucide-react";
+import { useState } from "react";
+import PopUp from "../../Utils/PopUp";
 
 const AdminLayout = () => {
   const StampCard = ({ icon, title, variable }) => {
@@ -57,8 +59,21 @@ const AdminLayout = () => {
     );
   };
 
+  const [showPopup, setShowPopup] = useState(false);
+
   return (
     <div className="">
+      <section className="w-full flex justify-center items-center py-5">
+        <button
+          className="py-3 px-5 rounded-2xl text-white bg-[#386641] hover:scale-110 duration-200 ease-in-out"
+          onClick={() => setShowPopup(true)}
+        >
+          Add New Product
+        </button>
+
+        {showPopup && <PopUp onClose={() => setShowPopup(false)} />}
+      </section>
+
       <section className="p-5 lg:flex lg:justify-evenly w-full flex flex-col lg:flex-row items-center justify-center gap-5 lg:gap-2 ">
         <StampCard
           icon={<Layers3 className="w-14 h-14 text-white drop-shadow-2xl" />}
