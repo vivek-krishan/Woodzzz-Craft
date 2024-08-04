@@ -160,26 +160,18 @@ const Header = () => {
             )}
           </nav>
         </div>
-        <div className="SearchBar relative flex items-center">
-          <input
-            className="bg-transparent border border-gray-500 rounded-full h-8 w-60 p-2 "
-            placeholder="Search"
-            value={searchText}
-            name={"searchBar"}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
-            onSubmit={HandelSubmit}
-          />
-          <button
-            onClick={() => {
-              HandelSubmit();
-            }}
-            className="relative -left-7"
-          >
+        <div className="Search-bar  relative color">
+          <button className="absolute left-0 top-1/2 -translate-y-1/2">
             <Search width={20} />
           </button>
+
+          <input
+            type="text"
+            placeholder="Type to search..."
+            className="placeholder:text-gray-700 w-full bg-transparent pl-9 pr-4 text-black focus:outline-none focus:underline xl:w-125"
+          />
         </div>
+
         <div className="SocialMedia w-1/6 flex justify-evenly mx-3">
           <Link
             to={""}
