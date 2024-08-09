@@ -32,11 +32,6 @@ const Product = () => {
   //   HandelCartData(userId, Cart.cartItems);
   // }, [Cart]);
 
-  function HandelInputChange(e) {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setNewProductDetails({ ...newProductDetails, [name]: value });
-  }
 
   function HandelUpdateProduct() {}
   function HandelDeleteProduct() {}
@@ -112,12 +107,12 @@ const Product = () => {
               </p>
             </div>
             {user != null && user[0].admin === true && (
-              <div className="ProductUpdate-and-delete-btn relative -bottom-60 flex justify-center items-center">
-                <button className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
+              <div className="ProductUpdate-and-delete-btn relative -bottom-52 flex justify-center items-center">
+                <button onClick={HandelUpdateProduct} className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
                   <span className="mx-2">Update</span>
                   <CloudUpload />
                 </button>
-                <button className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
+                <button onClick={HandelDeleteProduct} className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
                   <span className="mx-2">Delete</span>
                   <Trash2 />
                 </button>
