@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 export const VerifyAdmin = asyncHandeler(async (req, res, next) => {
   try {
-    // console.log(req.cookies);
+    console.log(req);
     const token =
       req.cookies.AccessToken ||
       req.header("Authorization")?.replace("Bearer ", "");

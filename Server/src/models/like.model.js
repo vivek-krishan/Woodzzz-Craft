@@ -1,13 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 
-const cartSchema = new Schema(
+const likeSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    cartProduct: {
+    likedProduct: {
       type: Schema.Types.ObjectId,
       ref: "Product",
     },
@@ -15,4 +15,4 @@ const cartSchema = new Schema(
   { timestamps: true }
 );
 
-export const Cart = new mongoose.model("Cart", cartSchema);
+export const Like = new mongoose.model("Like", likeSchema);
