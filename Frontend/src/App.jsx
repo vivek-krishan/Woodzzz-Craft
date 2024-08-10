@@ -7,10 +7,16 @@ import Product from "./Components/pages/Product/Product.index";
 import Cart from "./Components/pages/Cart/Cart.index";
 import SearchPage from "./Components/pages/Search/Search.index";
 import Authentication from "./Components/pages/Register and Login/Authentication.index";
+<<<<<<< HEAD
 import { useEffect } from "react";
 import { addProducts } from "./Components/Utils/Slices/ProductSlice";
 import { useDispatch } from "react-redux";
 // import Testing from "./Components/Testing";
+=======
+
+import AdminLayout from "./Components/pages/Admin/AdminLayout";
+
+>>>>>>> aa42ee5e9e5ad5f1f1497a7c90beadd7254ea652
 
 function App() {
   const Dispatch = useDispatch();
@@ -54,6 +60,7 @@ function App() {
         {/* <Route path="/dashboard/*" element={<Dashboard />} /> */}
         <Route path="/search/:input" element={<SearchPage />} />
         <Route path="/authentication" element={<Authentication />} />
+        <Route path="/admin" element={<AdminLayout />} />
       </Routes>
       <Footer />
     </div>
