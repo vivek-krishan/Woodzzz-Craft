@@ -12,6 +12,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json({ limit: "16kb" }));
+app.use(express.text({ type: "text/*", limit: "32kb" })); // For plain text format
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());

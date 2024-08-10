@@ -7,6 +7,7 @@ import {
 } from "../utils/Cloudinary.js";
 import { Product } from "../models/product.model.js";
 
+// This will upload a new product to the database
 const UploadNewProduct = asyncHandler(async (req, res) => {
   const { productId, name, description, summery, oldPrice, newPrice, rating } =
     req.body;
@@ -72,10 +73,10 @@ const UploadNewProduct = asyncHandler(async (req, res) => {
     );
 });
 
+// Returns product details of a certain product. It takes the productId
 const GetProductDetails = asyncHandler(async (req, res) => {
   const { productId } = req.params;
 
-  console.log(req);
   if (!productId)
     throw new ApiError(
       400,
@@ -93,28 +94,26 @@ const GetProductDetails = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, product, "Got your product"));
 });
 
+// Returns all the product uploaded to the database
 const GetAllProducts = asyncHandler(async (req, res) => {
-  const { productId } = req.params;
 
-  if (!productId)
-    throw new ApiError(
-      400,
-      "product Id isn't found! Please provide product id."
-    );
+  const products = await Product.find();
 
-  const product = await Product.find({ productId });
-
-  if (!product)
+  if (!products)
     throw new ApiError(
       400,
       "Product not found! may be due to invalid product Id. Please check and try again"
     );
 
-  res.status(200).json(new ApiResponse(200, product, "Got your product"));
+  res.status(200).json(new ApiResponse(200, products, "Got your product"));
 });
 
+// This function will clear all the previously uploaded images and upload newer ones
 const ClearAndUpdateImages = asyncHandler(async (req, res) => {
   const { productId } = req.params;
+
+  // console.log(req);
+  
 
   if (!productId)
     throw new ApiError(
@@ -168,6 +167,8 @@ const ClearAndUpdateImages = asyncHandler(async (req, res) => {
     );
 });
 
+// This is for adding Images to a certain product. The max limit of Images to a product is '5'.
+// So This function will only accept max of 4 images.
 const AddImages = asyncHandler(async (req, res) => {
   const MAX_IMAGES = 5;
   const { productId } = req.params;
@@ -225,6 +226,7 @@ const AddImages = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, product, "Images added successfully."));
 });
 
+// Updating Product details. This will take the productId via params and all other details in body
 const UpdateProductDetails = asyncHandler(async (req, res) => {
   const { productId } = req.params;
   const { name, description, summery, wasPrice, price, rating } = req.body;
@@ -265,8 +267,11 @@ const UpdateProductDetails = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, product, "Updation completed"));
 });
 
+// Deletion of one product using product Id
 const DeleteProduct = asyncHandler(async (req, res) => {
-  const { productId } = req.param;
+  const { productId } = req.params;
+
+  // console.log(req);
 
   if (!productId) throw new ApiError(400, "Product Id not found!");
 

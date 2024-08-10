@@ -17,8 +17,7 @@ const router = Router();
 router
   .route("/")
   .post(VerifyAdmin, upload.single("Image"), UploadNewProduct)
-  .get(GetAllProducts)
-  .delete(VerifyAdmin, DeleteProduct);
+  .get(GetAllProducts);
 
 router
   .route("/img-update/:productId")
@@ -31,6 +30,7 @@ router
 router
   .route("/update-product-details/:productId")
   .get(GetProductDetails)
-  .patch(VerifyAdmin, UpdateProductDetails);
+  .patch(VerifyAdmin, UpdateProductDetails)
+  .delete(VerifyAdmin, DeleteProduct);
 
 export default router;

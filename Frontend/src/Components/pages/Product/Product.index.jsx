@@ -1,11 +1,10 @@
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CloudUpload, Heart, IndianRupee, Trash2 } from "lucide-react";
 import Banner from "../../Genral purpose/Banner";
-import { addCartItem } from "../../Utils/Slices/CartInfoSlice";
-import HandelCartData from "../../Utils/HandelCartData";
 import { Products } from "../../Utils/productImg";
+import { alertError, alertInfo } from "../../Utils/Alert";
 
 const Product = () => {
   // State variables
@@ -14,8 +13,6 @@ const Product = () => {
   const Cart = useSelector((store) => store.CartInfo.cart);
   const [like, setLike] = useState(false);
   const { index } = useParams();
-
-  const userId = user ? user[0]?.user?._id : null;
 
   const [newProductDetails, setNewProductDetails] = useState({
     name: String,
@@ -28,13 +25,39 @@ const Product = () => {
 
   // Utility functions
 
-  // useEffect(() => {
-  //   HandelCartData(userId, Cart.cartItems);
-  // }, [Cart]);
-
+  console.log(Products[index]);
 
   function HandelUpdateProduct() {}
-  function HandelDeleteProduct() {}
+
+  async function HandelDeleteProduct() {
+    const requestOptions = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+      redirect: "follow",
+    };
+    try {
+     
+
+      fetch(
+        `http://localhost:3000/api/v1/update-product-details/:productId`,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+
+          // console.log(result);
+          alertInfo(result.message);
+          navigate("/");
+        })
+        .catch((error) => console.error(error));
+    } catch (error) {
+      console.error(error);
+      alertError(error.message);
+    }
+  }
 
   return (
     <div className="ProductPage">
@@ -108,11 +131,17 @@ const Product = () => {
             </div>
             {user != null && user[0].admin === true && (
               <div className="ProductUpdate-and-delete-btn relative -bottom-52 flex justify-center items-center">
-                <button onClick={HandelUpdateProduct} className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
+                <button
+                  onClick={HandelUpdateProduct}
+                  className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
+                >
                   <span className="mx-2">Update</span>
                   <CloudUpload />
                 </button>
-                <button onClick={HandelDeleteProduct} className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
+                <button
+                  onClick={HandelDeleteProduct}
+                  className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
+                >
                   <span className="mx-2">Delete</span>
                   <Trash2 />
                 </button>
