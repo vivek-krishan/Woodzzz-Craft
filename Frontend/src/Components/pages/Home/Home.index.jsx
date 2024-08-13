@@ -38,20 +38,7 @@ function Home() {
           <Banner images={4} start={0} />
         </div>
       </div>
-
-      <section>
-        <ul>
-          <li></li>
-        </ul>
-      </section>
-
-      <section>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </section>
+      
       <div className="Featured mb-20">
         <div className="Heading flex justify-center items-center z-0 mb-10 cursor-default">
           <div className="absolute">

@@ -1,8 +1,15 @@
 import { Layers3 } from "lucide-react";
-import { useState } from "react";
-import { PopUp } from "../../Utils/PopUp";
+import { useRef, useState } from "react";
+import { PopUp } from "./PopUp";
 
 const AdminLayout = () => {
+  // Variables
+  const [showPopup, setShowPopup] = useState(false);
+
+  // Utility functions
+
+  // UI components
+
   const StampCard = ({ icon, title, variable }) => {
     return (
       <div className="bg-[#386641] flex lg:w-80 w-full p-2 justify-evenly rounded-2xl hover:-translate-y-2 duration-300 ease-in-out hover:drop-shadow-2xl hover:shadow-md">
@@ -58,8 +65,6 @@ const AdminLayout = () => {
       </div>
     );
   };
-
-  const [showPopup, setShowPopup] = useState(false);
 
   return (
     <div className="">

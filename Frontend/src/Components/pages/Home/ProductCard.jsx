@@ -1,5 +1,4 @@
 import { IndianRupee } from "lucide-react";
-import Data from "../../Utils/Data.json";
 import { Products } from "../../Utils/productImg";
 
 const ProductCard = ({ index, width, height }) => {

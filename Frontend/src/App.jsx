@@ -7,16 +7,11 @@ import Product from "./Components/pages/Product/Product.index";
 import Cart from "./Components/pages/Cart/Cart.index";
 import SearchPage from "./Components/pages/Search/Search.index";
 import Authentication from "./Components/pages/Register and Login/Authentication.index";
-<<<<<<< HEAD
-import { useEffect } from "react";
-import { addProducts } from "./Components/Utils/Slices/ProductSlice";
-import { useDispatch } from "react-redux";
-// import Testing from "./Components/Testing";
-=======
-
 import AdminLayout from "./Components/pages/Admin/AdminLayout";
-
->>>>>>> aa42ee5e9e5ad5f1f1497a7c90beadd7254ea652
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import axios from "axios";
+import { addProducts, clearProducts } from "./Components/Utils/Slices/ProductSlice";
 
 function App() {
   const Dispatch = useDispatch();
@@ -25,20 +20,14 @@ function App() {
     const url = "http://localhost:3000/api/v1/products/";
 
     try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.get(url);
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      // Axios automatically parses the response, so no need to call .json()
+      const products = response.data;
 
-      const products = await response.json();
       console.log(products);
-      return products;
+      Dispatch(clearProducts())
+      Dispatch(addProducts(products.data));
     } catch (error) {
       console.error("Error fetching products:", error);
       return [];
@@ -57,7 +46,6 @@ function App() {
         <Route path="/all-products" element={<AllProducts />} />
         <Route path="/product/:index" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
-        {/* <Route path="/dashboard/*" element={<Dashboard />} /> */}
         <Route path="/search/:input" element={<SearchPage />} />
         <Route path="/authentication" element={<Authentication />} />
         <Route path="/admin" element={<AdminLayout />} />

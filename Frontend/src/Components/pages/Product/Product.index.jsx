@@ -5,15 +5,19 @@ import { CloudUpload, Heart, IndianRupee, Trash2 } from "lucide-react";
 import Banner from "../../Genral purpose/Banner";
 import { Products } from "../../Utils/productImg";
 import { alertError, alertInfo } from "../../Utils/Alert";
+import { ProductUpdationForm } from "./InputForm";
 
 const Product = () => {
   // State variables
+  const [showOption, setShowOption] = useState({
+    updationOpt: false,
+    updationForm: false,
+  });
   const user = useSelector((store) => store.UserInfo.user);
   const Dispatch = useDispatch();
   const Cart = useSelector((store) => store.CartInfo.cart);
   const [like, setLike] = useState(false);
   const { index } = useParams();
-
   const [newProductDetails, setNewProductDetails] = useState({
     name: String,
     description: String,
@@ -24,9 +28,6 @@ const Product = () => {
   });
 
   // Utility functions
-
-  console.log(Products[index]);
-
   function HandelUpdateProduct() {}
 
   async function HandelDeleteProduct() {
@@ -38,8 +39,6 @@ const Product = () => {
       redirect: "follow",
     };
     try {
-     
-
       fetch(
         `http://localhost:3000/api/v1/update-product-details/:productId`,
         requestOptions
@@ -58,6 +57,20 @@ const Product = () => {
       alertError(error.message);
     }
   }
+
+  const handelUpdateImages = () => {
+    setShowOption({
+      updationOpt: false,
+      updationForm: showOption.updationForm,
+    });
+  };
+
+  const handelUpdateDetails = () => {
+    setShowOption({
+      updationOpt: false,
+      updationForm: true,
+    });
+  };
 
   return (
     <div className="ProductPage">
@@ -131,13 +144,41 @@ const Product = () => {
             </div>
             {user != null && user[0].admin === true && (
               <div className="ProductUpdate-and-delete-btn relative -bottom-52 flex justify-center items-center">
-                <button
-                  onClick={HandelUpdateProduct}
-                  className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
-                >
-                  <span className="mx-2">Update</span>
-                  <CloudUpload />
-                </button>
+                
+                {/* product Update Btn */}
+                <div>
+                  <button
+                    onClick={() => {
+                      setShowOption({
+                        updationOpt: !showOption.updationOpt,
+                        updationForm: false,
+                      });
+                    }}
+                    className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
+                  >
+                    <span className="mx-2">Update</span>
+                    <CloudUpload />
+                  </button>
+
+                  {showOption.updationOpt && (
+                    <div className="absolute flex flex-col -top-24 left-24">
+                      <button
+                        onClick={handelUpdateImages}
+                        className="px-2 pt-2 mt-2 hover:drop-shadow-xl scale-105 drop-shadow-lg border-b-4 border-r-2 rounded-xl hover:bg-slate-200 transition duration-150 ease-in-out "
+                      >
+                        Image Update
+                      </button>
+                      <button
+                        onClick={handelUpdateDetails}
+                        className="px-2 pt-2 mt-2 hover:drop-shadow-xl scale-105 drop-shadow-lg border-b-4 border-r-2 rounded-xl hover:bg-slate-200 transition duration-150 ease-in-out "
+                      >
+                        Details Update
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* product delete Btn */}
                 <button
                   onClick={HandelDeleteProduct}
                   className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
@@ -147,19 +188,21 @@ const Product = () => {
                 </button>
               </div>
             )}
-            {/* <div className="ProductUpdate-and-delete-btn relative -bottom-60 flex justify-center items-center">
-              <button className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
-                <span className="mx-2">Update</span>
-                <CloudUpload />
-              </button>
-              <button className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105">
-                <span className="mx-2">Delete</span>
-                <Trash2 />
-              </button>
-            </div> */}
           </div>
         </div>
       </div>
+
+      {showOption.updationForm && (
+        <ProductUpdationForm
+          onClose={() =>
+            setShowOption({
+              updationOpt: true,
+              updationForm: false,
+            })
+          }
+        />
+      )}
+
       <div className="Recommendation">
         <div className="Heading relative flex justify-center items-center z-0 mb-5 cursor-default p-10  ">
           <div className="absolute -top-5">

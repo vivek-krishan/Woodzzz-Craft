@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Data from "../Utils/Data.json";
 import ProductCard from "../pages/Home/ProductCard";
 import { BannerImg } from "../pages/Home/BannerImg";
 import { useSelector } from "react-redux";
@@ -12,9 +11,7 @@ const Banner = ({ images, start, details, height, width }) => {
 
   const [imgIndx, setImgIndx] = useState(0);
 
-  const items =
-    Data.item?.props?.pageProps?.initialData?.searchResult?.itemStacks[0]
-      ?.items;
+  
 
   const prevSlide = () => {
     if (BannerImg?.length === 1) {
