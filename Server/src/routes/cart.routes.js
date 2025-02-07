@@ -1,17 +1,27 @@
-import { Router } from 'express';
+import { Router } from "express";
 import {
-    addComment,
-    deleteComment,
-    getVideoComments,
-    updateComment,
-} from "../controllers/comment.controller.js"
-import {VerifyUser} from "../middlewares/auth.middleware.js"
+  GetCart,
+  AddToCart,
+  GetWishlist,
+  AddToWishlist,
+  DeleteFromCart,
+  DeleteFromWishlist,
+} from "../controllers/cart.controller.js";
+import { VerifyUser } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
 router.use(VerifyUser); // Apply VerifyUser middleware to all routes in this file
 
-router.route("/:videoId").get(getVideoComments).post(addComment);
-router.route("/c/:commentId").delete(deleteComment).patch(updateComment);
+// Routes for cart
+router.route("/cart/").get(GetCart);
+router.route("/cart/:productId").post(AddToCart).delete(DeleteFromCart);
 
-export default router
+// Routes for wishlists
+router.route("/wishlist/").get(GetWishlist);
+router
+  .route("/wishlist/:productId")
+  .post(AddToWishlist)
+  .delete(DeleteFromWishlist);
+
+export default router;

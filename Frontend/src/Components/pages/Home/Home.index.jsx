@@ -34,7 +34,7 @@ function Home() {
   return (
     <div className="w-full">
       <div className="Banner my-20 w-full h-[80vh] overflow-hidden rounded-[40px]    flex  justify-center items-center drop-shadow-2xl">
-        <div className=" before:absolute before:rounded-[40px]  before:left-0 before:z-40 before:w-[30vw] before:h-[80vh] before:bg-gradient-to-r from-[#f4f4f5d2] to-transparent after:absolute after:rounded-[40px] after:z-40 after:w-[30vw] after:h-[80vh] after:right-0 after:top-0  after:bg-gradient-to-l from-[#f4f4f5c8] to-transparent  ">
+        <div className=" before:absolute before:rounded-[40px]  before:left-0 before:z-40 before:w-[30vw] before:h-[81vh] before:bg-gradient-to-r from-[#f4f4f5d2] to-transparent after:absolute after:rounded-[40px] after:z-40 after:w-[30vw] after:h-[80vh] after:right-0 after:top-0  after:bg-gradient-to-l from-[#f4f4f5c8] to-transparent  ">
           <Banner images={4} start={0} />
         </div>
       </div>

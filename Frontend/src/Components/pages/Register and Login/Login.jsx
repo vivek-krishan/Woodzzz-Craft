@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import axios from "axios";
 import { alertError, alertInfo } from "../../Utils/Alert";
 import { addUser, clearUser } from "../../Utils/Slices/UserInfoSlice";
 

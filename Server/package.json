@@ -1,7 +1,7 @@
 {
-  "name": "playit",
+  "name": "Woodz-craft",
   "version": "1.0.0",
-  "description": "Video streaming webApp for watching and uploading videos as well as chat posts",
+  "description": "Shop wooden products for home decorw",
   "main": "src/index.js",
   "type": "module",
   "scripts": {

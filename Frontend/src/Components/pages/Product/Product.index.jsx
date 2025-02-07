@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { CloudUpload, Heart, IndianRupee, Trash2 } from "lucide-react";
 import Banner from "../../Genral purpose/Banner";
 import { Products } from "../../Utils/productImg";
-import { alertError, alertInfo } from "../../Utils/Alert";
+import { alertError, alertInfo, alertSuccess } from "../../Utils/Alert";
 import { ProductUpdationForm } from "./InputForm";
+import InfiniteLoading from "../../../assets/img/Infinite-loading-2.svg";
 
 const Product = () => {
   // State variables
@@ -26,9 +27,9 @@ const Product = () => {
     wasPrice: Number,
     rating: Number,
   });
+  const [loading, setLoading] = useState(false);
 
   // Utility functions
-  function HandelUpdateProduct() {}
 
   async function HandelDeleteProduct() {
     const requestOptions = {
@@ -70,6 +71,33 @@ const Product = () => {
       updationOpt: false,
       updationForm: true,
     });
+  };
+
+  const HandelAddToCart = async (event) => {
+    event.preventDefault(); // Prevent the default form submission
+
+    setLoading(true);
+
+    const url = `http://localhost:3000/api/v1/carts/cart/${123}`;
+    const AccessToken = localStorage.getItem("AccessToken");
+
+    try {
+      const response = await axios.post(url, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${AccessToken}`,
+        },
+        withCredentials: true,
+      });
+
+      console.log("Added to your cart:", response.data);
+      setLoading(false);
+      alertSuccess(response.data.message);
+    } catch (error) {
+      console.error("Error uploading product:", error);
+      setLoading(false);
+      alertError();
+    }
   };
 
   return (
@@ -124,8 +152,21 @@ const Product = () => {
                     <Heart color="#000000" />
                   </button>
                 )}
-                <button className="bg-green  my-4 text-white p-3 drop-shadow-xl rounded-full hover:bg-Lgreen hover:drop-shadow-2xl transition duration-200 ease-in-out hover:scale-105">
-                  Add to cart
+                <button
+                  onClick={HandelAddToCart}
+                  className="bg-green w-28 h-12 my-4 text-white p-3 drop-shadow-xl rounded-full hover:bg-Lgreen hover:drop-shadow-2xl transition duration-200 ease-in-out hover:scale-105"
+                >
+                  {loading ? (
+                    <div className=" w-full h-full flex justify-center items-center ">
+                      <img
+                        src={InfiniteLoading}
+                        alt=""
+                        className=" w-[6vw] h-[6vh]"
+                      />
+                    </div>
+                  ) : (
+                    <h5>Add to Cart</h5>
+                  )}
                 </button>
               </div>
             </div>
@@ -142,9 +183,10 @@ const Product = () => {
                 {Products[index]?.details}
               </p>
             </div>
+
+            {/* Update and Delete Btn */}
             {user != null && user[0].admin === true && (
               <div className="ProductUpdate-and-delete-btn relative -bottom-52 flex justify-center items-center">
-                
                 {/* product Update Btn */}
                 <div>
                   <button
@@ -188,6 +230,7 @@ const Product = () => {
                 </button>
               </div>
             )}
+            {/* Update and Delete Btn */}
           </div>
         </div>
       </div>

@@ -36,7 +36,7 @@ function App() {
 
   useEffect(async () => {
     await getProducts();
-  }, []);
+  });
 
   return (
     <div className="overflow-x-hidden bg-Tan">

@@ -28,10 +28,6 @@ const ProductUpdationForm = ({ onClose, productId }) => {
 
     // Utility Functions
 
-    const handleImageChange = (event) => {
-      setInputImage(event.target.files[0]);
-    };
-
     const handleSubmit = async (event) => {
       event.preventDefault(); // Prevent the default form submission
 

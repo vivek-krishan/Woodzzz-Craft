@@ -65,10 +65,10 @@ const Banner = ({ images, start, details, height, width }) => {
         />
       </div>
       <div className="absolute top-[35vh] w-full z-50 flex justify-between items-center     ">
-        <button onClick={prevSlide}>
+        <button className="bg-gray-500 p-1 mx-4 rounded-full hover:bg-gray-400 transition duration-150 ease-in-out" onClick={prevSlide}>
           <ChevronLeft color="black" />
         </button>
-        <button onClick={nextSlide}>
+        <button className="bg-gray-500 p-1 mx-4 rounded-full hover:bg-gray-400 transition duration-150 ease-in-out" onClick={nextSlide}>
           <ChevronRight color="black" />
         </button>
       </div>
