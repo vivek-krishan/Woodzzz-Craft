@@ -37,10 +37,23 @@ const RegisterUser = asyncHandler(async (req, res) => {
       res.send( user )
       */
 
-  const { fullName, email, age, address, passkey } = req.body;
-  console.log(req.body);
+  const {
+    fullName,
+    email,
+    age,
+    street,
+    city,
+    state,
+    country,
+    pinCode,
+    passkey,
+  } = req.body;
 
-  if ([fullName, email, address].some((field) => field.trim() === ""))
+  if (
+    [fullName, email, street, city, state, country, pinCode].some(
+      (field) => field.trim() === ""
+    )
+  )
     throw new ApiError(400, "all field are required");
 
   if (!age) throw new ApiError(401, "Please provide your age");
@@ -57,7 +70,7 @@ const RegisterUser = asyncHandler(async (req, res) => {
     fullName,
     email,
     age,
-    address,
+    address: { street, city, state, country, pinCode, activated: true },
     password: passkey,
     admin: true,
   });
@@ -145,24 +158,21 @@ const LogInUser = asyncHandler(async (req, res) => {
 });
 
 const LogOutUser = asyncHandler(async (req, res) => {
-
- const LogedOutUser = await User.findOneAndUpdate(req.user._id, {
+  const LogedOutUser = await User.findOneAndUpdate(req.user._id, {
     $set: {
       refreshToken: "1",
     },
   });
 
-  LogedOutUser.save()
+  LogedOutUser.save();
 
-  console.log(LogedOutUser)
+  console.log(LogedOutUser);
   console.log("reached Logout");
 
   const options = {
     httpOnly: true,
     secure: true,
   };
-
-  
 
   return res
     .status(200)
@@ -203,6 +213,7 @@ const regenerateRefreshToken = asyncHandler(async (req, res) => {
           {
             RefreshToken,
             AccessToken,
+            User: user,
           },
           "Refresh token regenerated successfully"
         )
@@ -321,13 +332,50 @@ const GetOrderHistory = asyncHandler(async (req, res) => {
     );
 });
 
+const AddAddress = asyncHandler(async (req, res) => {
+  const { street, city, state, country, pinCode } = req.body;
+
+  if (!street || !city || !state || !country || !pinCode) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  user.address.push({ street, city, state, country, pinCode });
+
+  await user.save();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { user }, "Address added successfully"));
+});
+
+const selectActiveAddress = asyncHandler(async (req, res) => {
+  const { addressId } = req.body; // Get address ID from request
+
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  await user.setActiveAddress(addressId);
+
+  res.status(200).json(new ApiResponse(200, { user }, "Address Activated 👍"));
+});
+
 export {
   GetUser,
   LogInUser,
   LogOutUser,
+  AddAddress,
   RegisterUser,
   GetOrderHistory,
   UpdateUserDetails,
+  selectActiveAddress,
   ChangeCurrentPassword,
   regenerateRefreshToken,
 };

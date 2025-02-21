@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Header from "./Components/Genral purpose/Header";
 import Footer from "./Components/Genral purpose/Footer";
 import Home from "./Components/pages/Home/Home.index";
@@ -10,23 +10,28 @@ import Authentication from "./Components/pages/Register and Login/Authentication
 import AdminLayout from "./Components/pages/Admin/AdminLayout";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import axios from "axios";
-import { addProducts, clearProducts } from "./Components/Utils/Slices/ProductSlice";
+import {
+  addProducts,
+  clearProducts,
+} from "./Components/Utils/Slices/ProductSlice";
+import { addUser, clearUser } from "./Components/Utils/Slices/UserInfoSlice";
+import { FetchData } from "./Components/Utils/fetchFromAPI";
 
 function App() {
   const Dispatch = useDispatch();
+  const Navigate = useNavigate();
 
   async function getProducts() {
-    const url = "http://localhost:3000/api/v1/products/";
+    // const url = "http://localhost:3000/api/v1/products/";
 
     try {
-      const response = await axios.get(url);
+      const response = await FetchData("products/", "get");
 
       // Axios automatically parses the response, so no need to call .json()
       const products = response.data;
 
       console.log(products);
-      Dispatch(clearProducts())
+      Dispatch(clearProducts());
       Dispatch(addProducts(products.data));
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -34,9 +39,28 @@ function App() {
     }
   }
 
-  useEffect(async () => {
-    await getProducts();
-  });
+  const ReLogin = async () => {
+    try {
+      const response = await FetchData("user/refresh-token", "get");
+      console.log(response);
+      // Storing the tokens into browser's local storage
+      localStorage.setItem("AccessToken", response.data.data.AccessToken);
+      localStorage.setItem("RefreshToken", response.data.data.RefreshToken);
+
+      // Storing data inside redux store
+      Dispatch(clearUser());
+      Dispatch(addUser(response.data.data.User));
+
+      // console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+    ReLogin();
+  }, []);
 
   return (
     <div className="overflow-x-hidden bg-Tan">

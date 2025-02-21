@@ -1,11 +1,12 @@
 import { Layers3 } from "lucide-react";
 import { useRef, useState } from "react";
 import { PopUp } from "./PopUp";
+import { useSelector } from "react-redux";
 
 const AdminLayout = () => {
   // Variables
   const [showPopup, setShowPopup] = useState(false);
-
+  const AllProducts = useSelector((store) => store.ProductsList.products);
   // Utility functions
 
   // UI components
@@ -82,18 +83,18 @@ const AdminLayout = () => {
       <section className="p-5 lg:flex lg:justify-evenly w-full flex flex-col lg:flex-row items-center justify-center gap-5 lg:gap-2 ">
         <StampCard
           icon={<Layers3 className="w-14 h-14 text-white drop-shadow-2xl" />}
-          title={"Orders"}
+          title={"Total Orders"}
           variable={"5000"}
         />
         <StampCard
           icon={<Layers3 className="w-14 h-14 text-white drop-shadow-2xl" />}
-          title={"Recent Orders"}
+          title={"Total Users"}
           variable={"5000"}
         />
         <StampCard
           icon={<Layers3 className="w-14 h-14 text-white drop-shadow-2xl" />}
-          title={"New Customers"}
-          variable={"5000"}
+          title={"Total Products"}
+          variable={AllProducts?.length}
         />
       </section>
       <section className="lg:px-36 lg:py-10 w-full p-5 flex justify-center items-center lg:w-full">

@@ -64,7 +64,7 @@ const PopUp = ({ onClose }) => {
         console.log("Product uploaded successfully:", response.data);
         setLoading(false);
         alertSuccess(response.data.message);
-        formRef.current.reset();
+        formRef.current = "";
       } catch (error) {
         setLoading(false);
         alertError(error.message);
@@ -83,22 +83,21 @@ const PopUp = ({ onClose }) => {
       fetchProductIds();
     }, []);
 
-   const handleProductIdChange = (event) => {
-     const value = Number(event.target.value); // Convert to number
+    const handleProductIdChange = (event) => {
+      const value = Number(event.target.value); // Convert to number
 
-     // Debugging logs
-     console.log("All Products:", AllProducts);
-     console.log("Existing Product IDs:", existingProductIds);
-     console.log("Entered Product ID:", value);
+      // Debugging logs
+      console.log("All Products:", AllProducts);
+      console.log("Existing Product IDs:", existingProductIds);
+      console.log("Entered Product ID:", value);
 
-     // Check if the entered product ID is unique
-     if (existingProductIds.includes(value)) {
-       setIsUnique(false);
-     } else {
-       setIsUnique(true);
-     }
-   };
-
+      // Check if the entered product ID is unique
+      if (existingProductIds.includes(value)) {
+        setIsUnique(false);
+      } else {
+        setIsUnique(true);
+      }
+    };
 
     return (
       <form
@@ -180,7 +179,7 @@ const PopUp = ({ onClose }) => {
                   className="px-3 py-2 rounded-xl  text-black"
                 />
               </div>
-              { !isUnique && (
+              {!isUnique && (
                 <h5 className="text-red-500 text-xs font-sans select-none">
                   This id is already provided! Please choose a unique one
                 </h5>

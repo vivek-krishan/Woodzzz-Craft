@@ -1,16 +1,69 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import CartProduct from "./CartProduct";
-import Puppy from "../../../assets/img/puppy.png"
+import Puppy from "../../../assets/img/puppy.png";
+import PopUp from "../../Genral purpose/PopUpWrapper";
+import { clearUser, addUser } from "../../Utils/Slices/UserInfoSlice";
+import { useDispatch } from "react-redux";
+import { FetchData } from "../../Utils/fetchFromAPI";
+import { alertInfo } from "../../Utils/Alert";
 
 const Cart = () => {
   const [isvisible, SetIsVisible] = useState("account");
   const Cart = useSelector((store) => store.CartInfo.cart);
   const [price, setPrice] = useState(null);
   const user = useSelector((store) => store.UserInfo.user);
+  const [selectAddress, setSelectAddress] = useState(false);
+  const [addAddress, setAddAddress] = useState(false);
+  const [activeAddress, setActiveAddress] = useState(null);
+  const AddressFormRef = useRef();
+  const Dispatch = useDispatch();
 
   console.log(user);
-  // const CartResponse = await fetch()
+
+  const handleAddAddress = async () => {
+    const formData = new FormData(AddressFormRef.current);
+
+    try {
+      const response = await FetchData("user/add-address", "post", formData);
+      console.log(response);
+      // Storing data inside redux store
+      Dispatch(clearUser());
+      Dispatch(addUser(response.data.data.user));
+
+      alertInfo(response.data.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setAddAddress(false);
+    }
+  };
+
+  const handleActiveAddress = async (_id) => {
+    try {
+      const response = await FetchData("user/select-address", "post", {
+        addressId: _id,
+      });
+      console.log(response);
+      // Storing data inside redux store
+      Dispatch(clearUser());
+      Dispatch(addUser(response.data.data.user));
+
+      alertInfo(response.data.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+
+  const getActivatedAddress = (user) => {
+    console.log(user);
+    return user.address.find((addr) => addr.activated === true) || null;
+  };
+
+  useEffect(() => {
+    setActiveAddress(getActivatedAddress(user));
+  }, [user]);
 
   return (
     <div className="h-[70vh]">
@@ -18,7 +71,7 @@ const Cart = () => {
         <h1 className="font-bold text-3xl">Check Out</h1>
       </div>
 
-      {user === null ? (
+      {user === null || user.length === 0 ? (
         <div className="">
           {/* <h1 className="text-black">data not found</h1> */}
           <div className="flex w-full">
@@ -112,13 +165,68 @@ const Cart = () => {
                 </div>
               </div>
               {isvisible === "address" && (
-                <div className="Details mt-5">
-                  <h3 className="text-sm font-medium">
-                    Address:{" "}
-                    <span className="text-lg font-serif">
-                      {user[0].address}
+                <div className="flex justify-start items-center">
+                    <div className="Details grid grid-cols-3 grid-rows-1 mt-5 min-w-[70%]">
+                    <span className="text-sm font-serif col-span-3">
+                      {activeAddress?.street},{" "}
                     </span>
-                  </h3>
+                    <span className="text-sm font-serif row-start-2">
+                      {activeAddress?.city},{" "}
+                    </span>
+                    <span className="text-sm font-serif row-start-2">
+                      {activeAddress?.state},
+                    </span>
+                    <span className="text-sm font-serif row-start-2">
+                      {activeAddress?.pinCode}
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <button
+                      className="bg-gray-200 text-black px-1 font-extralight rounded-2xl mb-2"
+                      onClick={() => setSelectAddress(!selectAddress)}
+                    >
+                      Select Address
+                    </button>
+                  </div>
+                  {selectAddress && (
+                    <div className="w-80 h-52 absolute -right-80 -top-2 rounded-xl flex flex-col bg-blue-200/30 overflow-scroll">
+                      {user[0].address.map((address) => {
+                        return (
+                          <div
+                            key={address.street}
+                            className="flex justify-between items-center p-2 mb-2 border-b-2 "
+                          >
+                            <div className="grid grid-cols-3 grid-rows-1 w-[80%] h-fit">
+                              <span className="text-sm font-serif col-span-3">
+                                {address.street},
+                              </span>
+                              <span className="text-sm font-serif row-start-2">
+                                {address.city},
+                              </span>
+                              <span className="text-sm font-serif row-start-2">
+                                {address.state},
+                              </span>
+                              <span className="text-sm font-serif row-start-2">
+                                {address.pinCode}
+                              </span>
+                            </div>
+                            <button
+                              onClick={() => handleActiveAddress(address._id)}
+                              className="bg-gray-200 text-black px-1 font-extralight rounded-2xl"
+                            >
+                              Select
+                            </button>
+                          </div>
+                        );
+                      })}
+                      <button
+                        className="bg-gray-200 text-black px-1 font-extralight rounded-2xl"
+                        onClick={() => setAddAddress(true)}
+                      >
+                        Add Address
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </section>
@@ -166,6 +274,65 @@ const Cart = () => {
                 </div>
               )}
             </section>
+
+            {addAddress && (
+              <>
+                <PopUp onClose={() => setAddAddress(false)}>
+                  <form
+                    ref={AddressFormRef}
+                    onSubmit={handleAddAddress}
+                    className="Address w-full m-5 mx-10 text-white bg-Tan p-20 rounded-2xl flex flex-col gap-5"
+                  >
+                    <label className="block mb-2 text-lg w-fit font-serif txt-green">
+                      Address
+                    </label>
+                    <div className=" grid grid-cols-4 grid-rows-2 gap-4 w-full  ">
+                      <input
+                        type="text"
+                        className="col-span-4 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-100 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-100  focus:outline-none focus:border-b-2 focus:border-black "
+                        name="street"
+                        placeholder="Street"
+                        required
+                      />
+                      <input
+                        type="text"
+                        className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-100 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-100  focus:outline-none focus:border-b-2 focus:border-black "
+                        name="city"
+                        placeholder="city"
+                        required
+                      />
+                      <input
+                        type="text"
+                        className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-100 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-100  focus:outline-none focus:border-b-2 focus:border-black "
+                        name="state"
+                        placeholder="state"
+                        required
+                      />
+                      <input
+                        type="text"
+                        className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-100 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-100  focus:outline-none focus:border-b-2 focus:border-black "
+                        name="country"
+                        placeholder="country"
+                        required
+                      />
+                      <input
+                        type="number"
+                        className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-100 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-100  focus:outline-none focus:border-b-2 focus:border-black"
+                        name="pinCode"
+                        placeholder="Pin Code"
+                        required
+                      />
+                    </div>
+                    <button
+                      className="relative border-2 rounded-xl w-80 self-center px-2 py-1 inline cursor-pointer text-xl font-bold before:bg-green before:rounded-xl before:absolute before:-bottom-0 before:-left-0 before:h-full before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100 before:text-white before:block before:z-0 before:content-['add']"
+                      onClick={handleAddAddress}
+                    >
+                      Add
+                    </button>
+                  </form>
+                </PopUp>
+              </>
+            )}
           </div>
           <div className="RightSide w-2/5 p-5">
             <h1 className="text-xl text-center font-bold">Your Products</h1>

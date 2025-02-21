@@ -20,7 +20,7 @@ const Header = () => {
 
   // console.log(user);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const Dispatch = useDispatch();
 
   const [activeMenu, setActiveMenu] = useState(false);
 
@@ -38,57 +38,6 @@ const Header = () => {
 
   const setMenuVisible = () => {
     setActiveMenu(!activeMenu);
-  };
-
-  const LogOutFn = async () => {
-    try {
-      // Retrieve tokens from local storage
-      const refreshToken = localStorage.getItem("RefreshToken");
-      const accessToken = localStorage.getItem("AccessToken");
-
-      if (!refreshToken || !accessToken) {
-        alertError("Tokens are missing from local storage");
-        throw new Error("Tokens are missing from local storage");
-      }
-
-      const requestOptions = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-          "x-refresh-token": refreshToken,
-        },
-        method: "POST",
-        credentials: "include", // This will include cookies in the request
-        body: JSON.stringify({}),
-        redirect: "follow",
-      };
-
-      console.log(requestOptions);
-      fetch("http://localhost:3000/api/v1/user/logout", requestOptions)
-        .then((response) => {
-          console.log(response);
-          response.json();
-        })
-        .then((result) => {
-          console.log(result);
-          // Clearing data from redux store
-          dispatch(clearUser());
-
-          // Clear tokens from local storage
-          // localStorage.removeItem("RefreshToken");
-          localStorage.removeItem("AccessToken");
-
-          alertInfo(result.message);
-          navigate("/");
-        })
-        .catch((error) => {
-          console.error(error);
-          alertError("Failed to log out. Please try again.");
-        });
-    } catch (error) {
-      console.error(error);
-      alertError(error.message);
-    }
   };
 
   return (
@@ -110,7 +59,12 @@ const Header = () => {
             </h1>
             <button
               className="bg-green px-3 rounded-lg text-white hover:bg-Lgreen transition duration-200 ease-in-out"
-              onClick={LogOutFn}
+              onClick={() => {
+                Dispatch(clearUser());
+                alertInfo("you are logged Out! Please log in");
+                navigate("/authentication");
+                localStorage.clear();
+              }}
             >
               LogOut
             </button>

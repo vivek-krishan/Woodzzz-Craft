@@ -1,60 +1,33 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useRef } from "react";
 import { alertError, alertInfo } from "../../Utils/Alert";
 import { addUser, clearUser } from "../../Utils/Slices/UserInfoSlice";
+import { FetchData } from "../../Utils/fetchFromAPI";
 
 const Register = () => {
-  // All Variables declaration for this components
-  const [user, setUser] = useState({
-    fullName: "",
-    email: "",
-    age: Number,
-    passkey: "",
-    address: Number,
-    pinCode: Number,
-  });
+  // All Variables declaration for this components 
   const navigate = useNavigate();
   const Dispatch = useDispatch();
+  const formRef = useRef();
 
-  // All function defination
-
-  const HandelInputChange = (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
-  };
-
+  // All function definition for this components
   const Register = async () => {
+    const formData = new FormData(formRef.current);
+
     try {
-      const requestOptions = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(user),
-        redirect: "follow",
-      };
+      const response = await FetchData("user/register", "post", formData);
+      console.log(response.data);
+      // Storing the tokens into browser's local storage
+      localStorage.setItem("AccessToken", response.data.data.AccessToken);
+      localStorage.setItem("RefreshToken", response.data.data.RefreshToken);
 
-      // console.log(requestOptions);
+      // Storing data inside redux store
+      Dispatch(clearUser());
+      Dispatch(addUser(response.data.data.User));
 
-      fetch("http://localhost:3000/api/v1/user/register", requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-          // Storing the tokens into browser's local storage
-          localStorage.setItem("AccessToken", result.data.AccessToken);
-          localStorage.setItem("RefreshToken", result.data.RefreshToken);
-
-          // Storing data inside redux store
-          Dispatch(clearUser());
-          Dispatch(addUser(result.data.User));
-
-          console.log("Dispatched actions");
-          alertInfo(result.message);
-          navigate("/");
-        })
-        .catch((error) => console.error(error));
+      alertInfo(response.data.message);
+      navigate("/");
     } catch (error) {
       console.log(error);
       alertError(error.message);
@@ -75,63 +48,45 @@ const Register = () => {
 
         <h1 className="text-center m-10 text-lg">--- Register ---</h1>
 
-        <form className="Form flex flex-wrap justify-center">
-          <div className="fullName w-72 m-5">
-            <label className="block mb-2 text-lg w-fit font-serif txt-Gray">
-              Full Name
-            </label>
+        <form ref={formRef} className="Form flex flex-wrap justify-center ">
+          <div className="grid grid-cols-3 grid-rows-2 gap-4 w-full mx-10">
             <input
               type="text"
-              className="bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black "
-              placeholder="vivek krishan"
+              className="bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black focus:outline-none focus:border-b-2 focus:border-black"
+              placeholder="Enter Your full name"
               name="fullName"
-              value={user.fullName}
-              onChange={HandelInputChange}
               required
             />
-          </div>
-          <div className="email w-72 m-5">
-            <label className="block mb-2 text-lg w-fit font-serif txt-Gray">
-              Email
-            </label>
+
             <input
               type="email"
-              className="bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black "
-              placeholder="user@gmail.com"
+              className="col-span-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+              placeholder="Your Email"
               name="email"
-              value={user.email}
-              onChange={HandelInputChange}
               required
             />
-          </div>
-          <div className="age w-72 m-5">
-            <label className="block mb-2 text-lg w-fit font-serif txt-Gray">
-              Age
-            </label>
+
             <input
               type="number"
-              className="bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black "
-              placeholder="20"
-              name="age"
-              value={user.age}
-              onChange={HandelInputChange}
+              className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+              placeholder="Contact Number"
+              name="phone"
               required
             />
-          </div>
-          <div className="password w-72 m-5">
-            <label
-              htmlFor="password"
-              className="block mb-2 text-lg w-fit font-serif txt-Gray"
-            >
-              Password
-            </label>
+
+            <input
+              type="number"
+              className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+              placeholder="Age"
+              name="age"
+              required
+            />
+
             <input
               type="password"
-              className="bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5    dark:placeholder-gray-700 dark:text-black "
-              placeholder="****"
+              className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+              placeholder="Password"
               name="passkey"
-              value={user.passkey}
-              onChange={HandelInputChange}
               required
             />
           </div>
@@ -139,34 +94,42 @@ const Register = () => {
             <label className="block mb-2 text-lg w-fit font-serif txt-Gray">
               Address
             </label>
-            <div className="flex flex-wrap justify-between w-full  ">
-              <div className="mx-4 w-full">
-                <label className="block mb-2 text-sm w-fit font-serif text-gray-600">
-                  Address 1
-                </label>
-                <input
-                  type="text"
-                  className="bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5  dark:placeholder-gray-700 dark:text-black "
-                  name="address"
-                  value={user.address}
-                  onChange={HandelInputChange}
-                  required
-                />
-              </div>
-
-              <div className="mx-4 w-60 mt-5">
-                <label className="block mb-2 text-sm w-fit font-serif text-gray-600">
-                  Pin Code
-                </label>
-                <input
-                  type="number"
-                  className="bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black "
-                  name="pinCode"
-                  value={user.pinCode}
-                  onChange={HandelInputChange}
-                  required
-                />
-              </div>
+            <div className=" grid grid-cols-4 grid-rows-2 gap-4 w-full  ">
+              <input
+                type="text"
+                className="col-span-4 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                name="street"
+                placeholder="Street"
+                required
+              />
+              <input
+                type="text"
+                className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                name="city"
+                placeholder="city"
+                required
+              />
+              <input
+                type="text"
+                className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                name="state"
+                placeholder="state"
+                required
+              />
+              <input
+                type="text"
+                className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                name="country"
+                placeholder="country"
+                required
+              />
+              <input
+                type="number"
+                className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black"
+                name="pinCode"
+                placeholder="Pin Code"
+                required
+              />
             </div>
           </div>
         </form>

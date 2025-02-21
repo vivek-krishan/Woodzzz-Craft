@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { alertError, alertInfo } from "../../Utils/Alert";
 import { addUser, clearUser } from "../../Utils/Slices/UserInfoSlice";
+import { FetchData } from "../../Utils/fetchFromAPI";
 
 const LogIn = () => {
   // Utility variables
@@ -24,34 +25,19 @@ const LogIn = () => {
 
   const LogInFn = async () => {
     try {
-      const requestOptions = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(user),
-        redirect: "follow",
-      };
+      const response = await FetchData("user/login", "post", user);
+      console.log(response);
+      // Storing the tokens into browser's local storage
+      localStorage.setItem("AccessToken", response.data.data.AccessToken);
+      localStorage.setItem("RefreshToken", response.data.data.RefreshToken);
 
-      // console.log(requestOptions);
+      // Storing data inside redux store
+      Dispatch(clearUser());
+      Dispatch(addUser(response.data.data.User));
 
-      fetch("http://localhost:3000/api/v1/user/login", requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-          // Storing the tokens into browser's local storage
-          localStorage.setItem("AccessToken", result.data.AccessToken);
-          localStorage.setItem("RefreshToken", result.data.RefreshToken);
-
-          // Storing data inside redux store
-          Dispatch(clearUser());
-          Dispatch(addUser(result.data.User));
-
-          // console.log(result);
-          alertInfo(result.message);
-          navigate("/");
-        })
-        .catch((error) => console.error(error));
+      // console.log(response);
+      alertInfo(response.data.message);
+      navigate("/");
     } catch (error) {
       console.error(error);
       alertError(error.message);

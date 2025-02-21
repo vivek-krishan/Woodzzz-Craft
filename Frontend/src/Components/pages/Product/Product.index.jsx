@@ -7,6 +7,7 @@ import { Products } from "../../Utils/productImg";
 import { alertError, alertInfo, alertSuccess } from "../../Utils/Alert";
 import { ProductUpdationForm } from "./InputForm";
 import InfiniteLoading from "../../../assets/img/Infinite-loading-2.svg";
+import { FetchData } from "../../Utils/fetchFromAPI";
 
 const Product = () => {
   // State variables
@@ -40,19 +41,13 @@ const Product = () => {
       redirect: "follow",
     };
     try {
-      fetch(
-        `http://localhost:3000/api/v1/update-product-details/:productId`,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-
-          // console.log(result);
-          alertInfo(result.message);
-          navigate("/");
-        })
-        .catch((error) => console.error(error));
+      const result = await FetchData(
+        `update-product-details/${Products[index]?.id}`,
+        "delete"
+      );
+      console.log(result);
+      alertInfo(result.message);
+      navigate("/");
     } catch (error) {
       console.error(error);
       alertError(error.message);
@@ -78,17 +73,26 @@ const Product = () => {
 
     setLoading(true);
 
-    const url = `http://localhost:3000/api/v1/carts/cart/${123}`;
-    const AccessToken = localStorage.getItem("AccessToken");
+    try {
+      const response = await FetchData(`carts/cart/${123}`, "post");
+
+      console.log("Added to your cart:", response.data);
+      setLoading(false);
+      alertSuccess(response.data.message);
+    } catch (error) {
+      console.error("Error uploading product:", error);
+      setLoading(false);
+      alertError();
+    }
+  };
+
+  const HandelAddToWishlist = async (event) => {
+    event.preventDefault(); // Prevent the default form submission
+
+    setLoading(true);
 
     try {
-      const response = await axios.post(url, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${AccessToken}`,
-        },
-        withCredentials: true,
-      });
+      const response = await FetchData(`carts/cart/${123}`, "post");
 
       console.log("Added to your cart:", response.data);
       setLoading(false);

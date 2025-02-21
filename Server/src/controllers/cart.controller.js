@@ -2,7 +2,7 @@ import mongoose, { isValidObjectId } from "mongoose";
 import { Like } from "../models/like.model.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import asyncHandler from "../utils/asyncHandler.js";
 import { Product } from "../models/product.model.js";
 import { Cart } from "../models/cart.model.js";
 import { User } from "../models/user.model.js";
@@ -44,8 +44,7 @@ const DeleteFromCart = asyncHandler(async (req, res) => {
 
   const product = await Product.findOne({ productId });
 
-  if (!product)
-    throw new ApiError(404, "Product Not found"); 
+  if (!product) throw new ApiError(404, "Product Not found");
 
   const deletedItem = await Cart.findOneAndDelete({
     cartProduct: product._id,
@@ -139,15 +138,15 @@ const DeleteFromWishlist = asyncHandler(async (req, res) => {
 });
 
 const GetWishlist = asyncHandler(async (req, res) => {
-   const user = await User.findById(req._id).populate("likedProduct");
+  const user = await User.findById(req._id).populate("likedProduct");
 
-   if (!user)
-     throw ApiError(
-       500,
-       "failed to find due to internal error! Please try again"
-     );
+  if (!user)
+    throw ApiError(
+      500,
+      "failed to find due to internal error! Please try again"
+    );
 
-   res.status(200).json(new ApiResponse(200, user, "Got the cart"));
+  res.status(200).json(new ApiResponse(200, user, "Got the cart"));
 });
 
 export {
