@@ -22,15 +22,12 @@ function App() {
   const Navigate = useNavigate();
 
   async function getProducts() {
-    // const url = "http://localhost:3000/api/v1/products/";
-
     try {
       const response = await FetchData("products/", "get");
 
       // Axios automatically parses the response, so no need to call .json()
       const products = response.data;
 
-      console.log(products);
       Dispatch(clearProducts());
       Dispatch(addProducts(products.data));
     } catch (error) {
@@ -42,7 +39,7 @@ function App() {
   const ReLogin = async () => {
     try {
       const response = await FetchData("user/refresh-token", "get");
-      console.log(response);
+
       // Storing the tokens into browser's local storage
       localStorage.setItem("AccessToken", response.data.data.AccessToken);
       localStorage.setItem("RefreshToken", response.data.data.RefreshToken);

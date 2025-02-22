@@ -96,7 +96,6 @@ const GetProductDetails = asyncHandler(async (req, res) => {
 
 // Returns all the product uploaded to the database
 const GetAllProducts = asyncHandler(async (req, res) => {
-
   const products = await Product.find();
 
   if (!products)
@@ -113,7 +112,6 @@ const ClearAndUpdateImages = asyncHandler(async (req, res) => {
   const { productId } = req.params;
 
   // console.log(req);
-  
 
   if (!productId)
     throw new ApiError(
@@ -229,9 +227,9 @@ const AddImages = asyncHandler(async (req, res) => {
 // Updating Product details. This will take the productId via params and all other details in body
 const UpdateProductDetails = asyncHandler(async (req, res) => {
   const { productId } = req.params;
-  const { name, description, summery, wasPrice, price, rating } = req.body;
+  const { name, description, summery, oldPrice, newPrice, rating } = req.body;
 
-  //   console.log(req);
+  console.log(productId);
 
   if (
     [name, description, summery].some((field) => !field || field.trim() === "")
@@ -241,10 +239,10 @@ const UpdateProductDetails = asyncHandler(async (req, res) => {
 
   if (!productId) throw new ApiError(400, "product Id isn't found!");
 
-  console.log("price", price, typeof price);
+  console.log("price", newPrice, typeof newPrice);
 
-  if (!price || !rating)
-    throw new ApiError(400, " Price and Rating both are required");
+  if (!newPrice || !rating)
+    throw new ApiError(400, "Price and Rating both are required");
 
   const product = await Product.findOne({ productId });
 
@@ -257,14 +255,16 @@ const UpdateProductDetails = asyncHandler(async (req, res) => {
   product.name = name;
   product.description = description;
   product.summery = summery;
-  product.price.currentPrice = price;
-  product.rating = rating;
+  product.price.currentPrice = parseInt(newPrice);
+  product.rating = parseInt(rating);
 
-  if (wasPrice) product.price.wasPrice = wasPrice;
+  if (oldPrice) product.price.wasPrice = parseInt(oldPrice);
 
   await product.save();
 
-  res.status(200).json(new ApiResponse(200, product, "Updation completed"));
+  console.log("Updated product:", product);
+
+  res.status(200).json(new ApiResponse(200, {product}, "Updation completed"));
 });
 
 // Deletion of one product using product Id

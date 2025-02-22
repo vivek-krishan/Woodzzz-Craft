@@ -10,7 +10,7 @@ const Crousel = () => {
           <div
             className={`flex flex-col w-[25vw] h-[50vh] rounded-2xl  mr-7 z-50 `}
           >
-            <ProductCard key={11} index={2} start={1} width={"25vw"}  />
+            <ProductCard key={11} index={2} width={"25vw"}   />
           </div>
         </Link>
       </div>
@@ -18,7 +18,6 @@ const Crousel = () => {
         <div className="flex  h-40 min-w-40 m-10 ml-20 mb-14 ">
           <Banner
             images={10}
-            start={0}
             details={true}
             width={"10vw"}
             height={"20vh"}
@@ -27,7 +26,6 @@ const Crousel = () => {
         <div className="flex h-64 min-w-40 m-10 ml-20  ">
           <Banner
             images={10}
-            start={0}
             details={true}
             width={"10vw"}
             height={"20vh"}

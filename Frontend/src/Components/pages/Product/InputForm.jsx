@@ -5,12 +5,20 @@ import { useRef } from "react";
 import { useState } from "react";
 import { alertError, alertSuccess } from "../../Utils/Alert";
 import InfiniteLoading from "../../../assets/img/Infinite-Loading.svg";
+import { FetchData } from "../../Utils/fetchFromAPI";
+import {
+  clearProducts,
+  addProducts,
+  updateProduct,
+} from "../../Utils/Slices/ProductSlice";
+import { useDispatch } from "react-redux";
 
 const ProductUpdationForm = ({ onClose, productId }) => {
   // Variable
   const modelRef = useRef();
   const LoadingRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const Dispatch = useDispatch();
 
   // Utility Functions
   const closeModel = (e) => {
@@ -20,48 +28,41 @@ const ProductUpdationForm = ({ onClose, productId }) => {
   };
 
   // Input fields UI
-  const InputForm = ({productId}) => {
+  const InputForm = ({ productId }) => {
     // Variables
     const formRef = useRef(null);
-
-    const [inputImage, setInputImage] = useState(null);
-
+    console.log("productId from input form", productId);
     // Utility Functions
 
     const handleSubmit = async (event) => {
       event.preventDefault(); // Prevent the default form submission
 
-      setLoading(true);
+      setLoading(true); // Show the loading spinner
 
-      if (!inputImage) {
-        alertError("Please Give the product Image");
-        throw new Error("Please give product image");
-      }
-
-      // Create a FormData object from the form reference
       const formData = new FormData(formRef.current);
-      formData.append("Image", inputImage); // Append the image file to the formData
 
-      const url = `http://localhost:3000/api/v1/products/update-product-details/${123}`;
-      const AccessToken = localStorage.getItem("AccessToken");
-
-      //  console.log("AccessToken:", AccessToken);
-
+      console.log(productId);
       try {
-        const response = await axios.post(url, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${AccessToken}`,
-          },
-          withCredentials: true,
-        });
+        const response = FetchData(
+          `products/product-details/${productId}`,
+          "post",
+          formData
+        )
+          .then((response) => {
+            console.log("Product uploaded successfully:", response);
+            Dispatch(updateProduct(response.data.data.product));
+            alertSuccess(response.data.message);
+            formRef.current.reset();
+            closeModel(event);
+          })
+          .catch((error) => {
+            console.error("Error uploading product:", error);
+          });
 
-        console.log("Product uploaded successfully:", response.data);
         setLoading(false);
-        alertSuccess(response.data.message);
-        formRef.current.reset();
       } catch (error) {
         console.error("Error uploading product:", error);
+        setLoading(false);
       }
     };
 
@@ -72,7 +73,9 @@ const ProductUpdationForm = ({ onClose, productId }) => {
         className="flex flex-col justify-center items-center text-white text-lg"
       >
         <div className="" ref={LoadingRef}></div>
-        <h2 className="text-xl font-serif text-black underline ">Give the updated details</h2>
+        <h2 className="text-xl font-serif text-black underline ">
+          Give the updated details
+        </h2>
         <section className="flex justify-center items-center w-full">
           <div className="w-3/4 flex flex-col p-5 ">
             {/* Product Name */}
@@ -82,8 +85,6 @@ const ProductUpdationForm = ({ onClose, productId }) => {
             <input
               type="text"
               name="name"
-              // value={productDetails.name}
-              // onChange={HandelInputChange}
               id="name"
               required={true}
               placeholder="Product Name"
@@ -97,8 +98,6 @@ const ProductUpdationForm = ({ onClose, productId }) => {
             <input
               type="text"
               name="description"
-              // value={productDetails.description}
-              // onChange={HandelInputChange}
               id="description"
               required={true}
               placeholder="product Description"
@@ -112,8 +111,6 @@ const ProductUpdationForm = ({ onClose, productId }) => {
             <input
               type="text"
               name="summery"
-              // value={productDetails.summery}
-              // onChange={HandelInputChange}
               id="summary"
               required={true}
               placeholder="About Product"
@@ -127,8 +124,6 @@ const ProductUpdationForm = ({ onClose, productId }) => {
             <input
               type="number"
               name="oldPrice"
-              // value={productDetails.oldPrice}
-              // onChange={HandelInputChange}
               id="oldPrice"
               required={true}
               placeholder="Maximum retail Price"
@@ -142,8 +137,6 @@ const ProductUpdationForm = ({ onClose, productId }) => {
             <input
               type="number"
               name="newPrice"
-              // value={productDetails.newPrice}
-              // onChange={HandelInputChange}
               id="newPrice"
               required={true}
               placeholder="Offer Price"
@@ -157,8 +150,6 @@ const ProductUpdationForm = ({ onClose, productId }) => {
             <input
               type="number"
               name="rating"
-              // value={productDetails.rating}
-              // onChange={HandelInputChange}
               id="rating"
               required={true}
               placeholder="Rating"

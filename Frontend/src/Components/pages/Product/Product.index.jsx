@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CloudUpload, Heart, IndianRupee, Trash2 } from "lucide-react";
 import Banner from "../../Genral purpose/Banner";
@@ -16,30 +16,17 @@ const Product = () => {
     updationForm: false,
   });
   const user = useSelector((store) => store.UserInfo.user);
+  const allProduct = useSelector((store) => store.ProductsList.products);
+
   const Dispatch = useDispatch();
-  const Cart = useSelector((store) => store.CartInfo.cart);
   const [like, setLike] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
   const { index } = useParams();
-  const [newProductDetails, setNewProductDetails] = useState({
-    name: String,
-    description: String,
-    summery: String,
-    price: Number,
-    wasPrice: Number,
-    rating: Number,
-  });
   const [loading, setLoading] = useState(false);
 
   // Utility functions
 
   async function HandelDeleteProduct() {
-    const requestOptions = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "DELETE",
-      redirect: "follow",
-    };
     try {
       const result = await FetchData(
         `update-product-details/${Products[index]?.id}`,
@@ -74,10 +61,14 @@ const Product = () => {
     setLoading(true);
 
     try {
-      const response = await FetchData(`carts/cart/${123}`, "post");
+      const response = await FetchData(
+        `carts/cart/${allProduct[index].productId}`,
+        "post"
+      );
 
       console.log("Added to your cart:", response.data);
       setLoading(false);
+      setAddedToCart(true);
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
@@ -92,40 +83,100 @@ const Product = () => {
     setLoading(true);
 
     try {
-      const response = await FetchData(`carts/cart/${123}`, "post");
+      const response = await FetchData(
+        `carts/wishlist/${allProduct[index].productId}`,
+        "post"
+      );
 
-      console.log("Added to your cart:", response.data);
+      console.log("Added to your wishlist:", response);
       setLoading(false);
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
       setLoading(false);
-      alertError();
+      // alertError();
     }
   };
 
-  return (
+  const HandelRemoveToWishlist = async (event) => {
+    event.preventDefault(); // Prevent the default form submission
+
+    setLoading(true);
+
+    try {
+      const response = await FetchData(
+        `carts/wishlist/${allProduct[index].productId}`,
+        "delete"
+      );
+
+      console.log("Removed from wishlist:", response);
+      setLoading(false);
+      alertSuccess(response.data.message);
+    } catch (error) {
+      console.error("Error in removing product from wishlist:", error);
+      setLoading(false);
+      // alertError();
+    }
+  };
+
+  // For checking if the product is liked or not and
+  // if it is added to cart or not
+  useEffect(() => {
+    const CheckIsLiked = async () => {
+      try {
+        const response = await FetchData(
+          `carts/wishlist/${allProduct[index].productId}`,
+          "get"
+        );
+        console.log("Is liked:", response);
+        setLike(response.data.data);
+      } catch (error) {
+        console.error("Error checking if liked:", error);
+      }
+    };
+    const IsAddedToCart = async () => {
+      try {
+        const response = await FetchData(
+          `carts/cart/${allProduct[index].productId}`,
+          "get"
+        );
+        console.log("Is Added to cart:", response);
+        setAddedToCart(response.data.data);
+      } catch (error) {
+        console.error("Error checking if liked:", error);
+      }
+    };
+
+    CheckIsLiked();
+    IsAddedToCart();
+  }, [allProduct]);
+
+  return allProduct === null ? (
+    <div></div>
+  ) : (
     <div className="ProductPage">
+      {console.dir(allProduct[index], { depth: 0 })}
       <div className="ProductDetails h-[75vh] my-16 relative flex flex-wrap">
         <div className="Image-section  w-4/6 h-full">
           <div className="ProductImg h-full m-4 rounded-3xl bg-white flex justify-center items-center overflow-hidden">
             <img
-              src={Products[index]?.img}
+              src={allProduct[index]?.images[0]}
               alt="PImg"
               className="h-[70vh] drop-shadow-2xl "
             />
           </div>
           <div className="Name-and-Cart-btn flex justify-between mt-5 mx-5 absolute w-[62vw] h-[70vh] top-0 ">
             <div className="PName max-w-lg mx-16 cursor-default">
-              <h1 className="text-2xl font-bold">{Products[index]?.name}</h1>
+              <h1 className="text-2xl font-bold">{allProduct[index]?.name}</h1>
             </div>
             <div className="Price&cart m-10 h-fit flex flex-col justify-center items-center absolute bottom-0 right-0">
-              {Products[index].wasPrice != null &&
-                Products[index].wasPrice != Products[index]?.price && (
+              {allProduct[index].price.wasPrice != null &&
+                allProduct[index].price.wasPrice !=
+                  allProduct[index]?.price.currentPrice && (
                   <div className="flex justify-center items-center">
                     <IndianRupee width={15} />
                     <h1 className="text-xl font-thin line-through">
-                      {Products[index].wasPrice}
+                      {allProduct[index].price.wasPrice}
                     </h1>
                   </div>
                 )}
@@ -133,14 +184,15 @@ const Product = () => {
               <div className="Price flex items-center">
                 <IndianRupee width={15} />
                 <h1 className=" text-2xl font-medium ">
-                  {Products[index]?.price}
+                  {allProduct[index]?.price.currentPrice}
                 </h1>
               </div>
               <div className="LikeBtn-And-AddToCart flex justify-center items-center">
                 {like === true ? (
                   <button
                     className="Like m-4"
-                    onClick={() => {
+                    onClick={(event) => {
+                      HandelRemoveToWishlist(event);
                       setLike(false);
                     }}
                   >
@@ -149,7 +201,8 @@ const Product = () => {
                 ) : (
                   <button
                     className="Like m-4"
-                    onClick={() => {
+                    onClick={(event) => {
+                      HandelAddToWishlist(event);
                       setLike(true);
                     }}
                   >
@@ -158,7 +211,9 @@ const Product = () => {
                 )}
                 <button
                   onClick={HandelAddToCart}
-                  className="bg-green w-28 h-12 my-4 text-white p-3 drop-shadow-xl rounded-full hover:bg-Lgreen hover:drop-shadow-2xl transition duration-200 ease-in-out hover:scale-105"
+                  className={`${
+                    addedToCart ? "bg-gray-400" : "bg-green"
+                  } w-28 h-12 my-4 text-white p-3 drop-shadow-xl rounded-full hover:bg-Lgreen hover:drop-shadow-2xl transition duration-200 ease-in-out hover:scale-105`}
                 >
                   {loading ? (
                     <div className=" w-full h-full flex justify-center items-center ">
@@ -168,6 +223,8 @@ const Product = () => {
                         className=" w-[6vw] h-[6vh]"
                       />
                     </div>
+                  ) : addedToCart ? (
+                    <h1>Added</h1>
                   ) : (
                     <h5>Add to Cart</h5>
                   )}
@@ -179,12 +236,12 @@ const Product = () => {
         <div className="Details-Section w-1/3 h-full  mt-5 ">
           <div className="bg-white relative mx-4 h-full rounded-3xl overflow-hidden ">
             <h1 className="text-xl font-[700] font-serif text-center  my-5">
-              {Products[index]?.description}
+              {allProduct[index]?.description}
             </h1>
             <div className="Details w-full m-4">
               <h1 className="text-2xl font-serif">Details</h1>
               <p className="tracking-wider font-extralight leading-relaxed">
-                {Products[index]?.details}
+                {allProduct[index]?.summery}
               </p>
             </div>
 
@@ -247,6 +304,7 @@ const Product = () => {
               updationForm: false,
             })
           }
+          productId={allProduct[index]?.productId}
         />
       )}
 

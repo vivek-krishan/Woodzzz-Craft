@@ -5,27 +5,6 @@ import Crousel from "./Crousel";
 import { Link } from "react-router-dom";
 
 function Home() {
-  const [counter, setCounter] = useState(0);
-  const slides = document.querySelectorAll(".slide");
-
-  const goRight = () => {
-    slideImg();
-  };
-  const goLeft = () => {
-    slideImg();
-  };
-
-  const slideImg = () => {
-    slides.forEach((slide) => {
-      slide.style.transform = `translateX(-${counter * 100}%)`;
-    });
-  };
-
-  useEffect(() => {
-    slides.forEach((i, index) => {
-      i.style.left = `${index * 100}%`;
-    });
-  }, []);
 
   // Css for Banner div containing banner for white gradient from side wise
 

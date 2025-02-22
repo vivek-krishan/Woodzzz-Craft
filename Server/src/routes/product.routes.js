@@ -28,9 +28,9 @@ router
   .patch(VerifyAdmin, upload.array("Images"), ClearAndUpdateImages);
 
 router
-  .route("/update-product-details/:productId")
+  .route("/product-details/:productId")
   .get(GetProductDetails)
-  .patch(VerifyAdmin, UpdateProductDetails)
+  .post(VerifyAdmin, UpdateProductDetails)
   .delete(VerifyAdmin, DeleteProduct);
 
 export default router;

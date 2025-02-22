@@ -58,11 +58,12 @@ const Cart = () => {
 
   const getActivatedAddress = (user) => {
     console.log(user);
-    return user.address.find((addr) => addr.activated === true) || null;
+    if(user === null) return null;
+    return user[0]?.address.find((addr) => addr.activated === true) || null;
   };
 
   useEffect(() => {
-    setActiveAddress(getActivatedAddress(user));
+    setActiveAddress(getActivatedAddress(user))
   }, [user]);
 
   return (

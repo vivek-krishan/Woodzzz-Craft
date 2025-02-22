@@ -5,14 +5,11 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const Banner = ({ images, start, details, height, width }) => {
-  // const FilteredItem = useSelector((store) => store.FilteredData.items);
-  // console.log(height);
+const Banner = ({ images, details, height, width }) => {
+
+  const allProducts = useSelector((store) => store.ProductsList.products);
 
   const [imgIndx, setImgIndx] = useState(0);
-
-  
-
   const prevSlide = () => {
     if (BannerImg?.length === 1) {
       return;
@@ -33,20 +30,15 @@ const Banner = ({ images, start, details, height, width }) => {
       .map((e, index) => {
         return (
           <div
+            key={index + 11}
             className={`bg-Tan p-5 w-[15vw] h-[32vh] rounded-xl hover:drop-shadow-2xl transition duration-150 ease-in-out`}
           >
             <Link
-              to={`/product/${index + start}`}
+              to={`/product/${index}`}
               key={index + "BannerImg"}
               className={` flex flex-col    overflow-hidden `}
             >
-              <ProductCard
-                key={index + 11}
-                index={index}
-                start={start}
-                width={width}
-                height={height}
-              />
+              <ProductCard index={index} width={width} height={height} />
             </Link>
           </div>
         );
