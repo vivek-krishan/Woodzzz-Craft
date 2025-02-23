@@ -16,7 +16,7 @@ const router = Router();
 router.use(VerifyUser); // Apply VerifyUser middleware to all routes in this file
 
 // Routes for cart
-router.route("/cart/").get(GetCart);
+router.route("/cart").get(GetCart);
 router
   .route("/cart/:productId")
   .get(IsAddedToCart)

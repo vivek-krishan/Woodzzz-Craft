@@ -18,8 +18,10 @@ const Cart = () => {
   const [activeAddress, setActiveAddress] = useState(null);
   const AddressFormRef = useRef();
   const Dispatch = useDispatch();
+  const [CartProducts, SetCartProducts] = useState([]);
 
   console.log(user);
+  console.log(Cart);
 
   const handleAddAddress = async () => {
     const formData = new FormData(AddressFormRef.current);
@@ -58,13 +60,29 @@ const Cart = () => {
 
   const getActivatedAddress = (user) => {
     console.log(user);
-    if(user === null) return null;
+    if (user === null) return null;
     return user[0]?.address.find((addr) => addr.activated === true) || null;
   };
 
   useEffect(() => {
-    setActiveAddress(getActivatedAddress(user))
+    setActiveAddress(getActivatedAddress(user));
   }, [user]);
+
+  const getCartProducts = async (user) => {
+    try {
+      const response = await FetchData(`carts/cart`, "get");
+      // console.log(response);
+      SetCartProducts(response.data.data.cart);
+    } catch {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCartProducts(user);
+  }, [user]);
+
+  console.log(CartProducts);
 
   return (
     <div className="h-[70vh]">
@@ -167,7 +185,7 @@ const Cart = () => {
               </div>
               {isvisible === "address" && (
                 <div className="flex justify-start items-center">
-                    <div className="Details grid grid-cols-3 grid-rows-1 mt-5 min-w-[70%]">
+                  <div className="Details grid grid-cols-3 grid-rows-1 mt-5 min-w-[70%]">
                     <span className="text-sm font-serif col-span-3">
                       {activeAddress?.street},{" "}
                     </span>

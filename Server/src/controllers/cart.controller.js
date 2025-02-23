@@ -90,7 +90,7 @@ const IsAddedToCart = asyncHandler(async (req, res) => {
 });
 
 const GetCart = asyncHandler(async (req, res) => {
-  const user = await User.findById(req._id).populate("cart");
+  const user = await User.findById(req.user._id).populate("cart");
 
   if (!user)
     throw ApiError(
@@ -194,6 +194,25 @@ const GetWishlist = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, user, "Got the cart"));
 });
 
+const getCartProducts = asyncHandler(async (req, res) => {
+  const { userId } = req.params; // Get userId from the URL parameter
+
+  try {
+    // Find the user and populate the CartProducts field
+    const user = await User.findById(userId).populate("Cart");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Send back the cart products
+    return res.status(200).json({ success: true, data: Cart });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
 export {
   GetCart,
   AddToCart,
@@ -203,4 +222,5 @@ export {
   AddToWishlist,
   DeleteFromCart,
   DeleteFromWishlist,
+  getCartProducts,
 };
