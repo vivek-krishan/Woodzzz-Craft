@@ -5,21 +5,22 @@ import { ProductCardAI } from "../../Genral purpose/product-card";
 
 const Carousel = () => {
   return (
-    <div className="Carousel flex z-20 justify-between items-center">
-      <div className="CaptainImg h-fit ml-20 ">
+    <div className="Carousel flex flex-col lg:flex-row z-20 lg:justify-between lg:items-center ">
+      <div className="CaptainImg h-fit lg:ml-20 ">
         <Link
           to={`/product/${2}`}
-          className="flex flex-col w-[25vw] h-fit rounded-2xl z-50  "
+          className="flex flex-col w-3/4 lg:w-[25vw] m-auto h-fit rounded-2xl z-50  "
           key={"BannerImg"}
         >
           <ProductCardAI key={11} index={2} />
         </Link>
       </div>
-      <div className="Players overflow-hidden overflow-x-scroll w-[69vw] no-scrollbar flex flex-col  before:absolute before:left-[31vw]  before:z-40 before:w-44 before:h-3/4  before:bg-gradient-to-r from-[#d2b48c] to-transparent   ">
-        <div className="flex gap-5 m-5 ml-20   ">
+
+      <div className="Players lg:overflow-hidden lg:overflow-x-scroll overflow-x-scroll lg:w-[69vw] no-scrollbar flex flex-col  lg:before:absolute lg:before:left-[31vw]  lg:before:z-40 lg:before:w-44 lg:before:h-3/4  lg:before:bg-gradient-to-r from-[#d2b48c] to-transparent   ">
+        <div className="flex gap-5 m-5 lg:ml-20   ">
           <Banner images={10} details={true} width={"10vw"} height={"20vh"} />
         </div>
-        <div className="flex gap-5 m-5 ml-20  ">
+        <div className="gap-5 m-5 lg:ml-20 hidden lg:flex">
           <Banner images={10} details={true} width={"10vw"} height={"20vh"} />
         </div>
       </div>

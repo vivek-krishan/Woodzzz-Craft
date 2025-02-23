@@ -90,15 +90,15 @@ const IsAddedToCart = asyncHandler(async (req, res) => {
 });
 
 const GetCart = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).populate("cart");
+  const cartItems = await Cart.find({ user: req.user._id }).populate(
+    "cartProduct"
+  );
 
-  if (!user)
-    throw ApiError(
-      500,
-      "failed to find due to internal error! Please try again"
-    );
+  if (!cartItems) {
+    return res.status(404).json({ message: "No cart items found" });
+  }
 
-  res.status(200).json(new ApiResponse(200, user, "Got the cart"));
+  res.status(200).json(new ApiResponse(200, cartItems, "Got the cart"));
 });
 
 const AddToWishlist = asyncHandler(async (req, res) => {
