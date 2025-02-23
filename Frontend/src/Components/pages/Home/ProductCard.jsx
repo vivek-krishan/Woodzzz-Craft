@@ -1,10 +1,8 @@
 import { IndianRupee } from "lucide-react";
-import { Products } from "../../Utils/productImg";
 import { useSelector } from "react-redux";
 
 const ProductCard = ({ index, width, height }) => {
-  // console.log(height);
-  // console.log(typeof height);
+ 
   const allProduct = useSelector((store) => store.ProductsList.products);
   if (!allProduct) return null;
   if (index >= allProduct.length) {

@@ -1,23 +1,25 @@
 import { useState, useEffect } from "react";
 // import { goLeft, goRight } from "../utils/SlideImg";
 import Banner from "../../Genral purpose/Banner";
-import Crousel from "./Crousel";
+import Carousel from "./Carousel";
 import { Link } from "react-router-dom";
+import { BannerSlider } from "../../Genral purpose/Banner-Slider";
+import { ProductCardAI } from "../../Genral purpose/product-card";
 
 function Home() {
 
-  // Css for Banner div containing banner for white gradient from side wise
-
-  // <---  before:absolute before:left-0 before:z-40 before:w-[30vw] before:h-[80vh] before:bg-gradient-to-r from-[#f4f4f5] to-transparent after:absolute after:z-40 after:w-[30vw] after:h-[80vh] after:right-0 after:bg-gradient-to-l from-[#f4f4f5] to-transparent --->
-
   return (
     <div className="w-full">
-      <div className="Banner my-20 w-full h-[80vh] overflow-hidden rounded-[40px]    flex  justify-center items-center drop-shadow-2xl">
-        <div className=" before:absolute before:rounded-[40px]  before:left-0 before:z-40 before:w-[30vw] before:h-[73vh] before:bg-gradient-to-r from-[#f4f4f5d2] to-transparent after:absolute after:rounded-[40px] after:z-40 after:w-[30vw] after:h-[73vh] after:right-0 after:top-7  after:bg-gradient-to-l from-[#f4f4f5c8] to-transparent  ">
+      {/* <div className="Banner my-20 w-full h-[80vh] overflow-hidden rounded-[40px]    flex  justify-center items-center drop-shadow-2xl">
+         <div className=" before:absolute before:rounded-[40px]  before:left-0 before:z-40 before:w-[30vw] before:h-[73vh] before:bg-gradient-to-r from-[#f4f4f5d2] to-transparent after:absolute after:rounded-[40px] after:z-40 after:w-[30vw] after:h-[73vh] after:right-0 after:top-7  after:bg-gradient-to-l from-[#f4f4f5c8] to-transparent  ">
           <Banner images={4} start={0} />
-        </div>
+        </div> 
+      </div> */}
+
+      <div className="Banner my-20">
+        <BannerSlider />
       </div>
-      
+
       <div className="Featured mb-20">
         <div className="Heading flex justify-center items-center z-0 mb-10 cursor-default">
           <div className="absolute">
@@ -33,7 +35,8 @@ function Home() {
           </div>
         </div>
         <div className="ProductList w-full h-fit ">
-          <Crousel />
+          <Carousel />
+          {/* <ProductCardAI index={0} width={"25vw"}  /> */}
         </div>
       </div>
       <div className="Best_Seller h-fit">
@@ -49,8 +52,8 @@ function Home() {
             </h1>
           </div>
         </div>
-        <div className="Players overflow-hidden overflow-x-scroll no-scrollbar flex flex-col  before:absolute before:left-0 before:z-40 before:w-44 before:h-72  before:bg-gradient-to-r from-[#d2b48c] to-transparent ">
-          <div className="flex h-64 min-w-40 m-10  ">
+        <div className="Players overflow-hidden overflow-x-scroll no-scrollbar flex flex-col  before:absolute before:left-0 before:z-40 before:w-44 before:h-80 before:mt-16 before:bg-gradient-to-r from-[#d2b48c] to-transparent ">
+          <div className="flex gap-5 m-5 ml-20 mt-20">
             <Banner
               images={10}
               start={10}
