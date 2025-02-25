@@ -20,8 +20,8 @@ const Cart = () => {
   const Dispatch = useDispatch();
   const [CartProducts, SetCartProducts] = useState([]);
 
-  console.log(user);
-  console.log(Cart);
+  // console.log(user);
+  // console.log(Cart);
 
   const handleAddAddress = async () => {
     const formData = new FormData(AddressFormRef.current);
@@ -59,7 +59,7 @@ const Cart = () => {
   };
 
   const getActivatedAddress = (user) => {
-    console.log(user);
+    // console.log(user);
     if (user === null) return null;
     return user[0]?.address.find((addr) => addr.activated === true) || null;
   };
@@ -68,7 +68,7 @@ const Cart = () => {
     setActiveAddress(getActivatedAddress(user));
   }, [user]);
 
-  const getCartProducts = async (user) => {
+  const getCartProducts = async () => {
     try {
       const response = await FetchData(`carts/cart`, "get");
       // console.log(response);
@@ -85,7 +85,7 @@ const Cart = () => {
   console.log(CartProducts);
 
   return (
-    <div className="h-[70vh]">
+    <div className="lg:h-[70vh]">
       <div className="Cart_Heading w-full flex justify-center">
         <h1 className="font-bold text-3xl">Check Out</h1>
       </div>
@@ -108,8 +108,8 @@ const Cart = () => {
           </div>
         </div>
       ) : (
-        <div className="MainContainer_for_Cart flex justify-evenly">
-          <div className="leftside w-2/5 mt-20">
+        <div className="MainContainer_for_Cart flex lg:justify-evenly flex-col lg:flex-row">
+          <div className="leftside lg:w-2/5 lg:mt-20">
             <section className="Account m-5 p-2 bg-green drop-shadow-xl text-white rounded-lg hover:drop-shadow-2xl transition duration-150 cursor-default">
               <div className="flex justify-between items-center">
                 <div className="Title-Name">
@@ -353,9 +353,9 @@ const Cart = () => {
               </>
             )}
           </div>
-          <div className="RightSide w-2/5 p-5">
+          <div className="RightSide lg:w-2/5 p-5">
             <h1 className="text-xl text-center font-bold">Your Products</h1>
-            {Cart.cartItems.map((item) => {
+            {CartProducts?.map((item) => {
               // setPrice(price +item.priceInfo.linePrice)
               return <CartProduct item={item} key={item.id} />;
             })}
