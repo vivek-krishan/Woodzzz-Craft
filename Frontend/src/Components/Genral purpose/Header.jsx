@@ -90,6 +90,13 @@ const Header = () => {
             >
               Cart
             </Link>
+            <Link
+              to="/cart"
+              onClick={onClose}
+              className=" font-Exo my-1 mx-2  "
+            >
+              All Orders
+            </Link>
 
             {user != null && user[0]?.admin && (
               <Link
@@ -193,6 +200,12 @@ const Header = () => {
               className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
             >
               Cart
+            </Link>
+            <Link
+              to={"/cart"}
+              className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
+            >
+              All Orders
             </Link>
             {user != null && user[0]?.admin && (
               <Link

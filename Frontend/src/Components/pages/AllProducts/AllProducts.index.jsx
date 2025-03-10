@@ -1,8 +1,10 @@
-import CheckBox from "./CheckBox";
 import Banner from "../../Genral purpose/Banner";
-import { Products } from "../../Utils/productImg";
+// import { Products } from "../../Utils/productImg";
+import { useSelector } from "react-redux";
 
 const AllProducts = ({ data }) => {
+  const Products = useSelector((store) => store.ProductsList.products);
+
   return (
     <div className="flex justify-evenly h-fit mt-10">
       {/* <section className="Navbar relative  w-1/4 mr-10">
@@ -25,9 +27,9 @@ const AllProducts = ({ data }) => {
           </div>
         </div>
       </section> */}
-      <section className="Products w-4/5 h-fit ml-10 ">
+      <section className="Products lg:w-4/5 h-fit lg:ml-10 ">
         <div className="Recommendation">
-          <div className="grid grid-cols-5 gap-24 m-10">
+          <div className="grid lg:grid-cols-5 lg:gap-24 lg:m-10 grid-cols-2 gap-5 md:grid-cols-3 md:gap-10 md:m-10">
             <Banner
               images={Products.length}
               start={0}

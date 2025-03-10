@@ -15,14 +15,18 @@ const AddToCart = asyncHandler(async (req, res) => {
 
   if (!product) throw new ApiError(404, "Product Not found");
 
-  const cartItem = await Cart.findOne({ cartProduct: product._id });
+  const cartItem = await Cart.findOne({
+    user: req.user._id,
+    cartProduct: product._id,
+  });
 
   if (cartItem) {
     cartItem.quantity += 1;
     await cartItem.save();
+    const populatedCartItem = await cartItem.populate("cartProduct"); // Populate product details
     return res
       .status(200)
-      .json(new ApiResponse(200, cartItem, "Added successfully"));
+      .json(new ApiResponse(200, populatedCartItem, "Added successfully"));
   }
 
   const newCartItem = await Cart.create({
@@ -46,6 +50,41 @@ const AddToCart = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, createdCart, "Added successfully"));
 });
 
+const SubtractFromCart = asyncHandler(async (req, res) => {
+  const { productId } = req.params;
+
+  if (!productId) throw new ApiError(400, "Product Id not found");
+
+  const product = await Product.findOne({
+    productId,
+  });
+
+  if (!product) throw new ApiError(404, "Product Not found");
+
+  const cartItem = await Cart.findOne({
+    user: req.user._id,
+    cartProduct: product._id,
+  });
+
+  if (!cartItem) {
+    throw new ApiError(404, "Item not found in cart");
+  }
+
+  if (cartItem.quantity === 1) {
+    await cartItem.remove();
+    return res
+      .status(200)
+      .json(new ApiResponse(200, cartItem, "Removed successfully"));
+  }
+
+  cartItem.quantity -= 1;
+  await cartItem.save();
+  const populatedCartItem = await cartItem.populate("cartProduct"); // Populate product details
+  return res
+    .status(200)
+    .json(new ApiResponse(200, populatedCartItem, "Subtracted successfully"));
+});
+
 const DeleteFromCart = asyncHandler(async (req, res) => {
   const { productId } = req.params;
 
@@ -57,21 +96,31 @@ const DeleteFromCart = asyncHandler(async (req, res) => {
 
   const deletedItem = await Cart.findOneAndDelete({
     cartProduct: product._id,
+    user: req.user._id,
   });
 
-  if (deletedItem)
+  console.log(deletedItem)
+
+  if (!deletedItem)
     throw new ApiError(
       500,
       "Failed in deleting item from cart due to internal error ! Please try again"
     );
 
-  // Adding cart item to user's Cart section
+  // Removing cart item from user's Cart section
   const user = await User.findById(req.user._id);
-  const index = user.cart.findIndex(deletedItem._id);
-  user.cart.splice(index);
-  await user.save();
+ const index = user.cart.findIndex(
+   (item) => item.toString() === deletedItem._id.toString()
+ );
 
-  res.status(200).json(new ApiResponse(200, deletedItem, "Added successfully"));
+ if (index !== -1) {
+   user.cart.splice(index, 1); // Remove the item at the found index
+   await user.save();
+ } else {
+   console.log("Item not found in the cart.");
+ }
+
+  res.status(200).json(new ApiResponse(200, deletedItem, "Deleted successfully"));
 });
 
 const IsAddedToCart = asyncHandler(async (req, res) => {
@@ -146,6 +195,7 @@ const DeleteFromWishlist = asyncHandler(async (req, res) => {
 
   const deletedItem = await Like.findOneAndDelete({
     likedProduct: product._id,
+    user: req.user._id,
   });
 
   if (!deletedItem)
@@ -183,15 +233,15 @@ const CheckIfLiked = asyncHandler(async (req, res) => {
 });
 
 const GetWishlist = asyncHandler(async (req, res) => {
-  const user = await User.findById(req._id).populate("likedProduct");
+  const likedItems = await Like.find({ user: req.user._id }).populate(
+    "likedProduct"
+  );
 
-  if (!user)
-    throw ApiError(
-      500,
-      "failed to find due to internal error! Please try again"
-    );
+  if (!likedItems) {
+    return res.status(404).json({ message: "No Liked items found!" });
+  }
 
-  res.status(200).json(new ApiResponse(200, user, "Got the cart"));
+  res.status(200).json(new ApiResponse(200, likedItems, "Got your wishlist"));
 });
 
 const getCartProducts = asyncHandler(async (req, res) => {
@@ -221,6 +271,7 @@ export {
   IsAddedToCart,
   AddToWishlist,
   DeleteFromCart,
-  DeleteFromWishlist,
   getCartProducts,
+  SubtractFromCart,
+  DeleteFromWishlist,
 };

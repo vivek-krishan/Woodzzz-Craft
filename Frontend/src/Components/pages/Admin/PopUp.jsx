@@ -75,7 +75,8 @@ const PopUp = ({ onClose }) => {
     useEffect(() => {
       const fetchProductIds = () => {
         // Extract product IDs from the products
-        AllProducts[0].map((product) => {
+        console.log(AllProducts)
+        AllProducts.map((product) => {
           existingProductIds.push(product.productId);
         });
       };

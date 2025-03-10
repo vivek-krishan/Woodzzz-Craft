@@ -19,6 +19,7 @@
     "cosmiconfig": "^9.0.0",
     "dotenv": "^16.4.7",
     "embla-carousel-react": "^8.5.2",
+    "framer-motion": "^12.4.10",
     "http-proxy-middleware": "^3.0.0",
     "lucide-react": "^0.394.0",
     "prop-types": "^15.8.1",

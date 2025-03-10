@@ -14,17 +14,13 @@ const PopUp = ({ children, onClose }) => {
     <div
       ref={modelRef}
       onClick={closeModel}
-      className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
+      className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50"
     >
       <div className=" flex flex-col gap-5 text-white">
         <div className="place-self-end flex flex-row-reverse gap-5">
           <button onClick={onClose}>
             <X size={30} />
           </button>
-
-          <a href={"/CV.pdf"} download>
-            <ArrowBigDownDash />
-          </a>
         </div>
         {children}
       </div>

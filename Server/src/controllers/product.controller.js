@@ -6,6 +6,7 @@ import {
   DeleteFileFromCloudinary,
 } from "../utils/Cloudinary.js";
 import { Product } from "../models/product.model.js";
+import { UploadImages } from "../utils/imageKit.io.js";
 
 // This will upload a new product to the database
 const UploadNewProduct = asyncHandler(async (req, res) => {
@@ -33,11 +34,17 @@ const UploadNewProduct = asyncHandler(async (req, res) => {
 
   if (isUploaded) throw new ApiError(401, "This product is already uploaded");
 
-  const imageLocalFilePath = req.file?.path;
+  const imageLocalFilePath = req.file;
 
   if (!imageLocalFilePath) throw new ApiError("Product image is Compulsory.");
 
-  const Image = await UploadFileToCloudinary(imageLocalFilePath);
+
+  const Image = await UploadImages(
+    imageLocalFilePath.filename,
+    { root: "woodz-craft", name },
+    [name]
+  );
+  // const Image = await UploadFileToCloudinary(imageLocalFilePath);
 
   if (!Image)
     throw new ApiError(
@@ -264,7 +271,7 @@ const UpdateProductDetails = asyncHandler(async (req, res) => {
 
   console.log("Updated product:", product);
 
-  res.status(200).json(new ApiResponse(200, {product}, "Updation completed"));
+  res.status(200).json(new ApiResponse(200, { product }, "Updation completed"));
 });
 
 // Deletion of one product using product Id
@@ -275,7 +282,7 @@ const DeleteProduct = asyncHandler(async (req, res) => {
 
   if (!productId) throw new ApiError(400, "Product Id not found!");
 
-  const DeletedProduct = await Product.findOneAndDelete(productId);
+  const DeletedProduct = await Product.findByIdAndDelete(productId);
 
   if (!DeletedProduct)
     throw new ApiError(500, "failed to delete due to some internal error");

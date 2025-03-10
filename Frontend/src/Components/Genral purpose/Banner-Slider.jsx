@@ -6,11 +6,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./carousel";
-import Banner1 from "../../assets/ProductImg/Banner1.jpg";
-import Banner2 from "../../assets/ProductImg/Banner2.jpg";
-import Banner3 from "../../assets/ProductImg/Banner3.jpg";
-import Banner4 from "../../assets/ProductImg/Banner4.jpg";
-import Banner5 from "../../assets/ProductImg/Banner5.jpg";
+import Banner1 from "../../assets/bannerImages/Banner1.jpg";
+import Banner2 from "../../assets/bannerImages/Banner2.jpg";
+import Banner3 from "../../assets/bannerImages/Banner3.jpg";
+import Banner4 from "../../assets/bannerImages/Banner4.jpg";
+import Banner5 from "../../assets/bannerImages/Banner5.jpg";
 
 const BannerImgs = [Banner1, Banner2, Banner3, Banner4, Banner5];
 

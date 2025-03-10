@@ -1,9 +1,9 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CloudUpload, Heart, IndianRupee, Trash2 } from "lucide-react";
 import Banner from "../../Genral purpose/Banner";
-import { Products } from "../../Utils/productImg";
+// import { Products } from "../../Utils/productImg";
 import { alertError, alertInfo, alertSuccess } from "../../Utils/Alert";
 import { ProductUpdationForm } from "./InputForm";
 import InfiniteLoading from "../../../assets/img/Infinite-loading-2.svg";
@@ -27,14 +27,15 @@ const Product = () => {
   // Utility functions
 
   async function HandelDeleteProduct() {
+    console.log("Delete btn", allProduct[index]);
     try {
       const result = await FetchData(
-        `update-product-details/${Products[index]?.id}`,
+        `products/product-details/${allProduct[index]?._id}`,
         "delete"
       );
       console.log(result);
       alertInfo(result.message);
-      navigate("/");
+      window.location.href("/");
     } catch (error) {
       console.error(error);
       alertError(error.message);
@@ -156,27 +157,29 @@ const Product = () => {
   ) : (
     <div className="ProductPage">
       {console.dir(allProduct[index], { depth: 0 })}
-      <div className="ProductDetails h-[75vh] my-16 relative flex flex-wrap">
-        <div className="Image-section  w-4/6 h-full">
-          <div className="ProductImg h-full m-4 rounded-3xl bg-white flex justify-center items-center overflow-hidden">
+      <div className="ProductDetails lg:h-[75vh] lg:my-16 relative lg:flex flex-wrap ">
+        <div className="Image-section w-full h-[85vh]  lg:w-4/6 lg:h-full ">
+          <div className="ProductImg h-[80vh] lg:h-full m-4 rounded-3xl bg-white flex justify-center lg:items-center items-start overflow-hidden  ">
             <img
               src={allProduct[index]?.images[0]}
               alt="PImg"
-              className="h-[70vh] drop-shadow-2xl "
+              className="lg:h-[70vh] mt-20 lg:mt-0 drop-shadow-2xl  "
             />
           </div>
-          <div className="Name-and-Cart-btn flex justify-between mt-5 mx-5 absolute w-[62vw] h-[70vh] top-0 ">
-            <div className="PName max-w-lg mx-16 cursor-default">
-              <h1 className="text-2xl font-bold">{allProduct[index]?.name}</h1>
+
+          <div className="Name-and-Cart-btn flex justify-between lg:mt-5 mx-5 absolute lg:w-[62vw] lg:h-[70vh] h-[80vh] w-[90%] top-0   ">
+            <div className="PName max-w-lg mx-16 cursor-default ">
+              <h1 className="text-2xl font-bold ">{allProduct[index]?.name}</h1>
             </div>
-            <div className="Price&cart m-10 h-fit flex flex-col justify-center items-center absolute bottom-0 right-0">
-              {allProduct[index].price.wasPrice != null &&
-                allProduct[index].price.wasPrice !=
-                  allProduct[index]?.price.currentPrice && (
+
+            <div className="Price&cart lg:m-10 h-fit flex flex-col justify-center items-center absolute bottom-0 right-0">
+              {allProduct[index]?.price?.wasPrice != null &&
+                allProduct[index]?.price?.wasPrice !=
+                  allProduct[index]?.price?.currentPrice && (
                   <div className="flex justify-center items-center">
                     <IndianRupee width={15} />
                     <h1 className="text-xl font-thin line-through">
-                      {allProduct[index].price.wasPrice}
+                      {allProduct[index]?.price?.wasPrice}
                     </h1>
                   </div>
                 )}
@@ -184,7 +187,7 @@ const Product = () => {
               <div className="Price flex items-center">
                 <IndianRupee width={15} />
                 <h1 className=" text-2xl font-medium ">
-                  {allProduct[index]?.price.currentPrice}
+                  {allProduct[index]?.price?.currentPrice}
                 </h1>
               </div>
               <div className="LikeBtn-And-AddToCart flex justify-center items-center">
@@ -233,12 +236,13 @@ const Product = () => {
             </div>
           </div>
         </div>
-        <div className="Details-Section w-1/3 h-full  mt-5 ">
-          <div className="bg-white relative mx-4 h-full rounded-3xl overflow-hidden ">
+
+        <div className="Details-Section lg:w-1/3 h-full  mt-5 ">
+          <div className="bg-white relative mx-4 lg:h-full h-fit py-4 rounded-3xl overflow-hidden ">
             <h1 className="text-xl font-[700] font-serif text-center  my-5">
               {allProduct[index]?.description}
             </h1>
-            <div className="Details w-full m-4">
+            <div className="Details w-fit m-4">
               <h1 className="text-2xl font-serif">Details</h1>
               <p className="tracking-wider font-extralight leading-relaxed">
                 {allProduct[index]?.summery}
@@ -247,7 +251,7 @@ const Product = () => {
 
             {/* Update and Delete Btn */}
             {user != null && user[0].admin === true && (
-              <div className="ProductUpdate-and-delete-btn relative -bottom-52 flex justify-center items-center">
+              <div className="ProductUpdate-and-delete-btn relative flex justify-center items-center">
                 {/* product Update Btn */}
                 <div>
                   <button
@@ -309,21 +313,21 @@ const Product = () => {
       )}
 
       <div className="Recommendation">
-        <div className="Heading relative flex justify-center items-center z-0 mb-5 cursor-default p-10  ">
-          <div className="absolute -top-5">
-            <h1 className=" text-center text-9xl font-bold text-[#dadada78] ">
-              Recommended
-            </h1>
-          </div>
-          <div className="z-10 flex flex-col items-center justify-center">
-            <h1 className="text-center text-5xl font-bold txt-green">
+        <div className="Heading relative flex justify-center items-center z-0 mb-5 cursor-default p-10 mt-10 lg:mt-0   border">
+          <div className="absolute lg:-top-4">
+            <h1 className=" text-center text-6xl lg:text-9xl font-bold text-[#dadada78] ">
               Best Products
             </h1>
           </div>
+          <div className="z-10 flex flex-col items-center justify-center">
+            <h1 className="text-center text-4xl lg:text-5xl font-bold txt-green">
+              Recommended
+            </h1>
+          </div>
         </div>
-        <div className="grid grid-cols-6 gap-24 m-10">
+        <div className="grid lg:grid-cols-6 lg:gap-24 lg:m-10 grid-cols-2 gap-5 m-5 md:grid-cols-3 md:gap-10 md:m-10 items-center  ">
           <Banner
-            images={Products.length}
+            images={allProduct.length}
             start={0}
             details={true}
             width={"10vw"}

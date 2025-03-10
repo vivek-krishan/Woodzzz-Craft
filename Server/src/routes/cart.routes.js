@@ -8,6 +8,7 @@ import {
   IsAddedToCart,
   DeleteFromCart,
   DeleteFromWishlist,
+  SubtractFromCart,
 } from "../controllers/cart.controller.js";
 import { VerifyUser } from "../middlewares/auth.middleware.js";
 
@@ -22,6 +23,8 @@ router
   .get(IsAddedToCart)
   .post(AddToCart)
   .delete(DeleteFromCart);
+
+router.route("/cart/subtract/:productId").post(SubtractFromCart);
 
 // Routes for wishlists
 router.route("/wishlist/").get(GetWishlist);

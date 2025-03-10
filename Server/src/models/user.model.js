@@ -60,6 +60,12 @@ const userSchema = new Schema(
         ref: "Cart",
       },
     ],
+    orderHistory: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Order",
+      },
+    ],
     productHistory: [
       {
         type: Schema.Types.ObjectId,
@@ -125,6 +131,5 @@ userSchema.methods.setActiveAddress = async function (addressId) {
 
   await this.save();
 };
-
 
 export const User = mongoose.model("User", userSchema);

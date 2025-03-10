@@ -9,9 +9,9 @@ const Banner = ({ images }) => {
         <Link
           key={index + 11}
           to={`/product/${index}`}
-          className={`bg-Tan rounded-xl h-fit `}
+          className={`bg-Tan rounded-xl h-fit`}
         >
-          <div className=" w-48 ">
+          <div className=" lg:w-48 w-40 md:w-full ">
             <ProductCardAI index={index} />
           </div>
         </Link>
