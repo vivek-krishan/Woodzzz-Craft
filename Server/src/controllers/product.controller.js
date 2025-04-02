@@ -38,7 +38,6 @@ const UploadNewProduct = asyncHandler(async (req, res) => {
 
   if (!imageLocalFilePath) throw new ApiError("Product image is Compulsory.");
 
-
   const Image = await UploadImages(
     imageLocalFilePath.filename,
     { root: "woodz-craft", name },
@@ -62,7 +61,7 @@ const UploadNewProduct = asyncHandler(async (req, res) => {
       currentPrice: newPrice,
     },
     rating,
-    images: [Image.url],
+    images: [{ url: Image.url, fileId: Image.fileId }],
   });
 
   const createdProduct = await Product.findById(newProduct._id);
@@ -187,7 +186,7 @@ const AddImages = asyncHandler(async (req, res) => {
   }
 
   // Validate the product existence
-  const product = await Product.findOne(productId);
+  const product = await Product.findById(productId);
   if (!product) {
     throw new ApiError(
       400,
@@ -215,11 +214,22 @@ const AddImages = asyncHandler(async (req, res) => {
     );
   }
 
+  // throw new ApiError(400, "testing images");
   // Upload new images
   const uploadPromises = images.map(async (image) => {
-    const uploadedImg = await UploadFileToCloudinary(image.path);
-    console.log(`${image.originalname} is uploaded`);
-    product.images.push(uploadedImg.url);
+    const uploadedImg = await UploadImages(
+      image.filename,
+      { root: "woodz-craft", name: product.name },
+      [product.name]
+    );
+
+    if (!uploadedImg)
+      throw new ApiError(
+        500,
+        `Failed to upload the Image ${image.originalname} `
+      );
+
+    product.images.push({ url: uploadedImg.url, fileId: uploadedImg.fileId });
   });
   await Promise.all(uploadPromises);
 

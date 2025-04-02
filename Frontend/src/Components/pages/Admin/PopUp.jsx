@@ -269,12 +269,12 @@ const PopUp = ({ onClose }) => {
             <input
               type="number"
               name="rating"
-              // value={productDetails.rating}
-              // onChange={HandelInputChange}
               id="rating"
               required={true}
               placeholder="Rating"
               className="px-3 py-2 rounded-xl  text-black"
+              min="1"
+              max="5"
             />
           </div>
         </section>

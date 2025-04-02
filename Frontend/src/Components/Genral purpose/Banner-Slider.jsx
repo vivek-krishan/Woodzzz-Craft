@@ -46,8 +46,14 @@ export function BannerSlider() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <div className="absolute top-1/2  flex justify-between w-full px-2 h-10">
+          <div className="w-12 h-12">
+            <CarouselPrevious  />
+          </div>
+          <div className="w-12 h-12 ">
+            <CarouselNext />
+          </div>
+        </div>
       </Carousel>
     </section>
   );

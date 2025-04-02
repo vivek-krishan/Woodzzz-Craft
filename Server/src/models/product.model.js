@@ -14,8 +14,11 @@ const productSchema = new Schema(
     },
     images: [
       {
-        type: String,
-        required: true,
+        url: { type: String, required: true },
+        fileId: {
+          type: String, // ImageKit file ID
+          required: true, // The unique identifier for the uploaded image file
+        },
       },
     ],
     description: {

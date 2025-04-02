@@ -4,69 +4,6 @@ import { formatDate } from "../../Utils/FormatDateTime";
 import { FetchData } from "../../Utils/fetchFromAPI";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-const AllOrdersList = [
-  {
-    _id: "67cbfbeee3fb67528c22e1af",
-    user: "67cbf7ab469c3f0dc6c55d53",
-    products: [
-      {
-        productId: "67b852604a22791cead0690f",
-        quantity: 1,
-        _id: "67cbfbeee3fb67528c22e1b0",
-      },
-      {
-        productId: "67b852d64a22791cead06921",
-        quantity: 1,
-        _id: "67cbfbeee3fb67528c22e1b1",
-      },
-    ],
-    totalPrice: 450,
-    createdAt: "2025-03-08T08:12:30.412Z",
-    updatedAt: "2025-03-08T08:12:30.412Z",
-    __v: 0,
-  },
-  {
-    _id: "67cbfbeee3fb67528c22e1af",
-    user: "67cbf7ab469c3f0dc6c55d53",
-    products: [
-      {
-        productId: "67b852604a22791cead0690f",
-        quantity: 1,
-        _id: "67cbfbeee3fb67528c22e1b0",
-      },
-      {
-        productId: "67b852d64a22791cead06921",
-        quantity: 1,
-        _id: "67cbfbeee3fb67528c22e1b1",
-      },
-    ],
-    totalPrice: 450,
-    createdAt: "2025-03-08T08:12:30.412Z",
-    updatedAt: "2025-03-08T08:12:30.412Z",
-    __v: 0,
-  },
-  {
-    _id: "67cbfbeee3fb67528c22e1af",
-    user: "67cbf7ab469c3f0dc6c55d53",
-    products: [
-      {
-        productId: "67b852604a22791cead0690f",
-        quantity: 1,
-        _id: "67cbfbeee3fb67528c22e1b0",
-      },
-      {
-        productId: "67b852d64a22791cead06921",
-        quantity: 1,
-        _id: "67cbfbeee3fb67528c22e1b1",
-      },
-    ],
-    totalPrice: 450,
-    createdAt: "2025-03-08T08:12:30.412Z",
-    updatedAt: "2025-03-08T08:12:30.412Z",
-    __v: 0,
-  },
-];
-
 export default function AllOrders() {
   const [allOrders, setAllOrders] = useState([]);
   const [handlePopup, setHandlePopup] = useState({});
@@ -168,7 +105,7 @@ export default function AllOrders() {
                           >
                             <div className="flex flex-col">
                               <img
-                                src={product?.productId?.images[0]}
+                                src={product?.productId?.images[0]?.url}
                                 alt="Product"
                                 className="w-20"
                               />

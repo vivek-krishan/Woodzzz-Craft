@@ -2,7 +2,6 @@ import { IndianRupee } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const ProductCard = ({ index, width, height }) => {
- 
   const allProduct = useSelector((store) => store.ProductsList.products);
   if (!allProduct) return null;
   if (index >= allProduct.length) {
@@ -15,9 +14,10 @@ const ProductCard = ({ index, width, height }) => {
         //  height ? height : "20vh"
         className={`w-[${width}]  h-[${height}] rounded-xl bg-white    overflow-hidden`}
       >
+        {console.log(allProduct[index]?.images[0].url)}
         <img
           key={index + "img"}
-          src={allProduct[index]?.images[0]}
+          src={allProduct[index]?.images[0].url}
           alt="Banner"
           className={`slide w-full drop-shadow-xl  transition duration-200 rounded-xl`}
         />

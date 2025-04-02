@@ -10,13 +10,14 @@ export function ProductCardAI({ index, width, height }) {
   if (index >= allProduct.length) {
     index = index % allProduct.length;
   }
+  // console.log(allProduct[index]);
 
   return (
     <Card className="Card overflow-hidden transition-all duration-300 hover:shadow-lg bg-white">
       <CardContent className="p-0">
         <div className="relative aspect-square overflow-hidden">
           <img
-            src={allProduct[index]?.images[0] || "/placeholder.svg"}
+            src={allProduct[index]?.images[0]?.url || "/placeholder.svg"}
             alt={allProduct[index]?.name}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-110  "

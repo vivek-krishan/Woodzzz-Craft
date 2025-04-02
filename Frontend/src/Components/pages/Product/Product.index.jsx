@@ -5,7 +5,7 @@ import { CloudUpload, Heart, IndianRupee, Trash2 } from "lucide-react";
 import Banner from "../../Genral purpose/Banner";
 // import { Products } from "../../Utils/productImg";
 import { alertError, alertInfo, alertSuccess } from "../../Utils/Alert";
-import { ProductUpdationForm } from "./InputForm";
+import { ProductUpdationForm, ImageUpdationForm } from "./InputForm";
 import InfiniteLoading from "../../../assets/img/Infinite-loading-2.svg";
 import { FetchData } from "../../Utils/fetchFromAPI";
 
@@ -13,7 +13,8 @@ const Product = () => {
   // State variables
   const [showOption, setShowOption] = useState({
     updationOpt: false,
-    updationForm: false,
+    imageUpdationForm: false,
+    detailsUpdationForm: false,
   });
   const user = useSelector((store) => store.UserInfo.user);
   const allProduct = useSelector((store) => store.ProductsList.products);
@@ -43,17 +44,19 @@ const Product = () => {
   }
 
   const handelUpdateImages = () => {
-    setShowOption({
+    setShowOption((prev) => ({
+      ...prev,
       updationOpt: false,
-      updationForm: showOption.updationForm,
-    });
+      imageUpdationForm: true,
+    }));
   };
 
   const handelUpdateDetails = () => {
-    setShowOption({
+    setShowOption((prev) => ({
+      ...prev,
       updationOpt: false,
-      updationForm: true,
-    });
+      detailsUpdationForm: true,
+    }));
   };
 
   const HandelAddToCart = async (event) => {
@@ -126,7 +129,7 @@ const Product = () => {
     const CheckIsLiked = async () => {
       try {
         const response = await FetchData(
-          `carts/wishlist/${allProduct[index].productId}`,
+          `carts/wishlist/${allProduct?.[index]?.productId}`,
           "get"
         );
         console.log("Is liked:", response);
@@ -138,7 +141,7 @@ const Product = () => {
     const IsAddedToCart = async () => {
       try {
         const response = await FetchData(
-          `carts/cart/${allProduct[index].productId}`,
+          `carts/cart/${allProduct?.[index]?.productId}`,
           "get"
         );
         console.log("Is Added to cart:", response);
@@ -152,6 +155,11 @@ const Product = () => {
     IsAddedToCart();
   }, [allProduct]);
 
+  // Scroll to top when the component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top when the component mounts
+  }, []);
+
   return allProduct === null ? (
     <div></div>
   ) : (
@@ -161,7 +169,7 @@ const Product = () => {
         <div className="Image-section w-full h-[85vh]  lg:w-4/6 lg:h-full ">
           <div className="ProductImg h-[80vh] lg:h-full m-4 rounded-3xl bg-white flex justify-center lg:items-center items-start overflow-hidden  ">
             <img
-              src={allProduct[index]?.images[0]}
+              src={allProduct[index]?.images[0].url}
               alt="PImg"
               className="lg:h-[70vh] mt-20 lg:mt-0 drop-shadow-2xl  "
             />
@@ -256,10 +264,10 @@ const Product = () => {
                 <div>
                   <button
                     onClick={() => {
-                      setShowOption({
+                      setShowOption((prev) => ({
+                        ...prev,
                         updationOpt: !showOption.updationOpt,
-                        updationForm: false,
-                      });
+                      }));
                     }}
                     className="flex mx-5 bg-green text-white p-3 px-4 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
                   >
@@ -268,7 +276,7 @@ const Product = () => {
                   </button>
 
                   {showOption.updationOpt && (
-                    <div className="absolute flex flex-col -top-24 left-24">
+                    <div className="absolute flex flex-col top-12 left-24">
                       <button
                         onClick={handelUpdateImages}
                         className="px-2 pt-2 mt-2 hover:drop-shadow-xl scale-105 drop-shadow-lg border-b-4 border-r-2 rounded-xl hover:bg-slate-200 transition duration-150 ease-in-out "
@@ -300,20 +308,38 @@ const Product = () => {
         </div>
       </div>
 
-      {showOption.updationForm && (
+      {showOption.detailsUpdationForm && (
         <ProductUpdationForm
           onClose={() =>
             setShowOption({
-              updationOpt: true,
-              updationForm: false,
+              updationOpt: false,
+              detailsUpdationForm: false,
+              imageUpdationForm: false,
             })
           }
           productId={allProduct[index]?.productId}
         />
       )}
 
+      {showOption.imageUpdationForm && (
+        <ImageUpdationForm
+          onClose={() =>
+            setShowOption({
+              updationOpt: false,
+              detailsUpdationForm: false,
+              imageUpdationForm: false,
+            })
+          }
+          productId={allProduct[index]._id}
+            imagesRequired={() => {
+              const requirement = 5 - allProduct[index].images.length;
+            return requirement
+          }}
+        />
+      )}
+
       <div className="Recommendation">
-        <div className="Heading relative flex justify-center items-center z-0 mb-5 cursor-default p-10 mt-10 lg:mt-0   border">
+        <div className="Heading relative flex justify-center items-center z-0 mb-5 cursor-default p-10 mt-10 lg:mt-0  ">
           <div className="absolute lg:-top-4">
             <h1 className=" text-center text-6xl lg:text-9xl font-bold text-[#dadada78] ">
               Best Products

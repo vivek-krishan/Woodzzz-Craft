@@ -36,7 +36,7 @@ const Register = () => {
 
   return (
     <div className="text-black flex justify-center w-full h-fit  ">
-      <section className="Form_side ">
+      <section className="Form_side  w-full ">
         <div className="Google_signIn m-auto mt-10 px-3 w-fit text-black flex justify-center items-center rounded-full  border-b-2 border-l-2 border-white/30 bg-white/30 drop-shadow-xl  hover:scale-110 hover:drop-shadow-2xl transition duration-150 ease-in-out cursor-pointer">
           <h3 className="font-medium text-center ">Register with google </h3>
           <img
@@ -48,11 +48,11 @@ const Register = () => {
 
         <h1 className="text-center m-10 text-lg">--- Register ---</h1>
 
-        <form ref={formRef} className="Form flex flex-wrap justify-center ">
-          <div className="grid grid-cols-3 grid-rows-2 gap-4 w-full mx-10">
+        <form ref={formRef} className="Form flex flex-wrap justify-center m-5  ">
+          <div className="grid lg:grid-cols-3 grid-cols-1 lg:grid-rows-2 gap-4 w-full lg:mx-10   ">
             <input
               type="text"
-              className="bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black focus:outline-none focus:border-b-2 focus:border-black"
+              className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
               placeholder="Enter Your full name"
               name="fullName"
               required
@@ -60,7 +60,7 @@ const Register = () => {
 
             <input
               type="email"
-              className="col-span-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+              className="lg:col-span-2 bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
               placeholder="Your Email"
               name="email"
               required
@@ -68,7 +68,7 @@ const Register = () => {
 
             <input
               type="number"
-              className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+              className="lg:row-start-2 bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
               placeholder="Contact Number"
               name="phone"
               required
@@ -76,7 +76,7 @@ const Register = () => {
 
             <input
               type="number"
-              className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+              className="lg:row-start-2 bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
               placeholder="Age"
               name="age"
               required
@@ -84,48 +84,48 @@ const Register = () => {
 
             <input
               type="password"
-              className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+              className="lg:row-start-2 bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
               placeholder="Password"
               name="passkey"
               required
             />
           </div>
-          <div className="Address w-full m-5 mx-10">
+          <div className="Address w-full m-5 lg:mx-10">
             <label className="block mb-2 text-lg w-fit font-serif txt-Gray">
               Address
             </label>
-            <div className=" grid grid-cols-4 grid-rows-2 gap-4 w-full  ">
+            <div className=" grid lg:grid-cols-4 grid-cols-1 lg:grid-rows-2 gap-4 w-full  ">
               <input
                 type="text"
-                className="col-span-4 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                className="lg:col-span-4 bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
                 name="street"
                 placeholder="Street"
                 required
               />
               <input
                 type="text"
-                className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                className="lg:row-start-2 bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
                 name="city"
                 placeholder="city"
                 required
               />
               <input
                 type="text"
-                className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                className="lg:row-start-2 bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
                 name="state"
                 placeholder="state"
                 required
               />
               <input
                 type="text"
-                className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                className="lg:row-start-2 bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
                 name="country"
                 placeholder="country"
                 required
               />
               <input
                 type="number"
-                className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black"
+                className="lg:row-start-2 bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black"
                 name="pinCode"
                 placeholder="Pin Code"
                 required

@@ -21,17 +21,29 @@
 
 @layer components {
   .bg-Tan {
-    @apply bg-[#d2b48c];
+    @apply bg-[#EBE5DF];
   }
   .bg-green {
+    @apply bg-[#eb5a29];
+  }
+  .bg-Lgreen {
+    @apply bg-[#f96635];
+  }
+  /* .bg-green {
     @apply bg-[#386641];
   }
   .bg-Lgreen {
     @apply bg-[#568a66];
-  }
+  } */
   .txt-green {
-    @apply text-[#386641];
+    @apply text-neutral-800;
   }
+  .txt-orange{
+    @apply text-[#f96635]
+  }
+  /* .txt-green {
+    @apply text-[#386641];
+  } */
   .txt-Gray {
     @apply text-[#333];
   }

@@ -31,3 +31,21 @@ export const UploadImages = async (imageName, folderDetails, tags = []) => {
     throw error; // Ensure errors propagate to the caller
   }
 };
+
+export const DeleteImage = async (fileId = "") => {
+  imageKit.deleteFile(fileId, function (error, result) {
+    if (error) console.log(error);
+    else console.log(result);
+  });
+};
+
+export const DeleteBulkImage = async (fileId = []) => {
+  imageKit
+    .bulkDeleteFiles(fileId)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import Banner from "../../Genral purpose/Banner";
 // import { Products } from "../../Utils/productImg";
 import { useSelector } from "react-redux";
 
 const AllProducts = ({ data }) => {
   const Products = useSelector((store) => store.ProductsList.products);
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top when the component mounts
+  }, []);
 
   return (
     <div className="flex justify-evenly h-fit mt-10">
@@ -31,7 +36,7 @@ const AllProducts = ({ data }) => {
         <div className="Recommendation">
           <div className="grid lg:grid-cols-5 lg:gap-24 lg:m-10 grid-cols-2 gap-5 md:grid-cols-3 md:gap-10 md:m-10">
             <Banner
-              images={Products.length}
+              images={Products?.length}
               start={0}
               details={true}
               width={"10vw"}

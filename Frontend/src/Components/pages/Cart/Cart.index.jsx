@@ -22,7 +22,8 @@ const Cart = ({ startLoading, stopLoading }) => {
   const Dispatch = useDispatch();
   const [CartProducts, SetCartProducts] = useState([]);
 
-  const handleAddAddress = async () => {
+  const handleAddAddress = async (e) => {
+    e.preventDefault();
     const formData = new FormData(AddressFormRef.current);
 
     try {
@@ -31,7 +32,6 @@ const Cart = ({ startLoading, stopLoading }) => {
       // Storing data inside redux store
       Dispatch(clearUser());
       Dispatch(addUser(response.data.data.user));
-
       alertInfo(response.data.message);
     } catch (error) {
       console.log(error);
@@ -120,8 +120,17 @@ const Cart = ({ startLoading, stopLoading }) => {
 
   return (
     <div className="lg:h-fit">
-      <div className="Cart_Heading w-full flex justify-center">
-        <h1 className="font-bold text-3xl">Check Out</h1>
+      <div className="Cart_Heading w-full lg:flex items-center  p-4 relative">
+        <h1 className="font-bold text-3xl lg:absolute lg:left-1/2  transform lg:-translate-x-1/2">
+          Check Out
+        </h1>
+        <span
+          className="text-right txt-orange underline ml-auto whitespace-nowrap cursor-pointer hover:txt-orange hover:underline transition duration-150 ease-in-out"
+          onClick={() => setSelectAddress(true)}
+        >
+          {activeAddress?.street}, {activeAddress?.city}, {activeAddress?.state}
+          ,{activeAddress?.pinCode}
+        </span>
       </div>
 
       {user === null || user.length === 0 ? (
@@ -147,7 +156,7 @@ const Cart = ({ startLoading, stopLoading }) => {
         <div className="MainContainer_for_Cart flex flex-col">
           <div className="User-details-and-cart-products flex lg:justify-evenly flex-col lg:flex-row">
             {/* User details */}
-            <div className="leftside lg:w-2/5 lg:mt-20">
+            {/* <div className="leftside lg:w-2/5 lg:mt-20">
               <section className="Account m-5 p-2 bg-green drop-shadow-xl text-white rounded-lg hover:drop-shadow-2xl transition duration-150 cursor-default">
                 <div className="flex justify-between items-center">
                   <div className="Title-Name">
@@ -396,10 +405,115 @@ const Cart = ({ startLoading, stopLoading }) => {
                   </PopUp>
                 </>
               )}
-            </div>
+            </div> */}
+
+            {selectAddress && (
+              <PopUp onClose={() => setSelectAddress(false)}>
+                <div className="w-[50vw] h-52 -right-80 -top-2 rounded-xl flex flex-col items-center bg-Tan text-black overflow-y-scroll  border">
+                  <div className="w-5/6">
+                    {console.log(user[0])}
+                    {user[0].address.map((address) => {
+                      return (
+                        <div
+                          key={address.street}
+                          className="flex justify-between items-center p-2 mb-2 border-b-2 "
+                        >
+                          <div className="flex items-center gap-3 min-h-10 w-[80%] h-fit bg-white px-4 rounded-xl drop-shadow-lg">
+                            <span className="text-sm font-serif col-span-3">
+                              {address.street},
+                            </span>
+                            <span className="text-sm font-serif row-start-2">
+                              {address.city},
+                            </span>
+                            <span className="text-sm font-serif row-start-2">
+                              {address.state},
+                            </span>
+                            <span className="text-sm font-serif row-start-2">
+                              {address.pinCode}
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => handleActiveAddress(address._id)}
+                            className={`${
+                              address.activated ? "bg-Lgreen" : "bg-gray-200"
+                            } text-black px-2 font-extralight rounded-2xl`}
+                          >
+                            {address.activated ? "Selected" : "select"}
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <button
+                    className="bg-Lgreen text-black w-40 px-1 py-1 font-extralight rounded-2xl drop-shadow-lg hover:bg-green hover:drop-shadow-2xl transition duration-150 ease-in-out"
+                    onClick={() => setAddAddress(true)}
+                  >
+                    Add Address
+                  </button>
+                </div>
+              </PopUp>
+            )}
+            {addAddress && (
+              <>
+                <PopUp onClose={() => setAddAddress(false)}>
+                  <form
+                    ref={AddressFormRef}
+                    onSubmit={handleAddAddress}
+                    className="Address w-full m-5 mx-10 text-white bg-Tan txt-green p-20 rounded-2xl flex flex-col gap-5"
+                  >
+                    <label className="block mb-2 text-lg w-fit font-serif txt-green">
+                      Address
+                    </label>
+                    <div className=" grid grid-cols-4 grid-rows-2 gap-4 w-full  ">
+                      <input
+                        type="text"
+                        className="col-span-4 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 txt-green text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-800  focus:outline-none focus:border-b-2 focus:border-white bg-white "
+                        name="street"
+                        placeholder="Street"
+                        required
+                      />
+                      <input
+                        type="text"
+                        className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 txt-green text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-800  focus:outline-none focus:border-b-2 focus:border-white bg-white "
+                        name="city"
+                        placeholder="city"
+                        required
+                      />
+                      <input
+                        type="text"
+                        className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 txt-green text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-800  focus:outline-none focus:border-b-2 focus:border-white bg-white "
+                        name="state"
+                        placeholder="state"
+                        required
+                      />
+                      <input
+                        type="text"
+                        className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 txt-green text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-800  focus:outline-none focus:border-b-2 focus:border-white bg-white "
+                        name="country"
+                        placeholder="country"
+                        required
+                      />
+                      <input
+                        type="number"
+                        className="row-start-2 bg-gray-50/20 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 txt-green text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-800  focus:outline-none focus:border-b-2 focus:border-white bg-white"
+                        name="pinCode"
+                        placeholder="Pin Code"
+                        required
+                      />
+                    </div>
+                    <button
+                      className="relative border-2 rounded-xl w-80 self-center px-2 py-1 inline cursor-pointer text-xl font-bold bg-Lgreen drop-shadow-xl hover:bg-green hover:scale-105 transition duration-200 ease-in-out"
+                      onClick={handleAddAddress}
+                    >
+                      Add
+                    </button>
+                  </form>
+                </PopUp>
+              </>
+            )}
 
             {/* Cart products */}
-            <div className="RightSide lg:w-2/5 p-5">
+            <div className="LeftSide lg:w-2/5 p-5 mt-10">
               <h1 className="text-xl text-center font-bold">Your Products</h1>
               {CartProducts?.map((item) => {
                 return <CartProduct item={item} key={item._id} />;

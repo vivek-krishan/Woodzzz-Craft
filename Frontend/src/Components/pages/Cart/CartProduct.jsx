@@ -84,7 +84,7 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
         {/* Image */}
         <div className="w-fit h-fit m-2">
           <img
-            src={updatedItem?.cartProduct?.images[0]}
+            src={updatedItem?.cartProduct?.images[0].url}
             alt="product"
             className="w-full"
           />

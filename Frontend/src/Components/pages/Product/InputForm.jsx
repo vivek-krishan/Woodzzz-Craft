@@ -12,6 +12,8 @@ import {
   updateProduct,
 } from "../../Utils/Slices/ProductSlice";
 import { useDispatch } from "react-redux";
+import PopUp from "../../Genral purpose/PopUpWrapper";
+import Button from "../../Genral purpose/Buttons";
 
 const ProductUpdationForm = ({ onClose, productId }) => {
   // Variable
@@ -205,4 +207,94 @@ const ProductUpdationForm = ({ onClose, productId }) => {
   );
 };
 
-export { ProductUpdationForm };
+const ImageUpdationForm = ({ onClose, productId, imagesRequired }) => {
+  const [images, setImages] = useState([]);
+
+  const formRef = useRef(null);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(formRef.current);
+
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    try {
+      const response = await FetchData(
+        `products/img-update/${productId}`,
+        "post",
+        formData,
+        true
+      );
+
+      console.log("Image uploaded", response.data);
+      alertSuccess(response.data.message);
+      onClose();
+    } catch (error) {
+      console.error("Error uploading images:", error);
+    }
+  };
+
+  return (
+    <PopUp onClose={onClose}>
+      <div className="flex justify-center items-center ">
+        <form ref={formRef} className="w-2/3 h-fit p-16 rounded-2xl  bg-white">
+          <label
+            class="block mb-2 font-medium text-black text-2xl"
+            for="file_input"
+          >
+            Upload Images
+          </label>
+          <div className="w-full h-60 flex flex-wrap gap-5 justify-center items-center  border border-black mt-10 ">
+            {Array(imagesRequired())
+              .fill("")
+              .map((_, index) => {
+                return (
+                  <div class="flex items-center space-x-6" key={index}>
+                    <div class="shrink-0">
+                      {images[index] && (
+                        <img
+                          id="preview_img"
+                          class="h-16 aspect-video object-cover rounded"
+                          src={images[index]?.src}
+                          alt="uploaded image"
+                        />
+                      )}
+                    </div>
+                    <label class="block">
+                      <span class="sr-only">Choose profile photo</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        name="images"
+                        className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold   file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            setImages((prevImages) => [
+                              ...prevImages,
+                              {
+                                id: Math.random(),
+                                src: reader.result,
+                              },
+                            ]);
+                          };
+                          reader.readAsDataURL(file);
+                          console.log(images);
+                        }}
+                      />
+                    </label>
+                  </div>
+                );
+              })}
+          </div>
+          <Button onClick={handleSubmit}>Submit</Button>
+        </form>
+      </div>
+    </PopUp>
+  );
+};
+
+export { ProductUpdationForm, ImageUpdationForm };

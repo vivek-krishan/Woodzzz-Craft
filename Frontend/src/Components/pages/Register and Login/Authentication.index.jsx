@@ -6,7 +6,7 @@ const Authentication = () => {
     <div>
       {/* for mobile */}
       <div className="lg:hidden flex justify-center items-center flex-col">
-        <div className="w-3/5">
+        <div className="md:w-3/5">
           <Register />
         </div>
         <div className="w-2/5">

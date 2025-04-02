@@ -127,13 +127,13 @@ const CarouselPrevious = forwardRef(({ className, ...props }, ref) => {
   return (
     <Button
       ref={ref}
-      className={cn("absolute h-8 w-8 rounded-full", className)}
+      className={cn("absolute h-12 w-12 flex justify-center items-center rounded-full", className)}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft className="h-4 w-4" />
-      <span className="sr-only">Previous slide</span>
+      <ArrowLeft className="h-4 w-4 " />
+      {/* <span className="sr-only">Previous slide</span> */}
     </Button>
   );
 });
@@ -144,13 +144,16 @@ const CarouselNext = forwardRef(({ className, ...props }, ref) => {
   return (
     <Button
       ref={ref}
-      className={cn("absolute h-8 w-8 rounded-full", className)}
+      className={cn(
+        "absolute h-12 w-12 flex justify-center items-center rounded-full ",
+        className
+      )}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
     >
       <ArrowRight className="h-4 w-4" />
-      <span className="sr-only">Next slide</span>
+      {/* <span className="sr-only">Next slide</span> */}
     </Button>
   );
 });

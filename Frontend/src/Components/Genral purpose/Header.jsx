@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Youtube,
   Facebook,
@@ -12,18 +12,20 @@ import {
 } from "lucide-react";
 import { alertError, alertInfo } from "../Utils/Alert";
 import { clearUser } from "../Utils/Slices/UserInfoSlice";
+import Logo from "../../../public/Logo.png"
 
 const Header = () => {
   // Variables
   const [searchText, setSearchText] = useState("");
-  const [activePage, setActivePage] = useState("home");
+  const location = useLocation();
   const [showHamburger, setShowHamburger] = useState(false);
   const user = useSelector((store) => store.UserInfo.user);
+
+  // console.log(window.location.pathname);
 
   // console.log(user);
   const navigate = useNavigate();
   const Dispatch = useDispatch();
-
 
   // functions
   const HandelSubmit = (e) => {
@@ -36,7 +38,6 @@ const Header = () => {
   const HandelRegister = () => {
     navigate(`/authentication`);
   };
-
 
   const Hamburger = ({ onClose }) => {
     const modelRef = useRef();
@@ -90,13 +91,6 @@ const Header = () => {
             >
               Cart
             </Link>
-            <Link
-              to="/cart"
-              onClick={onClose}
-              className=" font-Exo my-1 mx-2  "
-            >
-              All Orders
-            </Link>
 
             {user != null && user[0]?.admin && (
               <Link
@@ -139,10 +133,10 @@ const Header = () => {
           )}
         </div>
 
-        <Link to={"/"} className="LOGO mx-10 lg:mx-40 " key={1112}>
-          {/* <img src={Logo} alt="Logo" className="w-28" key={1114} /> */}
+        <Link to={"/"} className="LOGO mx-10 lg:mx-40 flex justify-center items-center " key={1112}>
+          <img src={Logo} alt="Logo" className="w-20" key={1114} />
           <h1 className=" font-[700] text-xl lg:text-3xl txt-green font-Caveat">
-            Woodzzz Craft
+            <span className="txt-orange"> Woodzzz</span> Craft
           </h1>
         </Link>
         {user != null ? (
@@ -166,9 +160,20 @@ const Header = () => {
             </button>
           </div>
         ) : (
-          <div className="p-3 px-4 h-fit m-2 mx-20 rounded-full flex bg-green drop-shadow-lg  hover:scale-110 hover:drop-shadow-2xl hover:bg-Lgreen transition duration-200 ease-in-out">
-            <button className="text-white" onClick={HandelRegister}>
-              Sign Up/ Sign In
+          // <div className="lg:p-3 lg:px-4 px-2 py-1  h-fit m-2 mx-20 rounded-full flex bg-green drop-shadow-lg  hover:scale-110 hover:drop-shadow-2xl hover:bg-Lgreen transition duration-200 ease-in-out  border-2 border-black">
+          //   <button
+          //     className="text-white text-xs lg:text-base"
+          //     onClick={HandelRegister}
+          //   >
+          //     <span> Sign Up/ Sign In</span>
+          //   </button>
+          // </div>
+          <div className="w-fit h-10 px-4 py-1 lg:mx-20 m-4 rounded-xl drop-shadow-lg bg-green flex justify-center items-center  hover:scale-110 hover:drop-shadow-2xl hover:bg-Lgreen transition duration-200 ease-in-out">
+            <button
+              className="text-white text-xs lg:text-base"
+              onClick={HandelRegister}
+            >
+              Sign in
             </button>
           </div>
         )}
@@ -179,45 +184,78 @@ const Header = () => {
           <nav className="w-full flex justify-evenly items-center">
             <Link
               to={"/"}
-              className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
+              className={`font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out ${
+                location.pathname === "/" ? "underline" : ""
+              }`}
             >
-              Home
+              <span
+                className={`${location.pathname === "/" ? "txt-orange" : ""}`}
+              >
+                Home
+              </span>
             </Link>
             <Link
               to={"/all-products"}
-              className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
+              className={`font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out ${
+                location.pathname === "/all-products" ? "underline" : ""
+              }`}
             >
-              Collection
+              <span
+                className={`${
+                  location.pathname === "/all-products" ? "txt-orange" : ""
+                }`}
+              >
+                Collection
+              </span>
             </Link>
             <Link
               to={"/about"}
-              className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
+              className={`font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out ${
+                location.pathname === "/about" ? "underline" : ""
+              }`}
             >
-              About us
+              <span
+                className={`${
+                  location.pathname === "/about" ? "txt-orange" : ""
+                }`}
+              >
+                About us
+              </span>
             </Link>
             <Link
               to={"/cart"}
-              className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
+              className={`font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out ${
+                location.pathname === "/cart" ? "underline" : ""
+              }`}
             >
-              Cart
+              <span
+                className={`${
+                  location.pathname === "/cart" ? "txt-orange" : ""
+                }`}
+              >
+                Cart
+              </span>
             </Link>
-            <Link
-              to={"/cart"}
-              className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
-            >
-              All Orders
-            </Link>
+
             {user != null && user[0]?.admin && (
               <Link
                 to={"/admin"}
-                className="font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out "
+                className={`font-bold txt-green drop-shadow-xl hover:drop-shadow-2xl hover:scale-110  transition duration-100 ease-in-out ${
+                  location.pathname === "/admin" ? "underline" : ""
+                }`}
               >
-                Admin
+                <span
+                  className={`${
+                    location.pathname === "/admin" ? "txt-orange" : ""
+                  }`}
+                >
+                  Admin
+                </span>
               </Link>
             )}
           </nav>
         </div>
-        <div className="Search-bar border p-2 rounded-full lg:border-b-2  relative color">
+        <div className="Search-bar p-2 rounded-full border-b-2 border-black  relative color">
           <button className="absolute left-0 top-1/2 -translate-y-1/2">
             <Search width={20} />
           </button>
@@ -225,7 +263,7 @@ const Header = () => {
           <input
             type="text"
             placeholder="Type to search..."
-            className="placeholder:text-gray-700 w-full bg-transparent pl-9 pr-4 text-black focus:outline-none focus:underline xl:w-125"
+            className="placeholder:text-gray-700 w-full bg-transparent pl-9 pr-4 text-black focus:outline-none  xl:w-125"
           />
         </div>
 

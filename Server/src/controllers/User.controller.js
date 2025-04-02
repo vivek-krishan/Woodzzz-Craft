@@ -72,7 +72,7 @@ const RegisterUser = asyncHandler(async (req, res) => {
     age,
     address: { street, city, state, country, pinCode, activated: true },
     password: passkey,
-    admin: true,
+    admin: false,
   });
 
   const CreatedUser = await User.findById(user._id).select(

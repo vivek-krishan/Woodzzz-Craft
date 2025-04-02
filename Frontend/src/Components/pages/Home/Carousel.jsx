@@ -16,7 +16,7 @@ const Carousel = () => {
         </Link>
       </div>
 
-      <div className="Players lg:overflow-hidden lg:overflow-x-scroll overflow-x-scroll lg:w-[69vw] no-scrollbar flex flex-col  lg:before:absolute lg:before:left-[31vw]  lg:before:z-40 lg:before:w-44 lg:before:h-3/4  lg:before:bg-gradient-to-r from-[#d2b48c] to-transparent   ">
+      <div className="Players lg:overflow-hidden lg:overflow-x-scroll overflow-x-scroll lg:w-[69vw] no-scrollbar flex flex-col  lg:before:absolute lg:before:left-[30vw]  lg:before:z-40 lg:before:w-44 lg:before:h-5/6  lg:before:bg-gradient-to-r from-[#EBE5DF] to-transparent   ">
         <div className="flex gap-5 m-5 lg:ml-20   ">
           <Banner images={10} details={true} width={"10vw"} height={"20vh"} />
         </div>
