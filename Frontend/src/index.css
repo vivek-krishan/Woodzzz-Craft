@@ -6,6 +6,7 @@
 
 @layer utilities {
   @variants responsive {
+
     /* Hide scrollbar for Chrome, Safari, and Opera */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -13,8 +14,10 @@
 
     /* Hide scrollbar for IE, Edge, and Firefox */
     .no-scrollbar {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
     }
   }
 }
@@ -23,24 +26,34 @@
   .bg-Tan {
     @apply bg-[#EBE5DF];
   }
+
   .bg-green {
     @apply bg-[#eb5a29];
   }
+
   .bg-Lgreen {
     @apply bg-[#f96635];
   }
+
   /* .bg-green {
     @apply bg-[#386641];
   }
   .bg-Lgreen {
     @apply bg-[#568a66];
   } */
+
+  .bg-img {
+    @apply bg-[url("/wooden-bg.png")] bg-no-repeat bg-cover bg-center;
+  }
+
   .txt-green {
     @apply text-neutral-800;
   }
-  .txt-orange{
+
+  .txt-orange {
     @apply text-[#f96635]
   }
+
   /* .txt-green {
     @apply text-[#386641];
   } */

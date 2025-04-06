@@ -60,7 +60,7 @@ function App() {
   }, []);
 
   return (
-    <div className="overflow-hidden w-full bg-Tan">
+    <div className="overflow-hidden w-full bg-img">
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

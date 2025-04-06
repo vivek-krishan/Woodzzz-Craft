@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { alertError, alertInfo } from "../Utils/Alert";
 import { clearUser } from "../Utils/Slices/UserInfoSlice";
-import Logo from "../../../public/Logo.png"
+import Logo from "/Logo.png"
 
 const Header = () => {
   // Variables
