@@ -16,6 +16,7 @@ import {
 } from "./Components/Utils/Slices/ProductSlice";
 import { addUser, clearUser } from "./Components/Utils/Slices/UserInfoSlice";
 import { FetchData } from "./Components/Utils/fetchFromAPI";
+import BGImage from "../public/wooden-bg.png";
 
 function App() {
   const Dispatch = useDispatch();
@@ -60,17 +61,24 @@ function App() {
   }, []);
 
   return (
-    <div className="overflow-hidden w-full bg-img">
+    <div className="overflow-hidden w-full ">
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/all-products" element={<AllProducts />} />
-        <Route path="/product/:index" element={<Product />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/search/:input" element={<SearchPage />} />
-        <Route path="/authentication" element={<Authentication />} />
-        <Route path="/admin" element={<AdminLayout />} />
-      </Routes>
+      <div className="relative w-full h-screen overflow-scroll no-scrollbar">
+        <img
+          className="w-full h-screen fixed top-0 left-0 z-0 opacity-20"
+          src={BGImage}
+          alt=""
+        />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/all-products" element={<AllProducts />} />
+          <Route path="/product/:index" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/search/:input" element={<SearchPage />} />
+          <Route path="/authentication" element={<Authentication />} />
+          <Route path="/admin" element={<AdminLayout />} />
+        </Routes>
+      </div>
       <Footer />
     </div>
   );

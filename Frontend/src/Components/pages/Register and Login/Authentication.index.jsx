@@ -14,7 +14,7 @@ const Authentication = () => {
         </div>
       </div>
       {/* for laptop */}
-      <div className="lg:flex flex-row hidden">
+      <div className="lg:flex flex-row hidden justify-center items-start">
         <div className="w-1/2 flex justify-center items-center">
           <LogIn />
         </div>

@@ -58,15 +58,15 @@ const LogIn = () => {
 
         <h1 className="text-center mt-2 mb-5 text-lg">--- Login ---</h1>
 
-        <form className="Form  flex flex-col justify-center items-center">
+        <form className="Form  flex flex-col justify-center items-center bg-black/30 rounded-xl">
           <div className="UserName w-72 m-5">
             <label className="block mb-2 text-lg w-fit font-serif txt-Gray">
               Email
             </label>
             <input
               type="text"
-              className="bg-gray-50 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black "
-              placeholder="Vivek"
+              className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+              placeholder="Email"
               name="email"
               value={user.email}
               onChange={HandelInputChange}
@@ -82,8 +82,8 @@ const LogIn = () => {
             </label>
             <input
               type="password"
-              className="bg-gray-50 border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black "
-              placeholder="****"
+              className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+              placeholder="Password"
               name="passkey"
               value={user.passkey}
               onChange={HandelInputChange}

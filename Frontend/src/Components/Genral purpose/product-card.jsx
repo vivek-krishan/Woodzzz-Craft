@@ -10,10 +10,9 @@ export function ProductCardAI({ index, width, height }) {
   if (index >= allProduct.length) {
     index = index % allProduct.length;
   }
-  // console.log(allProduct[index]);
 
   return (
-    <Card className="Card overflow-hidden transition-all duration-300 hover:shadow-lg bg-white">
+    <Card className="Card overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-black/50 bg-[#dadada78] ">
       <CardContent className="p-0">
         <div className="relative aspect-square overflow-hidden">
           <img
@@ -33,7 +32,7 @@ export function ProductCardAI({ index, width, height }) {
         </div>
       </CardContent>
       <CardFooter className="p-4 flex-col items-start">
-        <h3 className="font-semibold group-hover:text-[#3C7A5D] transition-colors">
+        <h3 className="font-semibold group-hover:text-[#3C7A5D] transition-colors truncate">
           {allProduct[index]?.name}
         </h3>
         <div className="flex items-center justify-between w-full">

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="bg-black text-white p-5 mt-10 w-[99vw] flex flex-col lg:flex-row justify-evenly ">
+    <div className="bg-black text-white p-5 mt-10 w-[99vw] flex flex-col lg:flex-row justify-evenly relative">
       <section className="logo flex flex-col justify-center items-center ">
         {/* <img src={Logo} alt="Logo" className="w-28 filter invert" /> */}
         <h1>Woodzzz Craft </h1>

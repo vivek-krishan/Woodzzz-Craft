@@ -167,11 +167,11 @@ const Product = () => {
       {console.dir(allProduct[index], { depth: 0 })}
       <div className="ProductDetails lg:h-[75vh] lg:my-16 relative lg:flex flex-wrap ">
         <div className="Image-section w-full h-[85vh]  lg:w-4/6 lg:h-full ">
-          <div className="ProductImg h-[80vh] lg:h-full m-4 rounded-3xl bg-white flex justify-center lg:items-center items-start overflow-hidden  ">
+          <div className="ProductImg h-[80vh] lg:h-full m-4 rounded-3xl bg-black/10 flex justify-center lg:items-center items-start overflow-hidden  ">
             <img
               src={allProduct[index]?.images[0].url}
               alt="PImg"
-              className="lg:h-[70vh] mt-20 lg:mt-0 drop-shadow-2xl  "
+              className="lg:h-96 lg:mt-0 drop-shadow-2xl  "
             />
           </div>
 
@@ -331,15 +331,15 @@ const Product = () => {
             })
           }
           productId={allProduct[index]._id}
-            imagesRequired={() => {
-              const requirement = 5 - allProduct[index].images.length;
-            return requirement
+          imagesRequired={() => {
+            const requirement = 5 - allProduct[index].images.length;
+            return requirement;
           }}
         />
       )}
 
-      <div className="Recommendation">
-        <div className="Heading relative flex justify-center items-center z-0 mb-5 cursor-default p-10 mt-10 lg:mt-0  ">
+      <div className="Recommendation z-50">
+        <div className="Heading relative flex justify-center items-center mb-5 cursor-default p-10 mt-10 lg:mt-0  ">
           <div className="absolute lg:-top-4">
             <h1 className=" text-center text-6xl lg:text-9xl font-bold text-[#dadada78] ">
               Best Products

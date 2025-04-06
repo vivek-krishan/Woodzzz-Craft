@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { alertError, alertInfo } from "../Utils/Alert";
 import { clearUser } from "../Utils/Slices/UserInfoSlice";
-import Logo from "/Logo.png"
+import Logo from "/Logo.png";
 
 const Header = () => {
   // Variables
@@ -111,7 +111,7 @@ const Header = () => {
   };
 
   return (
-    <div key={"1111"} className="lg:mt-5">
+    <div key={"1111"} className="lg:pt-5 bg-[#FEFFFF] relative z-50">
       <div className="Logo flex justify-between items-center  " key={1113}>
         <div className="Hamburger ml-2 laptop:hidden">
           <button
@@ -133,8 +133,12 @@ const Header = () => {
           )}
         </div>
 
-        <Link to={"/"} className="LOGO mx-10 lg:mx-40 flex justify-center items-center " key={1112}>
-          <img src={Logo} alt="Logo" className="w-20" key={1114} />
+        <Link
+          to={"/"}
+          className="LOGO mx-10 lg:mx-40 flex justify-center items-center"
+          key={1112}
+        >
+          <img src={Logo} alt="Logo" className="w-11" key={1114} />
           <h1 className=" font-[700] text-xl lg:text-3xl txt-green font-Caveat">
             <span className="txt-orange"> Woodzzz</span> Craft
           </h1>
@@ -143,7 +147,7 @@ const Header = () => {
           <div className="lg:p-3 lg:px-4 h-20 m-2 lg:mx-20 rounded-full flex flex-col items-center justify-center  drop-shadow-lg  hover:scale-110 hover:drop-shadow-2xl transition duration-200 ease-in-out  ">
             <h1 className="font-thin text-sm text-white cursor-default">
               Hello{" "}
-              <span className="lg:text-2xl text-lg txt-green font-Caveat font-bold">
+              <span className="lg:text-2xl text-lg truncate txt-green font-Caveat font-bold">
                 {user[0]?.fullName}
               </span>
             </h1>
@@ -160,14 +164,6 @@ const Header = () => {
             </button>
           </div>
         ) : (
-          // <div className="lg:p-3 lg:px-4 px-2 py-1  h-fit m-2 mx-20 rounded-full flex bg-green drop-shadow-lg  hover:scale-110 hover:drop-shadow-2xl hover:bg-Lgreen transition duration-200 ease-in-out  border-2 border-black">
-          //   <button
-          //     className="text-white text-xs lg:text-base"
-          //     onClick={HandelRegister}
-          //   >
-          //     <span> Sign Up/ Sign In</span>
-          //   </button>
-          // </div>
           <div className="w-fit h-10 px-4 py-1 lg:mx-20 m-4 rounded-xl drop-shadow-lg bg-green flex justify-center items-center  hover:scale-110 hover:drop-shadow-2xl hover:bg-Lgreen transition duration-200 ease-in-out">
             <button
               className="text-white text-xs lg:text-base"
@@ -179,7 +175,7 @@ const Header = () => {
         )}
       </div>
 
-      <div className=" w-full flex justify-evenly ">
+      <div className=" w-full flex justify-evenly pb-5 shadow-xl rounded-xl">
         <div className="Navigation w-1/2 hidden lg:flex">
           <nav className="w-full flex justify-evenly items-center">
             <Link
@@ -255,15 +251,15 @@ const Header = () => {
             )}
           </nav>
         </div>
-        <div className="Search-bar p-2 rounded-full border-b-2 border-black  relative color">
-          <button className="absolute left-0 top-1/2 -translate-y-1/2">
+        <div className="Search-bar p-2 rounded-full border border-black  relative color flex justify-center items-center gap-10 w-96 mx-2">
+          <button>
             <Search width={20} />
           </button>
 
           <input
             type="text"
             placeholder="Type to search..."
-            className="placeholder:text-gray-700 w-full bg-transparent pl-9 pr-4 text-black focus:outline-none  xl:w-125"
+            className="placeholder:text-gray-700 w-full bg-transparent  text-black focus:outline-none  xl:w-125"
           />
         </div>
 

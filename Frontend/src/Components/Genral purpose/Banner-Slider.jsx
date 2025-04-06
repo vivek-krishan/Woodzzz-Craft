@@ -21,12 +21,12 @@ export function BannerSlider() {
         <CarouselContent>
           {BannerImgs.map((img, index) => (
             <CarouselItem key={index}>
-              <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-lg overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent z-10" />
+              <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-lg overflow-hidden flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/5 z-10" />
                 <img
                   src={img}
                   alt="Hero"
-                  className="object-cover md:h-full"
+                  className="object-cover w-full md:h-full"
                   priority
                 />
                 <div className="absolute top-1/2 left-6 sm:left-12 -translate-y-1/2 z-20">
@@ -38,7 +38,7 @@ export function BannerSlider() {
                   <p className="text-white text-lg sm:text-xl mb-6 max-w-md">
                     Handcrafted wooden art pieces for your home
                   </p>
-                  <Button className="bg-[#3C7A5D] hover:bg-[#2A5641] text-white">
+                  <Button>
                     Shop Now
                   </Button>
                 </div>
@@ -48,7 +48,7 @@ export function BannerSlider() {
         </CarouselContent>
         <div className="absolute top-1/2  flex justify-between w-full px-2 h-10">
           <div className="w-12 h-12">
-            <CarouselPrevious  />
+            <CarouselPrevious />
           </div>
           <div className="w-12 h-12 ">
             <CarouselNext />

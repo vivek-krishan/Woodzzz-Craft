@@ -147,7 +147,7 @@ const Cart = ({ startLoading, stopLoading }) => {
                 Kindly Login Or Register to view your Cart.
               </h1>
             </section>
-            <section className="image flex w-1/2 justify-center items-center">
+            <section className="image flex w-1/2 justify-center items-center z-50">
               <img src={Puppy} className="w-1/2" />
             </section>
           </div>
@@ -523,14 +523,14 @@ const Cart = ({ startLoading, stopLoading }) => {
                 <p className="text-xl p-2 col-span-3">Total</p>
                 <p className="text-lg col-start-4">Rs. {totalPrice} </p>
               </div>
-              <div className="flex justify-center items-center w-full border">
+              <div className="flex justify-center items-center w-full ">
                 <Button className={`w-full`} onClick={handleOrder}>
                   Book Now
                 </Button>
               </div>
             </div>
           </div>
-          <div className="my-10">
+          <div className="my-10 ">
             <AllOrders />
           </div>
         </div>
