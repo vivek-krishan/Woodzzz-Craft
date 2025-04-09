@@ -2,17 +2,21 @@ import { Link } from "react-router-dom";
 import Banner from "../../Genral purpose/Banner";
 import ProductCard from "./ProductCard";
 import { ProductCardAI } from "../../Genral purpose/product-card";
+import { useSelector } from "react-redux";
 
 const Carousel = () => {
+  const Products = useSelector((store) => store.ProductsList.products);
+
+
   return (
     <div className="Carousel flex flex-col lg:flex-row  lg:justify-between lg:items-center ">
       <div className="CaptainImg h-fit lg:ml-20 ">
         <Link
-          to={`/product/${2}`}
+          to={`/product/${Products[2]?.productId}`}
           className="flex flex-col w-3/4 lg:w-[25vw] m-auto h-fit rounded-2xl  "
           key={"BannerImg"}
         >
-          <ProductCardAI key={11} index={2} />
+          <ProductCardAI key={11} product={Products[2]} />
         </Link>
       </div>
 

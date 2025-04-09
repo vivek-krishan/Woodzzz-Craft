@@ -17,21 +17,25 @@ const Product = () => {
     detailsUpdationForm: false,
   });
   const user = useSelector((store) => store.UserInfo.user);
-  const allProduct = useSelector((store) => store.ProductsList.products);
+  const allProducts = useSelector((store) => store.ProductsList.products);
 
   const Dispatch = useDispatch();
   const [like, setLike] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
-  const { index } = useParams();
+  const { productId } = useParams();
   const [loading, setLoading] = useState(false);
+
+  const product =
+    allProducts && allProducts.find((item) => item.productId == productId);
+  // console.log(productId, product, allProducts);
 
   // Utility functions
 
   async function HandelDeleteProduct() {
-    console.log("Delete btn", allProduct[index]);
+    console.log("Delete btn", product);
     try {
       const result = await FetchData(
-        `products/product-details/${allProduct[index]?._id}`,
+        `products/product-details/${product?._id}`,
         "delete"
       );
       console.log(result);
@@ -66,7 +70,7 @@ const Product = () => {
 
     try {
       const response = await FetchData(
-        `carts/cart/${allProduct[index].productId}`,
+        `carts/cart/${product.productId}`,
         "post"
       );
 
@@ -88,7 +92,7 @@ const Product = () => {
 
     try {
       const response = await FetchData(
-        `carts/wishlist/${allProduct[index].productId}`,
+        `carts/wishlist/${product.productId}`,
         "post"
       );
 
@@ -109,7 +113,7 @@ const Product = () => {
 
     try {
       const response = await FetchData(
-        `carts/wishlist/${allProduct[index].productId}`,
+        `carts/wishlist/${product.productId}`,
         "delete"
       );
 
@@ -129,7 +133,7 @@ const Product = () => {
     const CheckIsLiked = async () => {
       try {
         const response = await FetchData(
-          `carts/wishlist/${allProduct?.[index]?.productId}`,
+          `carts/wishlist/${product?.productId}`,
           "get"
         );
         console.log("Is liked:", response);
@@ -141,7 +145,7 @@ const Product = () => {
     const IsAddedToCart = async () => {
       try {
         const response = await FetchData(
-          `carts/cart/${allProduct?.[index]?.productId}`,
+          `carts/cart/${product?.productId}`,
           "get"
         );
         console.log("Is Added to cart:", response);
@@ -153,23 +157,22 @@ const Product = () => {
 
     CheckIsLiked();
     IsAddedToCart();
-  }, [allProduct]);
+  }, [allProducts]);
 
   // Scroll to top when the component mounts
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to top when the component mounts
   }, []);
 
-  return allProduct === null ? (
+  return allProducts === null ? (
     <div></div>
   ) : (
     <div className="ProductPage">
-      {console.dir(allProduct[index], { depth: 0 })}
       <div className="ProductDetails lg:h-[75vh] lg:my-16 relative lg:flex flex-wrap ">
         <div className="Image-section w-full h-[85vh]  lg:w-4/6 lg:h-full ">
-          <div className="ProductImg h-[80vh] lg:h-full m-4 rounded-3xl bg-black/10 flex justify-center lg:items-center items-start overflow-hidden  ">
+          <div className="ProductImg h-[80vh] lg:h-full m-4 rounded-3xl bg-[#dadada] flex justify-center lg:items-center items-start overflow-hidden  ">
             <img
-              src={allProduct[index]?.images[0].url}
+              src={product?.images[0].url}
               alt="PImg"
               className="lg:h-96 lg:mt-0 drop-shadow-2xl  "
             />
@@ -177,17 +180,16 @@ const Product = () => {
 
           <div className="Name-and-Cart-btn flex justify-between lg:mt-5 mx-5 absolute lg:w-[62vw] lg:h-[70vh] h-[80vh] w-[90%] top-0   ">
             <div className="PName max-w-lg mx-16 cursor-default ">
-              <h1 className="text-2xl font-bold ">{allProduct[index]?.name}</h1>
+              <h1 className="text-2xl font-bold ">{product?.name}</h1>
             </div>
 
             <div className="Price&cart lg:m-10 h-fit flex flex-col justify-center items-center absolute bottom-0 right-0">
-              {allProduct[index]?.price?.wasPrice != null &&
-                allProduct[index]?.price?.wasPrice !=
-                  allProduct[index]?.price?.currentPrice && (
+              {product?.price?.wasPrice != null &&
+                product?.price?.wasPrice != product?.price?.currentPrice && (
                   <div className="flex justify-center items-center">
                     <IndianRupee width={15} />
                     <h1 className="text-xl font-thin line-through">
-                      {allProduct[index]?.price?.wasPrice}
+                      {product?.price?.wasPrice}
                     </h1>
                   </div>
                 )}
@@ -195,7 +197,7 @@ const Product = () => {
               <div className="Price flex items-center">
                 <IndianRupee width={15} />
                 <h1 className=" text-2xl font-medium ">
-                  {allProduct[index]?.price?.currentPrice}
+                  {product?.price?.currentPrice}
                 </h1>
               </div>
               <div className="LikeBtn-And-AddToCart flex justify-center items-center">
@@ -248,12 +250,12 @@ const Product = () => {
         <div className="Details-Section lg:w-1/3 h-full  mt-5 ">
           <div className="bg-white relative mx-4 lg:h-full h-fit py-4 rounded-3xl overflow-hidden ">
             <h1 className="text-xl font-[700] font-serif text-center  my-5">
-              {allProduct[index]?.description}
+              {product?.description}
             </h1>
             <div className="Details w-fit m-4">
               <h1 className="text-2xl font-serif">Details</h1>
               <p className="tracking-wider font-extralight leading-relaxed">
-                {allProduct[index]?.summery}
+                {product?.summery}
               </p>
             </div>
 
@@ -317,7 +319,7 @@ const Product = () => {
               imageUpdationForm: false,
             })
           }
-          productId={allProduct[index]?.productId}
+          productId={product?.productId}
         />
       )}
 
@@ -330,9 +332,9 @@ const Product = () => {
               imageUpdationForm: false,
             })
           }
-          productId={allProduct[index]._id}
+          productId={product._id}
           imagesRequired={() => {
-            const requirement = 5 - allProduct[index].images.length;
+            const requirement = 5 - product.images.length;
             return requirement;
           }}
         />
@@ -353,7 +355,7 @@ const Product = () => {
         </div>
         <div className="grid lg:grid-cols-6 lg:gap-24 lg:m-10 grid-cols-2 gap-5 m-5 md:grid-cols-3 md:gap-10 md:m-10 items-center  ">
           <Banner
-            images={allProduct.length}
+            images={allProducts.length}
             start={0}
             details={true}
             width={"10vw"}

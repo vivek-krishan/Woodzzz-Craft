@@ -2,19 +2,22 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SearchProduct } from "./SearchProduct";
 import AllProducts from "../AllProducts/AllProducts.index";
+import { searchProducts } from "../../Utils/SearchProducts";
+import { useSelector } from "react-redux";
 
 const SearchPage = () => {
-  // const [data] = useState(
-  //   Data.item?.props?.pageProps?.initialData?.searchResult?.itemStacks[0]?.items
-  // );
-
   const [FilterItem, setFilterItem] = useState();
 
   const { input } = useParams();
+  const allProducts = useSelector((store) => store.ProductsList.products);
 
-  // useEffect(() => {
-  //   setFilterItem(SearchProduct(input, data));
-  // }, [input]);
+  useEffect(() => {
+    const FilterProducts = () => {
+      const items = allProducts && searchProducts(allProducts, input);
+      setFilterItem(items);
+    };
+    FilterProducts();
+  }, [allProducts]);
 
   return (
     <div className="w-full h-fit">

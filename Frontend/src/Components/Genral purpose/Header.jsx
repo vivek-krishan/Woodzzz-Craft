@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   Youtube,
   Facebook,
@@ -28,15 +28,19 @@ const Header = () => {
   const Dispatch = useDispatch();
 
   // functions
-  const HandelSubmit = (e) => {
+  const SearchProducts = (e) => {
     if (searchText) {
       navigate(`/search/${searchText}`);
-      setSearchText("");
+      // setSearchText("");
     }
   };
 
   const HandelRegister = () => {
     navigate(`/authentication`);
+  };
+
+  const handelSearchChange = (e) => {
+    setSearchText(e.target.value);
   };
 
   const Hamburger = ({ onClose }) => {
@@ -112,30 +116,29 @@ const Header = () => {
 
   return (
     <div key={"1111"} className="lg:pt-5 bg-[#FEFFFF] relative z-50">
+      <div className="Hamburger ml-2 laptop:hidden">
+        <button
+          className="laptop:hidden mobile:block"
+          onClick={() => setShowHamburger(true)}
+        >
+          <AlignLeft
+            size={25}
+            className="m-1 group-hover:text-black text-black lg:hidden font-light"
+          />
+        </button>
+
+        {showHamburger && (
+          <Hamburger
+            onClose={() => {
+              setShowHamburger(false);
+            }}
+          />
+        )}
+      </div>
       <div className="Logo flex justify-between items-center  " key={1113}>
-        <div className="Hamburger ml-2 laptop:hidden">
-          <button
-            className="laptop:hidden mobile:block"
-            onClick={() => setShowHamburger(true)}
-          >
-            <AlignLeft
-              size={25}
-              className="m-1 group-hover:text-black text-black lg:hidden font-light"
-            />
-          </button>
-
-          {showHamburger && (
-            <Hamburger
-              onClose={() => {
-                setShowHamburger(false);
-              }}
-            />
-          )}
-        </div>
-
         <Link
           to={"/"}
-          className="LOGO mx-10 lg:mx-40 flex justify-center items-center"
+          className="LOGO mx-5 lg:mx-20 flex justify-center items-center"
           key={1112}
         >
           <img src={Logo} alt="Logo" className="w-11" key={1114} />
@@ -258,8 +261,11 @@ const Header = () => {
 
           <input
             type="text"
-            placeholder="Type to search..."
+            placeholder="search..."
+            onChange={handelSearchChange}
+            value={searchText}
             className="placeholder:text-gray-700 w-full bg-transparent  text-black focus:outline-none  xl:w-125"
+            onKeyDown={(e) => e.key === "Enter" && SearchProducts()}
           />
         </div>
 
