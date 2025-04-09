@@ -16,7 +16,8 @@ import {
 } from "./Components/Utils/Slices/ProductSlice";
 import { addUser, clearUser } from "./Components/Utils/Slices/UserInfoSlice";
 import { FetchData } from "./Components/Utils/fetchFromAPI";
-import BGImage from "../public/wooden-bg.png";
+import BGImage from "/wooden-bg.png";
+import About from "./Components/pages/About/About.index";
 
 function App() {
   const Dispatch = useDispatch();
@@ -63,7 +64,7 @@ function App() {
   return (
     <div className="overflow-hidden w-full ">
       <Header />
-      <div className="relative w-full h-screen overflow-scroll no-scrollbar">
+      <div className="relative w-full overflow-scroll no-scrollbar">
         <img
           className="w-full h-screen fixed top-0 left-0 z-0 opacity-20"
           src={BGImage}
@@ -76,6 +77,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/search/:input" element={<SearchPage />} />
           <Route path="/authentication" element={<Authentication />} />
+          <Route path="/about" element={<About />} />
           <Route path="/admin" element={<AdminLayout />} />
         </Routes>
       </div>
