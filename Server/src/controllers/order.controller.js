@@ -34,12 +34,16 @@ const CreateOrder = asyncHandler(async (req, res) => {
       "Failed to create order due to some internal error! Please try again later."
     );
 
+  const address = user.address.findIndex((ads) => ads.activated === true);
+
   // this address is for sending user from mail.
   const UserAddress = [
-    `${user.address.street}, ${user.address.city}`,
-    `${user.address.state}, ${user.address.country}`,
-    `${user.address.pinCode}`,
+    `${user.address[address].street}, ${user.address[address].city}`,
+    `${user.address[address].state}, ${user.address[address].country}`,
+    `${user.address[address].pinCode}`,
   ];
+
+ 
 
   // Finding products for sending user via mail
   const orderedProducts = await Promise.all(
@@ -66,13 +70,20 @@ const CreateOrder = asyncHandler(async (req, res) => {
 
   await Cart.deleteMany({ user: user._id });
 
+  const OrderConformationEmailBody = OrderConformation(
+    user.fullName,
+    order._id,
+    UserAddress,
+    orderedProducts
+  );
+
   // Send email to user about the order
-  // await SendMail(
-  //   user.email,
-  //   "Order placed successfully",
-  //   "Order Conformation",
-  //   OrderConformation(user.fullName, order._id, UserAddress, orderedProducts)
-  // );
+  await SendMail(
+    user.email,
+    "Order placed successfully",
+    "Order Conformation",
+    OrderConformationEmailBody
+  );
 
   res
     .status(201)
