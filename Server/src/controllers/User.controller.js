@@ -4,6 +4,8 @@ import { User } from "../models/user.model.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+import SendMail from "../utils/Nodemailer.js";
+import { emailBody } from "../utils/Email.UI.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -90,6 +92,19 @@ const RegisterUser = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
   };
+
+  const emailBodyText = emailBody(
+    fullName,
+    `${process.env.SERVER_URL}/login`,
+    `${process.env.SERVER_URL}/support`
+  );
+
+  SendMail(
+    email,
+    "You have Successfully Registered to Woodzzz Craft",
+    "Registration Conformation",
+    emailBodyText
+  );
 
   res
     .status(201)

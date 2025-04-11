@@ -204,7 +204,8 @@ text-decoration: none
 </td></tr><tr><td><div class=t40 style="mso-line-height-rule:exactly;mso-line-height-alt:70px;line-height:70px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr></table></td></tr></table></div><div class="gmail-fix" style="display: none; white-space: nowrap; font: 15px courier; line-height: 0;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div></body>
 </html>`;
 
-const productUI = (img, name, quantity) => {
+const productUI = ({ image, name, quantity }) => {
+  console.log(image, name, quantity);
   return ` <tr>
                                   <td align="center">
                                     <table
@@ -302,8 +303,8 @@ const productUI = (img, name, quantity) => {
                                                                     "
                                                                     width="79.09324208725407"
                                                                     height="105.859375"
-                                                                    alt="${img}"
-                                                                    src="${img}"
+                                                                    alt="${image}"
+                                                                    src="${image.url}"
                                                                   />
                                                                 </div>
                                                               </td>
@@ -478,6 +479,8 @@ export const OrderConformation = (
   address = [],
   products = []
 ) => {
+  console.log(products);
+
   const allProductsUI = products.map((product) => productUI(product));
 
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -2012,3 +2015,19 @@ export const OrderConformation = (
 </html>
 `;
 };
+
+export const emailBody = (fullName, loginLink, supportEmail) => `
+<h1>Hi ${fullName}</h1>,<br />
+<h2>Welcome to Woodz Craft! 🎉</h2>
+
+<pre>   Your registration was successful, and we're excited to have you on board. You can now explore our handcrafted collections and place your first order anytime.
+
+Login anytime at: ${loginLink}
+
+If you have any questions, feel free to reach out to us at ${supportEmail}.</pre>
+
+<footer>
+Happy crafting,<br />
+Team Woodz Craft
+ </footer>
+`;

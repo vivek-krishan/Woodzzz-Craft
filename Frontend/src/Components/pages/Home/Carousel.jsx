@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 const Carousel = () => {
   const Products = useSelector((store) => store.ProductsList.products);
 
-
   return (
     <div className="Carousel flex flex-col lg:flex-row  lg:justify-between lg:items-center ">
       <div className="CaptainImg h-fit lg:ml-20 ">
