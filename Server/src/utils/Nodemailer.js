@@ -16,7 +16,7 @@ function SendMail(receivers, subject, text, html) {
     });
 
     const info = await transporter.sendMail({
-      from: process.env.SENDER_EMAIL, // sender address
+      from: '"Woodzzz Craft" <process.env.SENDER_EMAIL>', // sender address
       to: receivers, // list of receivers
       subject: subject, // Subject line
       text: text, // plain text body
