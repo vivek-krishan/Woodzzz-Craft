@@ -4,8 +4,10 @@ import cors from "cors";
 
 const app = express();
 
+const allowedOrigin = [process.env.ORIGIN_1, process.env.ORIGIN_2];
+
 const corsOptions = {
-  origin: "http://localhost:5173", // Your client app's origin
+  origin: allowedOrigin, // Your client app's origin
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
