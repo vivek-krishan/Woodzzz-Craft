@@ -47,14 +47,14 @@ const LogIn = () => {
   return (
     <div className="text-white flex  w-full h-full justify-center items-center ">
       <section className="Form_side   ">
-        <div className="Google_signIn m-auto mt-10 px-3 w-fit text-black flex justify-center items-center rounded-full  border-b-2 border-l-2 border-white/30 bg-white drop-shadow-xl  hover:scale-110 hover:drop-shadow-2xl transition duration-150 ease-in-out cursor-pointer">
+        {/* <div className="Google_signIn m-auto mt-10 px-3 w-fit text-black flex justify-center items-center rounded-full  border-b-2 border-l-2 border-white/30 bg-white drop-shadow-xl  hover:scale-110 hover:drop-shadow-2xl transition duration-150 ease-in-out cursor-pointer">
           <h3 className="font-medium text-center ">Login with google </h3>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/480px-Google_%22G%22_logo.svg.png"
             alt=""
             className="w-7 m-2"
           />
-        </div>
+        </div> */}
 
         <h1 className="text-center mt-2 mb-5 text-lg">--- Login ---</h1>
 

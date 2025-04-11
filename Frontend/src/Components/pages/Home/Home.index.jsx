@@ -10,16 +10,16 @@ function Home() {
         <BannerSlider />
       </div>
 
-      <div className="Best_Seller h-fit mb-20 mt-10 lg:mt-0">
+      <div className="Best_Seller h-fit mb-20 mt-10 lg:mt-0 ">
         <div className="Heading flex justify-center items-center  mb-5 cursor-default">
-          <div className="absolute">
+          {/* <div className="absolute">
             <h1 className=" text-center text-7xl lg:text-9xl font-bold text-[#dadada78]  ">
               PRODUCTS
             </h1>
-          </div>
-          <div className=" flex flex-col items-center">
-            <h1 className="text-center text-3xl lg:text-5xl font-bold txt-green z-50">
-              Best Seller
+          </div> */}
+          <div className=" flex flex-col items-center font-Caveat">
+            <h1 className="text-center text-3xl lg:text-6xl font-bold txt-green z-50">
+              Best selling products
             </h1>
           </div>
         </div>
@@ -36,16 +36,16 @@ function Home() {
         </div>
       </div>
 
-      <div className="Featured mb-20 mt-10 lg:mt-0">
+      <div className="Featured mb-20 mt-10 lg:mt-0 ">
         <div className="Heading flex justify-center items-center  mb-10 cursor-default">
-          <div className="absolute">
+          {/* <div className="absolute">
             <h1 className=" text-center text-7xl lg:text-9xl font-bold text-[#dadada78]  ">
               Crafts
             </h1>
-          </div>
-          <div className=" flex flex-col items-center ">
+          </div> */}
+          <div className=" flex flex-col items-center font-Caveat ">
             <h1 className="text-center text-3xl lg:text-5xl font-bold  pt-4 txt-green z-50">
-              Featured
+              Handicrafts
             </h1>
           </div>
         </div>

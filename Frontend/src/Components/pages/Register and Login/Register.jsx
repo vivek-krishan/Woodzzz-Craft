@@ -37,14 +37,14 @@ const Register = () => {
   return (
     <div className="text-black flex justify-center w-full h-fit  ">
       <section className="Form_side  w-full ">
-        <div className="Google_signIn m-auto mt-10 px-3 w-fit text-black flex justify-center items-center rounded-full  border-b-2 border-l-2 border-white/30 bg-white drop-shadow-xl  hover:scale-110 hover:drop-shadow-2xl transition duration-150 ease-in-out cursor-pointer">
+        {/* <div className="Google_signIn m-auto mt-10 px-3 w-fit text-black flex justify-center items-center rounded-full  border-b-2 border-l-2 border-white/30 bg-white drop-shadow-xl  hover:scale-110 hover:drop-shadow-2xl transition duration-150 ease-in-out cursor-pointer">
           <h3 className="font-medium text-center ">Register with google </h3>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/480px-Google_%22G%22_logo.svg.png"
             alt=""
             className="w-7 m-2"
           />
-        </div>
+        </div> */}
         <form
           ref={formRef}
           className="Form flex flex-wrap justify-center m-5 bg-black/30 rounded-xl py-10 "

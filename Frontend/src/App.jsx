@@ -18,6 +18,7 @@ import { addUser, clearUser } from "./Components/Utils/Slices/UserInfoSlice";
 import { FetchData } from "./Components/Utils/fetchFromAPI";
 import BGImage from "/wooden-bg.png";
 import About from "./Components/pages/About/About.index";
+import Fake_Error from "./Components/Genral purpose/Fake_Error";
 
 function App() {
   const Dispatch = useDispatch();
@@ -79,6 +80,7 @@ function App() {
           <Route path="/authentication" element={<Authentication />} />
           <Route path="/about" element={<About />} />
           <Route path="/admin" element={<AdminLayout />} />
+          <Route path="/error" element={<Fake_Error />} />
         </Routes>
       </div>
       <Footer />

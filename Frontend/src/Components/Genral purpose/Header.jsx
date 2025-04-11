@@ -13,6 +13,7 @@ import {
 import { alertError, alertInfo } from "../Utils/Alert";
 import { clearUser } from "../Utils/Slices/UserInfoSlice";
 import Logo from "/Logo.png";
+import { AiOutlinePinterest } from "react-icons/ai";
 
 const Header = () => {
   // Variables
@@ -172,7 +173,7 @@ const Header = () => {
               className="text-white text-xs lg:text-base"
               onClick={HandelRegister}
             >
-              Sign in
+              Log in
             </button>
           </div>
         )}
@@ -261,7 +262,7 @@ const Header = () => {
 
           <input
             type="text"
-            placeholder="search..."
+            placeholder="Search..."
             onChange={handelSearchChange}
             value={searchText}
             className="placeholder:text-gray-700 w-full bg-transparent  text-black focus:outline-none  xl:w-125"
@@ -271,29 +272,29 @@ const Header = () => {
 
         <div className="SocialMedia w-1/6 justify-evenly mx-3 hidden lg:flex">
           <Link
-            to={""}
+            to={"https://www.facebook.com/share/1A8VoVe2Ko/"}
             className="hover:scale-110 transition duration-100 ease-in-out"
           >
             <Facebook />
           </Link>
           <Link
-            to={""}
-            className="hover:scale-110 transition duration-100 ease-in-out"
+            to={"https://pin.it/1wy5DS6DE"}
+            className="hover:scale-110 transition duration-100 ease-in-out text-2xl"
           >
-            <Twitter />
+            <AiOutlinePinterest />
           </Link>
           <Link
-            to={""}
-            className="hover:scale-110 transition duration-100 ease-in-out"
+            to={"https://www.instagram.com/WOODZZZCRAFT"}
+            className="hover:scale-110 transition duration-100 ease-in-out "
           >
             <Instagram />
           </Link>
-          <Link
+          {/* <Link
             to={""}
             className="hover:scale-110 transition duration-100 ease-in-out"
           >
             <Youtube />
-          </Link>
+          </Link> */}
         </div>
 
         {/* Hamburger for Smaller devices */}

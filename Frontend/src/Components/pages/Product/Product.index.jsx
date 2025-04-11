@@ -342,14 +342,14 @@ const Product = () => {
 
       <div className="Recommendation z-50">
         <div className="Heading relative flex justify-center items-center mb-5 cursor-default p-10 mt-10 lg:mt-0  ">
-          <div className="absolute lg:-top-4">
+          {/* <div className="absolute lg:-top-4">
             <h1 className=" text-center text-6xl lg:text-9xl font-bold text-[#dadada78] ">
               Best Products
             </h1>
-          </div>
+          </div> */}
           <div className="z-10 flex flex-col items-center justify-center">
-            <h1 className="text-center text-4xl lg:text-5xl font-bold txt-green">
-              Recommended
+            <h1 className="text-center text-4xl lg:text-5xl font-bold txt-green font-Caveat">
+              Recommendations
             </h1>
           </div>
         </div>

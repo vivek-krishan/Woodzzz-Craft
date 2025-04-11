@@ -2,50 +2,42 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="bg-black text-white p-5 mt-10 w-[99vw] flex flex-col lg:flex-row justify-evenly relative">
+    <div className="bg-black text-white p-5 mt-10 w-full flex flex-col lg:flex-row justify-evenly relative">
       <section className="logo flex flex-col justify-center items-center ">
-        {/* <img src={Logo} alt="Logo" className="w-28 filter invert" /> */}
+        <img
+          alt="team"
+          className="w-16 h-16  object-cover object-center flex-shrink-0 rounded-full "
+          src="https://ik.imagekit.io/woodzcraft/IMG_20250411_105210-removebg-preview.png?updatedAt=1744349111877"
+        />
         <h1>Woodzzz Craft </h1>
-        <h3>@ 2023 Bundle Technologies Pvt. Ltd</h3>
+        {/* <h3>@ 2023 Bundle Technologies Pvt. Ltd</h3> */}
       </section>
       <section className="Company flex flex-col lg:justify-start  items-center lg:items-start p-2 lg:p-0">
         <h2 className="text-lg font-semibold cursor-default ">Company</h2>
         <div className="flex lg:flex-col flex-row justify-evenly items-center lg:items-start">
           <Link
-            to="#"
+            to="/"
+            className="lg:m-2 m-1 border-b text-sm font-extralight px-1 lg:border-0"
+          >
+            Home
+          </Link>
+          <Link
+            to="/all-products"
+            className="lg:m-2 m-1 border-b text-sm font-extralight px-1 lg:border-0"
+          >
+            All Products
+          </Link>
+          <Link
+            to="/about"
             className="lg:m-2 m-1 border-b text-sm font-extralight px-1 lg:border-0"
           >
             About
           </Link>
           <Link
-            to="#"
+            to="/about"
             className="lg:m-2 m-1 border-b text-sm font-extralight px-1 lg:border-0"
           >
             Team
-          </Link>
-          <Link
-            to="#"
-            className="lg:m-2 m-1 border-b text-sm font-extralight px-1 lg:border-0"
-          >
-            Careers
-          </Link>
-          <Link
-            to="#"
-            className="lg:m-2 m-1 border-b text-sm font-extralight px-1 lg:border-0"
-          >
-            Mall One
-          </Link>
-          <Link
-            to="#"
-            className="lg:m-2 m-1 border-b text-sm font-extralight px-1 lg:border-0"
-          >
-            Mall Instamart
-          </Link>
-          <Link
-            to="#"
-            className="lg:m-2 m-1 border-b text-sm font-extralight px-1 lg:border-0"
-          >
-            Mall Genie
           </Link>
         </div>
       </section>
@@ -53,13 +45,13 @@ const Footer = () => {
         <h2 className="text-lg font-semibold cursor-default">Contact us</h2>
         <div className="flex lg:flex-col flex-row justify-evenly items-center lg:items-start">
           <Link
-            to="#"
+            to="/error"
             className="lg:m-2 m-1 border-b text-sm font-extralight px-1 lg:border-0"
           >
             Help
           </Link>
           <Link
-            to="#"
+            to="/error"
             className="lg:m-2 m-1 border-b text-sm font-extralight px-1 lg:border-0"
           >
             Partners

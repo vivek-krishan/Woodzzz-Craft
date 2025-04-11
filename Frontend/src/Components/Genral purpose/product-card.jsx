@@ -59,12 +59,10 @@ export function ProductCardAI({ index, product }) {
           {product?.name}
         </h3>
         <div className="flex items-center justify-between w-full">
-          <p className="text-sm font-medium">
-            ₹{product?.price.currentPrice}
-          </p>
+          <p className="text-sm font-medium">₹{product?.price.currentPrice}</p>
           <div className="flex">
             {Array.from({ length: product?.rating }).map((_, i) => (
-              <span key={i} className="text-yellow-400">
+              <span key={i} className="text-[#EA5B2A]">
                 ★
               </span>
             ))}

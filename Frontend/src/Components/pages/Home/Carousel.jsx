@@ -12,11 +12,11 @@ const Carousel = () => {
     <div className="Carousel flex flex-col lg:flex-row  lg:justify-between lg:items-center ">
       <div className="CaptainImg h-fit lg:ml-20 ">
         <Link
-          to={`/product/${Products[2]?.productId}`}
+          to={`/product/${Products?.[2]?.productId}`}
           className="flex flex-col w-3/4 lg:w-[25vw] m-auto h-fit rounded-2xl  "
           key={"BannerImg"}
         >
-          <ProductCardAI key={11} product={Products[2]} />
+          <ProductCardAI key={11} product={Products?.[2]} />
         </Link>
       </div>
 
