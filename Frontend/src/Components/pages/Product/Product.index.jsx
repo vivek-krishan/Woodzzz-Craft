@@ -8,6 +8,7 @@ import { alertError, alertInfo, alertSuccess } from "../../Utils/Alert";
 import { ProductUpdationForm, ImageUpdationForm } from "./InputForm";
 import InfiniteLoading from "../../../assets/img/Infinite-loading-2.svg";
 import { FetchData } from "../../Utils/fetchFromAPI";
+import { addWishlist, popFromWishlist } from "../../Utils/Slices/WishListSlice";
 
 const Product = () => {
   // State variables
@@ -206,6 +207,7 @@ const Product = () => {
                     className="Like m-4"
                     onClick={(event) => {
                       HandelRemoveToWishlist(event);
+                      Dispatch(popFromWishlist(product));
                       setLike(false);
                     }}
                   >
@@ -216,6 +218,7 @@ const Product = () => {
                     className="Like m-4"
                     onClick={(event) => {
                       HandelAddToWishlist(event);
+                      Dispatch(addWishlist(product));
                       setLike(true);
                     }}
                   >
@@ -226,7 +229,12 @@ const Product = () => {
                   onClick={HandelAddToCart}
                   className={`${
                     addedToCart ? "bg-gray-400" : "bg-green"
-                  } w-28 h-12 my-4 text-white p-3 drop-shadow-xl rounded-full hover:bg-Lgreen hover:drop-shadow-2xl transition duration-200 ease-in-out hover:scale-105`}
+                  } w-28 h-12 my-4 text-white p-3 drop-shadow-xl rounded-full ${
+                    !addedToCart && "hover:bg-Lgreen"
+                  } ${
+                    addedToCart && "cursor-not-allowed"
+                  } hover:drop-shadow-2xl transition duration-200 ease-in-out hover:scale-105`}
+                  disabled={addedToCart}
                 >
                   {loading ? (
                     <div className=" w-full h-full flex justify-center items-center ">
