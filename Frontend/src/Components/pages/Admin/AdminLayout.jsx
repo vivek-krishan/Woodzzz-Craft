@@ -4,6 +4,8 @@ import { PopUp } from "./PopUp";
 import { useSelector } from "react-redux";
 import { FetchData } from "../../Utils/fetchFromAPI";
 import { formatDate } from "../../Utils/FormatDateTime";
+import Button from "../../Genral purpose/Buttons";
+import { alertSuccess } from "../../Utils/Alert";
 
 const AdminLayout = () => {
   // Variables
@@ -44,6 +46,20 @@ const AdminLayout = () => {
     fetchCounting();
   }, []);
 
+  const handleMarkCompleted = async (orderId) => {
+    try {
+      const response = await FetchData(
+        `dashboard/complete-order/${orderId}`,
+        "post",
+        {}
+      );
+      console.log("Marked order as completed:", response.data);
+      alertSuccess(response.data.message);
+    } catch (error) {
+      console.error("Error marking order as completed:", error);
+    }
+  };
+
   // UI components
   const StampCard = ({ icon, title, counting }) => {
     return (
@@ -59,10 +75,10 @@ const AdminLayout = () => {
     );
   };
 
-  const OrderTable = ({ OrderId, Name, Product, Status, OrderDate }) => {
+  const OrderTable = () => {
     return (
-      <div className="overflow-auto w-full z-10">
-        <table className="w-full text-left text-sm lg:rounded-t-2xl shadow-md bg-Lgreen p-3">
+      <div className="overflow-auto w-full  z-10">
+        <table className="w-full h-[50vh] text-left text-sm lg:rounded-t-2xl shadow-md bg-Lgreen p-3">
           <thead>
             <tr className="text-gray-600 text-2xl select-none">
               <th className="p-2 border-b border-[#D2B48C] text-white">
@@ -81,11 +97,10 @@ const AdminLayout = () => {
             </tr>
           </thead>
 
-          {console.log(allOrders)}
           {allOrders?.map((item, index) => (
-            <tbody key={index} className="text-white">
-              <tr>
-                <td className="p-2 text-lg border-r border-l">
+            <tbody key={index} className="text-white   ">
+              <tr className="">
+                <td className="px-2 text-lg border-r border-l">
                   {item?.user.fullName}
                 </td>
                 <td className="p-2 text-lg border-r border-l">
@@ -99,6 +114,16 @@ const AdminLayout = () => {
                 </td>
                 <td className="p-2 text-lg border-r border-l">
                   {item?.status}
+                </td>
+                <td className="p-2 text-lg border-r border-l">
+                  {item?.status === "completed" ? null : (
+                    <Button
+                      onClick={() => handleMarkCompleted(item._id)}
+                      className={"text-sm"}
+                    >
+                      Mark as completed
+                    </Button>
+                  )}
                 </td>
               </tr>
             </tbody>
