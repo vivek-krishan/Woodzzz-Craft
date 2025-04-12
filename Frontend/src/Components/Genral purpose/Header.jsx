@@ -216,7 +216,9 @@ const Header = () => {
                 ))
               ) : (
                 <div>
-                  <h1>You have no element in your wishlist!!</h1>
+                  <h2 className="txt-green">
+                    You have no element in your wishlist!!
+                  </h2>
                 </div>
               )}
             </div>
