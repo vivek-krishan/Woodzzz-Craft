@@ -18,7 +18,7 @@ function Home() {
             </h1>
           </div> */}
           <div className=" flex flex-col items-center font-Caveat">
-            <h1 className="text-center text-3xl lg:text-6xl font-bold txt-green z-50">
+            <h1 className="text-center text-3xl lg:text-6xl font-bold txt-green z-10">
               Best selling products
             </h1>
           </div>
@@ -44,7 +44,7 @@ function Home() {
             </h1>
           </div> */}
           <div className=" flex flex-col items-center font-Caveat ">
-            <h1 className="text-center text-3xl lg:text-5xl font-bold  pt-4 txt-green z-50">
+            <h1 className="text-center text-3xl lg:text-5xl font-bold  pt-4 txt-green z-10">
               Handicrafts
             </h1>
           </div>

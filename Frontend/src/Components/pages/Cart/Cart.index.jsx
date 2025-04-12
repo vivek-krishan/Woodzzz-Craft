@@ -124,13 +124,18 @@ const Cart = ({ startLoading, stopLoading }) => {
         <h1 className="font-bold text-3xl lg:absolute lg:left-1/2  transform lg:-translate-x-1/2">
           Check Out
         </h1>
-        <span
-          className="text-right txt-orange underline ml-auto whitespace-nowrap cursor-pointer hover:txt-orange hover:underline transition duration-150 ease-in-out"
+        <div
+          className=" ml-auto whitespace-nowrap cursor-pointer flex flex-col  transition duration-150 ease-in-out bg-white drop-shadow-lg px-2 py-2 rounded-xl"
           onClick={() => setSelectAddress(true)}
         >
-          {activeAddress?.street}, {activeAddress?.city}, {activeAddress?.state}
-          ,{activeAddress?.pinCode}
-        </span>
+          <span className=" txt-orange hover:txt-orange text-right  underline ">
+            {activeAddress?.street}, {activeAddress?.city},{" "}
+            {activeAddress?.state},{activeAddress?.pinCode}
+          </span>
+          <span className="text-xs text-center">
+            Click here to select/add address
+          </span>
+        </div>
       </div>
 
       {user === null || user.length === 0 ? (

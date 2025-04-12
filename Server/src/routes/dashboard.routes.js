@@ -1,15 +1,17 @@
-import { Router } from 'express';
+import { Router } from "express";
 import {
-    getChannelStats,
-    getChannelVideos,
-} from "../controllers/dashboard.controller.js"
-import {VerifyUser} from "../middlewares/auth.middleware.js"
+  completeOrder,
+  getAllOrders,
+  getCounting,
+} from "../controllers/dashboard.controller.js";
+import { VerifyAdmin } from "../middlewares/checkAdmin.middleware.js";
 
 const router = Router();
 
-router.use(VerifyUser); // Apply VerifyUser middleware to all routes in this file
+router.use(VerifyAdmin); // Apply VerifyUser middleware to all routes in this file
 
-router.route("/stats").get(getChannelStats);
-router.route("/videos").get(getChannelVideos);
+router.route("/all-orders").get(getAllOrders);
+router.route("/counting").get(getCounting);
+router.route("/complete-order/:orderId").post(completeOrder);
 
-export default router
+export default router;

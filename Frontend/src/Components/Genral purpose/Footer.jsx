@@ -56,12 +56,6 @@ const Footer = () => {
           >
             Partners
           </Link>
-          <Link
-            to="/admin"
-            className="lg:m-2 m-1 border-b lg:border-0 text-sm font-extralight px-1"
-          >
-            Admin
-          </Link>
         </div>
       </section>
       <section className="Delivery flex flex-col lg:justify-start  items-center lg:items-start p-2 lg:p-0">

@@ -82,7 +82,7 @@ const Header = () => {
   const user = useSelector((store) => store.UserInfo.user);
   const wishList = useSelector((store) => store.WishList.wishlist);
 
-  console.log(wishList);
+  console.log(user);
 
   const fetchWishlist = useCallback(async () => {
     try {
@@ -203,7 +203,7 @@ const Header = () => {
       {/* Wishlist Popup */}
       {showWishlist && (
         <PopUp onClose={() => setShowWishlist(false)}>
-          <div className="bg-white w-[80vw] h-[80vh] rounded-xl drop-shadow-2xl overflow-y-scroll ">
+          <div className="bg-white w-[80vw] h-[80vh] rounded-xl drop-shadow-2xl overflow-y-scroll z-50">
             <h2 className="txt-orange text-3xl font-bold font-serif m-5">
               Your Wish List
             </h2>

@@ -29,10 +29,12 @@ import userRouter from "./routes/user.routes.js";
 import productRouter from "./routes/product.routes.js";
 import cartRouter from "./routes/cart.routes.js";
 import orderRouter from "./routes/order.routes.js";
+import dashboardRouter from "./routes/dashboard.routes.js";
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/carts", cartRouter);
 app.use("/api/v1/orders", orderRouter);
+app.use("/api/v1/dashboard", dashboardRouter);
 
 export { app };

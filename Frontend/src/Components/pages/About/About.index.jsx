@@ -47,7 +47,7 @@ const About = () => {
               of handcrafted woodwork.
             </p>
           </div>
-          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 z-50">
+          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 z-10">
             <img
               className="object-cover object-center rounded w-489 h-511"
               alt="hero"
@@ -65,7 +65,7 @@ const About = () => {
             </h1>
           </div>
           <div className="flex flex-wrap justify-center items-center -m-2">
-            <div className="p-2 lg:w-1/3 md:w-1/2 w-full z-50">
+            <div className="p-2 lg:w-1/3 md:w-1/2 w-full z-10c">
               <a
                 // href="https://woodzzzcraft.com/"
                 target="_blank"
@@ -85,7 +85,7 @@ const About = () => {
                 </div>
               </a>
             </div>
-            <div className="p-2 lg:w-1/3 md:w-1/2 w-full z-50">
+            <div className="p-2 lg:w-1/3 md:w-1/2 w-full z-10c">
               <a
                 href="https://creativesartschool.in/"
                 target="_blank"

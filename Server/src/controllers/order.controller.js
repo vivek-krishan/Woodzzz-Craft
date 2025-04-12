@@ -43,8 +43,6 @@ const CreateOrder = asyncHandler(async (req, res) => {
     `${user.address[address].pinCode}`,
   ];
 
- 
-
   // Finding products for sending user via mail
   const orderedProducts = await Promise.all(
     products.map(async (item) => {
@@ -79,7 +77,7 @@ const CreateOrder = asyncHandler(async (req, res) => {
 
   // Send email to user about the order
   await SendMail(
-    user.email,
+    `${user.email}, "woodzzzcraft@gmail.com"`,
     "Order placed successfully",
     "Order Conformation",
     OrderConformationEmailBody
