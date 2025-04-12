@@ -208,11 +208,17 @@ const Header = () => {
               Your Wish List
             </h2>
             <div className="p-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {wishList?.map((item) => (
-                <div key={item._id} className="lg:w-48 w-40">
-                  <ProductCardAI product={item} />
+              {wishList.length > 0 ? (
+                wishList?.map((item) => (
+                  <div key={item._id} className="lg:w-48 w-40">
+                    <ProductCardAI product={item} />
+                  </div>
+                ))
+              ) : (
+                <div>
+                  <h1>You have no element in your wishlist!!</h1>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </PopUp>
