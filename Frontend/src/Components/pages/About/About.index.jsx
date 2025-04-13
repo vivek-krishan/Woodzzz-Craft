@@ -65,7 +65,7 @@ const About = () => {
             </h1>
           </div>
           <div className="flex flex-wrap justify-center items-center -m-2">
-            <div className="p-2 lg:w-1/3 md:w-1/2 w-full z-10c">
+            <div className="p-2 lg:w-1/3 md:w-1/2 w-full z-10">
               <a
                 // href="https://woodzzzcraft.com/"
                 target="_blank"
@@ -85,7 +85,7 @@ const About = () => {
                 </div>
               </a>
             </div>
-            <div className="p-2 lg:w-1/3 md:w-1/2 w-full z-10c">
+            <div className="p-2 lg:w-1/3 md:w-1/2 w-full z-10">
               <a
                 href="https://creativesartschool.in/"
                 target="_blank"

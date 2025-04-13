@@ -168,7 +168,7 @@ const Header = () => {
               className="flex flex-col justify-center items-center"
             >
               <Heart size={40} fill="#f96635" color="#f96635" />
-              <span>Wishlist</span>
+              <span className="text-xs">Wishlist</span>
             </button>
           )}
 

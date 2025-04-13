@@ -104,12 +104,12 @@ const PopUp = ({ onClose }) => {
       <form
         ref={formRef}
         onSubmit={handleSubmit}
-        className="flex flex-col justify-center items-center text-white text-lg"
+        className="flex flex-col justify-center items-center text-lg"
       >
         <div className="" ref={LoadingRef}></div>
         <section className="flex justify-center items-center w-full">
           <div className="w-1/4 p-5 flex flex-col justify-center items-center">
-            <h5 className="text-xl mb-4 underline font-serif ">
+            <h5 className="text-xl mb-4 font-serif text-black">
               Upload Product Image
             </h5>
 
@@ -213,7 +213,7 @@ const PopUp = ({ onClose }) => {
               // onChange={HandelInputChange}
               id="description"
               required={true}
-              placeholder="product Description"
+              placeholder="Product Description"
               className="px-3 py-2 rounded-xl  text-black"
             />
 
