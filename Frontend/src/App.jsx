@@ -45,6 +45,8 @@ function App() {
         RefreshToken,
       });
 
+      console.log("at re-login:", response.data);
+
       // Storing the tokens into browser's local storage
       localStorage.setItem("AccessToken", response.data.data.AccessToken);
       localStorage.setItem("RefreshToken", response.data.data.RefreshToken);

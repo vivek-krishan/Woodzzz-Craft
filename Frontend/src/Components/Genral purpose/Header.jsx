@@ -85,7 +85,6 @@ const Header = () => {
   const fetchWishlist = useCallback(async () => {
     try {
       const response = await FetchData("carts/wishlist/", "get");
-      console.log(response);
       response.data.data.map((item) =>
         dispatch(addWishlist(item.likedProduct))
       );

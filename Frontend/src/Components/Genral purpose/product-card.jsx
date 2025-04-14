@@ -7,9 +7,6 @@ import { useSelector } from "react-redux";
 export function ProductCardAI({ index, product }) {
   const allProduct = useSelector((store) => store.ProductsList.products);
   if (!allProduct) return null;
-  // if (index >= allProduct.length) {
-  //   index = index % allProduct.length;
-  // }
 
   if (!product) return null;
 

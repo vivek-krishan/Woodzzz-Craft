@@ -171,7 +171,7 @@ const Product = () => {
     <div className="ProductPage">
       <div className="ProductDetails lg:h-[75vh] lg:my-16 relative lg:flex flex-wrap ">
         <div className="Image-section w-full h-[85vh]  lg:w-4/6 lg:h-full ">
-          <div className="ProductImg h-[80vh] lg:h-full m-4 rounded-3xl bg-[#dadada] flex justify-center lg:items-center items-start overflow-hidden  ">
+          <div className="ProductImg h-[70vh] lg:h-full m-4 rounded-3xl bg-[#dadada] flex justify-center lg:items-center items-center overflow-hidden ">
             <img
               src={product?.images[0].url}
               alt="PImg"
