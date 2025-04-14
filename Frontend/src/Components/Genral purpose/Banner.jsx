@@ -13,7 +13,7 @@ const Banner = ({ images }) => {
       <Link
         key={index + 11}
         to={`/product/${item?.productId}`}
-        className={`bg-Tan rounded-xl h-fit w-fit border border-black`}
+        className={`bg-Tan rounded-xl h-fit w-fit `}
       >
         <div className=" lg:w-48 w-40 md:w-full ">
           <ProductCardAI product={item} />
