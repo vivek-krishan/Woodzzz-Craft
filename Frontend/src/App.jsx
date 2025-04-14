@@ -39,8 +39,11 @@ function App() {
   }
 
   const ReLogin = async () => {
+    const RefreshToken = localStorage.getItem("RefreshToken");
     try {
-      const response = await FetchData("user/refresh-token", "get");
+      const response = await FetchData("user/refresh-token", "post", {
+        RefreshToken,
+      });
 
       // Storing the tokens into browser's local storage
       localStorage.setItem("AccessToken", response.data.data.AccessToken);
