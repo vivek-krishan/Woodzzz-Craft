@@ -22,7 +22,6 @@ import Fake_Error from "./Components/Genral purpose/Fake_Error";
 
 function App() {
   const Dispatch = useDispatch();
-  const Navigate = useNavigate();
 
   async function getProducts() {
     try {
@@ -58,8 +57,8 @@ function App() {
   };
 
   useEffect(() => {
-    getProducts();
     ReLogin();
+    getProducts();
   }, []);
 
   return (

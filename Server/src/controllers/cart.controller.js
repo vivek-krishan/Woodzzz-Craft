@@ -99,7 +99,7 @@ const DeleteFromCart = asyncHandler(async (req, res) => {
     user: req.user._id,
   });
 
-  console.log(deletedItem)
+  console.log(deletedItem);
 
   if (!deletedItem)
     throw new ApiError(
@@ -109,18 +109,20 @@ const DeleteFromCart = asyncHandler(async (req, res) => {
 
   // Removing cart item from user's Cart section
   const user = await User.findById(req.user._id);
- const index = user.cart.findIndex(
-   (item) => item.toString() === deletedItem._id.toString()
- );
+  const index = user.cart.findIndex(
+    (item) => item.toString() === deletedItem._id.toString()
+  );
 
- if (index !== -1) {
-   user.cart.splice(index, 1); // Remove the item at the found index
-   await user.save();
- } else {
-   console.log("Item not found in the cart.");
- }
+  if (index !== -1) {
+    user.cart.splice(index, 1); // Remove the item at the found index
+    await user.save();
+  } else {
+    console.log("Item not found in the cart.");
+  }
 
-  res.status(200).json(new ApiResponse(200, deletedItem, "Deleted successfully"));
+  res
+    .status(200)
+    .json(new ApiResponse(200, deletedItem, "Deleted successfully"));
 });
 
 const IsAddedToCart = asyncHandler(async (req, res) => {
@@ -132,7 +134,10 @@ const IsAddedToCart = asyncHandler(async (req, res) => {
 
   if (!product) throw new ApiError(404, "Product Not found");
 
-  const cartItem = await Cart.findOne({ cartProduct: product._id });
+  const cartItem = await Cart.findOne({
+    cartProduct: product._id,
+    user: req.user._id,
+  });
 
   if (!cartItem) return res.status(200).json(new ApiResponse(200, false));
   else return res.status(200).json(new ApiResponse(200, true));
@@ -226,6 +231,7 @@ const CheckIfLiked = asyncHandler(async (req, res) => {
 
   const likedProduct = await Like.findOne({
     likedProduct: product._id,
+    user: req.user._id,
   });
 
   if (!likedProduct) return res.status(200).json(new ApiResponse(200, false));

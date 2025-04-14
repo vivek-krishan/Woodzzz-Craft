@@ -82,8 +82,6 @@ const Header = () => {
   const user = useSelector((store) => store.UserInfo.user);
   const wishList = useSelector((store) => store.WishList.wishlist);
 
-  console.log(user);
-
   const fetchWishlist = useCallback(async () => {
     try {
       const response = await FetchData("carts/wishlist/", "get");
