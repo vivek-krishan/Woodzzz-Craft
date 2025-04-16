@@ -220,6 +220,7 @@ const ImageUpdationForm = ({ onClose, productId, imagesRequired }) => {
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
+    console.log(productId);
     try {
       const response = await FetchData(
         `products/img-update/${productId}`,
@@ -238,7 +239,7 @@ const ImageUpdationForm = ({ onClose, productId, imagesRequired }) => {
 
   return (
     <PopUp onClose={onClose}>
-      <div className="flex justify-center items-center ">
+      <div className="flex justify-center items-center bg-black bg-opacity-50 h-screen w-screen absolute top-0 left-0">
         <form ref={formRef} className="w-2/3 h-fit p-16 rounded-2xl  bg-white">
           <label
             class="block mb-2 font-medium text-black text-2xl"
@@ -246,7 +247,7 @@ const ImageUpdationForm = ({ onClose, productId, imagesRequired }) => {
           >
             Upload Images
           </label>
-          <div className="w-full h-60 flex flex-wrap gap-5 justify-center items-center  border border-black mt-10 ">
+          <div className="w-full h-60 flex flex-wrap gap-5 justify-center items-center mt-10 ">
             {Array(imagesRequired())
               .fill("")
               .map((_, index) => {
@@ -263,12 +264,12 @@ const ImageUpdationForm = ({ onClose, productId, imagesRequired }) => {
                       )}
                     </div>
                     <label class="block">
-                      <span class="sr-only">Choose profile photo</span>
+                      <span class="sr-only">Choose photo</span>
                       <input
                         type="file"
                         accept="image/*"
                         name="images"
-                        className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold   file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+                        className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold   file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 border border-neutral-200 px-6 py-5 rounded-full"
                         onChange={(e) => {
                           const file = e.target.files[0];
                           const reader = new FileReader();
@@ -282,7 +283,7 @@ const ImageUpdationForm = ({ onClose, productId, imagesRequired }) => {
                             ]);
                           };
                           reader.readAsDataURL(file);
-                          console.log(images);
+                          // console.log(images);
                         }}
                       />
                     </label>

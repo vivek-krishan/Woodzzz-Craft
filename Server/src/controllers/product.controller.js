@@ -196,8 +196,9 @@ const AddImages = asyncHandler(async (req, res) => {
 
   // Validate the images in request
   const images = req.files;
+  console.log("Image file------------",req.files);
   if (!images || images.length === 0) {
-    throw new ApiError(400, "New Images not found! Please upload the images.");
+    throw new ApiError(400, "Images not found! Please upload the images.");
   }
   if (images.length > MAX_IMAGES - 1) {
     throw new ApiError(

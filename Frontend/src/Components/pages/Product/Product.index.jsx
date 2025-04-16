@@ -1,7 +1,14 @@
 import { Link, useNavigation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CloudUpload, Heart, IndianRupee, Trash2 } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CloudUpload,
+  Heart,
+  IndianRupee,
+  Trash2,
+} from "lucide-react";
 import Banner from "../../Genral purpose/Banner";
 // import { Products } from "../../Utils/productImg";
 import { alertError, alertInfo, alertSuccess } from "../../Utils/Alert";
@@ -9,6 +16,8 @@ import { ProductUpdationForm, ImageUpdationForm } from "./InputForm";
 import InfiniteLoading from "../../../assets/img/Infinite-loading-2.svg";
 import { FetchData } from "../../Utils/fetchFromAPI";
 import { addWishlist, popFromWishlist } from "../../Utils/Slices/WishListSlice";
+// import optionImage from "../../../assets/img/options.png";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Product = () => {
   // State variables
@@ -165,6 +174,74 @@ const Product = () => {
     window.scrollTo(0, 0); // Scroll to top when the component mounts
   }, []);
 
+
+  const ProductImageSlider = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [popupImage, setPopupImage] = useState(null);
+
+    const nextImage = () => {
+      setCurrentIndex((prev) => (prev + 1) % product?.images.length);
+    };
+
+    const prevImage = () => {
+      setCurrentIndex(
+        (prev) => (prev - 1 + product?.images.length) % product?.images.length
+      );
+    };
+
+    return (
+      <div className="flex flex-col items-center justify-center p-4 relative  w-full h-full">
+        <div className="w-full max-w-xl relative">
+          <img
+            src={product?.images[currentIndex].url}
+            alt={`Slide ${currentIndex}`}
+            className="rounded-lg cursor-pointer w-full object-cover h-96 "
+            onClick={() => setPopupImage(product?.images[currentIndex].url)}
+          />
+          <div className="absolute top-1/2 left-0 transform -translate-y-1/2 0 z-10">
+            <button
+              onClick={prevImage}
+              className="bg-white/80 text-black p-2 m-2  rounded-full lg:border-2 border-[#EB5A2A] lg:hover:bg-[#EB5A2A] lg:hover:text-white transition duration-300"
+            >
+              <ChevronLeftIcon />
+            </button>
+          </div>
+          <div className="absolute top-1/2 right-0 transform -translate-y-1/2 z-10">
+            <button
+              onClick={nextImage}
+              className="bg-white/80 text-black p-2 m-2 rou rounded-full lg:border-2 border-[#EB5A2A] lg:hover:bg-[#EB5A2A] lg:hover:text-white transition duration-300"
+            >
+              <ChevronRightIcon />
+            </button>
+          </div>
+        </div>
+
+        {/* Popup Modal */}
+        <AnimatePresence>
+          {popupImage && (
+            <motion.div
+              className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setPopupImage(null)}
+            >
+              <motion.img
+                src={popupImage}
+                alt="Popup"
+                className="max-w-3xl max-h-[90vh] rounded-lg shadow-lg"
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.8 }}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  };
+
   return allProducts === null ? (
     <div></div>
   ) : (
@@ -172,39 +249,23 @@ const Product = () => {
       <div className="ProductDetails lg:h-[75vh] lg:my-16 relative lg:flex flex-wrap ">
         <div className="Image-section w-full h-[85vh]  lg:w-4/6 lg:h-full ">
           <div className="ProductImg h-[70vh] lg:h-full m-4 rounded-3xl bg-[#dadada] flex justify-center lg:items-center items-center overflow-hidden ">
-            <img
+            {/* <img
               src={product?.images[0].url}
               alt="PImg"
               className="lg:h-96 lg:mt-0 drop-shadow-2xl  "
-            />
+            /> */}
+            <ProductImageSlider />
           </div>
 
           <div className="Name-and-Cart-btn flex justify-between lg:mt-5 mx-5 absolute lg:w-[62vw] lg:h-[70vh] h-[80vh] w-[90%] top-0   ">
-            <div className="PName max-w-lg mx-16 cursor-default ">
-              <h1 className="text-2xl font-bold ">{product?.name}</h1>
-            </div>
-
-            <div className="Price&cart lg:m-10 h-fit flex flex-col justify-center items-center absolute bottom-0 right-0">
-              {product?.price?.wasPrice != null &&
-                product?.price?.wasPrice != product?.price?.currentPrice && (
-                  <div className="flex justify-center items-center">
-                    <IndianRupee width={15} />
-                    <h1 className="text-xl font-thin line-through">
-                      {product?.price?.wasPrice}
-                    </h1>
-                  </div>
-                )}
-
-              <div className="Price flex items-center">
-                <IndianRupee width={15} />
-                <h1 className=" text-2xl font-medium ">
-                  {product?.price?.currentPrice}
-                </h1>
-              </div>
-              <div className="LikeBtn-And-AddToCart flex justify-center items-center">
+            <div className="PName w-full  mx-16 cursor-default flex justify-evenly gap-10">
+              <h1 className="lg:text-2xl font-bold font-sans ">
+                {product?.name}
+              </h1>
+              <div>
                 {like === true ? (
                   <button
-                    className="Like m-4"
+                    className="Like flex justify-center items-center gap-2 lg:border-2 border-[#EB5A2A] rounded-full px-4 py-2 hover:text-white hover:bg-[#EB5A2A] transition duration-300 ease-in-out"
                     onClick={(event) => {
                       HandelRemoveToWishlist(event);
                       Dispatch(popFromWishlist(product));
@@ -212,10 +273,13 @@ const Product = () => {
                     }}
                   >
                     <Heart fill="#ff0000" color="#ff0000" />
+                    <span className="text-xs hidden lg:block">
+                      Added to wishlist
+                    </span>
                   </button>
                 ) : (
                   <button
-                    className="Like m-4"
+                    className="Like  flex justify-center items-center gap-2 lg:border-2 border-[#EB5A2A] rounded-full px-4 py-2 hover:text-white hover:bg-[#EB5A2A] transition duration-300 ease-in-out"
                     onClick={(event) => {
                       HandelAddToWishlist(event);
                       Dispatch(addWishlist(product));
@@ -223,8 +287,33 @@ const Product = () => {
                     }}
                   >
                     <Heart color="#000000" />
+                    <span className="text-xs hidden lg:block">
+                      Add to wishlist
+                    </span>
                   </button>
                 )}
+              </div>
+            </div>
+
+            <div className="Price&cart lg:m-10 h-fit flex lg:flex-col lg:justify-center justify-evenly items-center absolute bottom-0 right-0 w-full lg:w-fit">
+              <div className="CurrentSellingPrice flex items-center">
+                <IndianRupee width={15} />
+                <h1 className=" text-2xl font-medium ">
+                  {product?.price?.currentPrice}
+                </h1>
+              </div>
+              <div className="PreviousSellingPrice">
+                {product?.price?.wasPrice != null &&
+                  product?.price?.wasPrice != product?.price?.currentPrice && (
+                    <div className="flex justify-center items-center">
+                      <IndianRupee width={15} />
+                      <h1 className="text-lg font-thin line-through">
+                        {product?.price?.wasPrice}
+                      </h1>
+                    </div>
+                  )}
+              </div>
+              <div className="AddToCart flex justify-center items-center">
                 <button
                   onClick={HandelAddToCart}
                   className={`${
@@ -256,7 +345,7 @@ const Product = () => {
         </div>
 
         <div className="Details-Section lg:w-1/3 h-full  mt-5 ">
-          <div className="bg-white relative mx-4 lg:h-full h-fit py-4 rounded-3xl overflow-hidden ">
+          <div className="bg-white relative mx-4 lg:h-full h-fit py-4 rounded-3xl shadow-xl ">
             <h1 className="text-xl font-[700] font-serif text-center  my-5">
               {product?.description}
             </h1>
@@ -286,16 +375,16 @@ const Product = () => {
                   </button>
 
                   {showOption.updationOpt && (
-                    <div className="absolute flex flex-col top-12 left-24">
+                    <div className="absolute flex flex-col lg:top-12 lg:left-20 gap-5 lg:mt-5 bg-white shadow-2xl p-4 z-20 lg:z-0 rounded-xl">
                       <button
                         onClick={handelUpdateImages}
-                        className="px-2 pt-2 mt-2 hover:drop-shadow-xl scale-105 drop-shadow-lg border-b-4 border-r-2 rounded-xl hover:bg-slate-200 transition duration-150 ease-in-out "
+                        className="px-4 py-2 hover:drop-shadow-xl scale-105 drop-shadow-lg border hover:bg-[#EB5A2A] hover:text-white rounded-full transition duration-150 ease-in-out border-[#EB5A2A]"
                       >
                         Image Update
                       </button>
                       <button
                         onClick={handelUpdateDetails}
-                        className="px-2 pt-2 mt-2 hover:drop-shadow-xl scale-105 drop-shadow-lg border-b-4 border-r-2 rounded-xl hover:bg-slate-200 transition duration-150 ease-in-out "
+                        className="px-4 py-2 hover:drop-shadow-xl scale-105 drop-shadow-lg border hover:bg-[#EB5A2A] hover:text-white rounded-full transition duration-150 ease-in-out border-[#EB5A2A] "
                       >
                         Details Update
                       </button>
