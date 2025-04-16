@@ -20,6 +20,15 @@ import { addWishlist, popFromWishlist } from "../../Utils/Slices/WishListSlice";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Product = () => {
+  const [isReadMoreDescription, setIsReadMoreDescription] = useState(false);
+  const [isReadMoreSpecification, setIsReadMoreSpecification] = useState(false);
+  const maxLength = 100;
+  const toggleReadMore = () => {
+    setIsReadMoreDescription(!isReadMoreDescription);
+  };
+  const toggleReadMoreSpecification = () => {
+    setIsReadMoreSpecification(!isReadMoreSpecification);
+  };
   // State variables
   const [showOption, setShowOption] = useState({
     updationOpt: false,
@@ -174,7 +183,6 @@ const Product = () => {
     window.scrollTo(0, 0); // Scroll to top when the component mounts
   }, []);
 
-
   const ProductImageSlider = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [popupImage, setPopupImage] = useState(null);
@@ -191,11 +199,11 @@ const Product = () => {
 
     return (
       <div className="flex flex-col items-center justify-center p-4 relative  w-full h-full">
-        <div className="w-full max-w-xl relative">
+        <div className="w-full max-w-xl relative object-center py-96 flex justify-center items-center">
           <img
             src={product?.images[currentIndex].url}
             alt={`Slide ${currentIndex}`}
-            className="rounded-lg cursor-pointer w-full object-cover h-96 "
+            className="rounded-lg cursor-pointer object-center h-96 "
             onClick={() => setPopupImage(product?.images[currentIndex].url)}
           />
           <div className="absolute top-1/2 left-0 transform -translate-y-1/2 0 z-10">
@@ -345,15 +353,45 @@ const Product = () => {
         </div>
 
         <div className="Details-Section lg:w-1/3 h-full  mt-5 ">
-          <div className="bg-white relative mx-4 lg:h-full h-fit py-4 rounded-3xl shadow-xl ">
-            <h1 className="text-xl font-[700] font-serif text-center  my-5">
-              {product?.description}
-            </h1>
+          <div className="bg-white relative mx-4 lg:h-full h-fit py-4 rounded-3xl shadow-xl flex flex-col justify-evenly items-center ">
+            <div className="px-5">
+              <h1 className="font-Caveat font-bold text-2xl">
+                Product Description
+              </h1>
+              <span>
+                <p className="text-gray-600 ">
+                  {isReadMoreDescription
+                    ? product?.description
+                    : `${product?.description.substring(0, maxLength)}...`}
+                </p>
+                {product?.description.length > maxLength && (
+                  <button className="text-blue-500" onClick={toggleReadMore}>
+                    {isReadMoreDescription ? "Read Less.." : "Read More..."}
+                  </button>
+                )}
+              </span>
+            </div>
             <div className="Details w-fit m-4">
-              <h1 className="text-2xl font-serif">Details</h1>
-              <p className="tracking-wider font-extralight leading-relaxed">
-                {product?.summery}
-              </p>
+              <div>
+                <h1 className="font-Caveat font-bold text-2xl">
+                  Product Specifications
+                </h1>
+                <span>
+                  <p className="text-gray-600">
+                    {isReadMoreSpecification
+                      ? product?.summery
+                      : `${product?.summery?.substring(0, maxLength)}...`}
+                  </p>
+                  {product?.summery?.length > maxLength && (
+                    <button
+                      className="text-blue-500"
+                      onClick={toggleReadMoreSpecification}
+                    >
+                      {isReadMoreSpecification ? "Read Less.." : "Read More..."}
+                    </button>
+                  )}
+                </span>
+              </div>
             </div>
 
             {/* Update and Delete Btn */}

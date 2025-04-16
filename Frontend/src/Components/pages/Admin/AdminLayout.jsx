@@ -75,6 +75,8 @@ const AdminLayout = () => {
     );
   };
 
+  console.log(allOrders);
+
   const OrderTable = () => {
     return (
       <div className=" w-full  z-10 ">
@@ -82,7 +84,7 @@ const AdminLayout = () => {
           <thead>
             <tr className="text-gray-600 text-lg select-none font-Caveat ">
               <th className="p-2 border-b border-[#D2B48C]">Customer Name</th>
-              <th className="p-2 border-b border-[#D2B48C]">Product</th>
+              <th className="p-2 border-b border-[#D2B48C]">Product ID</th>
               <th className="p-2 border-b border-[#D2B48C]">Address</th>
               <th className="p-2 border-b border-[#D2B48C]">Date</th>
               <th className="p-2 border-b border-[#D2B48C]">Status</th>
@@ -94,13 +96,13 @@ const AdminLayout = () => {
             <tbody key={index} className="   ">
               <tr className="">
                 <td className="px-2 text-lg border-r border-l">
-                  {item?.user.fullName}
+                  {item?.user?.fullName}
                 </td>
                 <td className="p-2 text-lg border-r border-l">
-                  {item?.products[0].productId.name}
+                  {item?.products[0]._id}
                 </td>
                 <td className="p-2 text-lg border-r border-l px-10 truncate">
-                  {`${item?.user.address[0].street}, ${item?.user.address[0].city}, ${item?.user.address[0].country},  ${item?.user.address[0].pinCode}`}
+                  {`${item?.user?.address[0].street}, ${item?.user?.address[0].city}, ${item?.user?.address[0].country},  ${item?.user?.address[0].pinCode}`}
                 </td>
                 <td className="p-2 text-lg border-r border-l">
                   {formatDate(item?.createdAt)}
