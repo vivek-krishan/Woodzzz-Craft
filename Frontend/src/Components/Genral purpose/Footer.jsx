@@ -13,7 +13,9 @@ const Footer = () => {
         {/* <h3>@ 2023 Bundle Technologies Pvt. Ltd</h3> */}
       </section>
       <section className="Company flex flex-col lg:justify-start  items-center lg:items-start p-2 lg:p-0">
-        <h2 className="text-lg font-semibold cursor-default ">Company</h2>
+        <h2 className="lg:text-lg font-semibold cursor-default ">
+          Handicraft manufacturer
+        </h2>
         <div className="flex lg:flex-col flex-row justify-evenly items-center lg:items-start">
           <Link
             to="/"

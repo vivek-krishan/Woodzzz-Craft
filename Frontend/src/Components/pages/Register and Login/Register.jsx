@@ -61,7 +61,7 @@ const Register = () => {
   return (
     <div className="text-black flex justify-center w-full h-fit  ">
       {user ? (
-        <div className="font-Caveat lg:w-3/4 w-4/5 lg:my-20 h-full">
+        <div className="font-Caveat lg:w-3/4 w-4/5 lg:my-20 h-full flex flex-col gap-10 py-5">
           <h1 className=" text-4xl text-center">
             Hello{" "}
             <span className="text-[#EB5A2A] font-bold">
