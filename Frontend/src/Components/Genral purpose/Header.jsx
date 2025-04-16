@@ -9,6 +9,10 @@ import {
   X,
   Heart,
   Pen,
+  Home,
+  ShoppingCart,
+  ListCollapse,
+  Package,
 } from "lucide-react";
 import { AiOutlinePinterest } from "react-icons/ai";
 import { alertInfo } from "../Utils/Alert";
@@ -18,18 +22,19 @@ import PopUp from "./PopUpWrapper";
 import { FetchData } from "../Utils/fetchFromAPI";
 import { ProductCardAI } from "./product-card";
 import { addWishlist, setWishlist } from "../Utils/Slices/WishListSlice";
+import { motion } from "framer-motion";
 
 const HamburgerMenu = ({ onClose }) => {
   const modelRef = useRef();
   const location = useLocation();
   const user = useSelector((store) => store.UserInfo.user);
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/all-products", label: "Collection" },
-    { path: "/about", label: "About us" },
-    { path: "/cart", label: "Cart" },
+    { path: "/", label: "Home", icon: <Home /> },
+    { path: "/all-products", label: "Collection", icon: <Package /> },
+    { path: "/about", label: "About us", icon: <ListCollapse /> },
+    { path: "/cart", label: "Cart", icon: <ShoppingCart /> },
     ...(user?.[0]?.admin ? [{ path: "/admin", label: "Admin" }] : []),
-    { path: "#", label: "Wishlist" },
+    // { path: "#", label: "Wishlist" },
   ];
 
   const handleClickOutside = (e) => {
@@ -37,14 +42,18 @@ const HamburgerMenu = ({ onClose }) => {
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ x: "-100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "-100%" }}
+      transition={{ type: "spring", stiffness: 120 }}
       ref={modelRef}
       onClick={handleClickOutside}
-      className="fixed inset-0 flex w-[50vw] h-60 z-50 bg-white backdrop-blur-3xl rounded-r-xl overflow-hidden"
+      className="fixed inset-0 flex h-screen z-50 bg-white backdrop-blur-3xl overflow-hidden"
     >
       <div className="flex flex-col w-full">
         <div className="h-248 flex justify-between p-6 gap-2">
-          <h1 className="text-xl font-serif font-semibold">Menu</h1>
+          <h1 className="text-3xl font-Caveat font-semibold">Menu</h1>
           <button onClick={onClose}>
             <X size={30} />
           </button>
@@ -55,16 +64,19 @@ const HamburgerMenu = ({ onClose }) => {
               key={item.path}
               to={item.path}
               onClick={onClose}
-              className={`font-Exo my-1 mx-2 ${
-                location.pathname === item.path ? "txt-orange" : ""
+              className={`font-Exo border border-[#EB5A2A]  my-1 mx-2 py-2 px-2 rounded-full w-3/4 flex justify-start items-center gap-5 ${
+                location.pathname === item.path
+                  ? "bg-[#EB5A2A] shadow-2xl text-white"
+                  : ""
               }`}
             >
+              {item.icon}
               {item.label}
             </Link>
           ))}
         </section>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -155,7 +167,7 @@ const Header = () => {
   return (
     <div className="lg:pt-5 bg-[#FEFFFF] relative z-50">
       {/* Mobile Hamburger */}
-      <div className="Hamburger ml-2 laptop:hidden">
+      <div className="Hamburger ml-2 laptop:hidden absolute">
         <button
           className="laptop:hidden mobile:block"
           onClick={() => setShowHamburger(true)}
@@ -171,7 +183,7 @@ const Header = () => {
       <div className="Logo flex justify-between items-center">
         <Link
           to="/"
-          className="LOGO mx-5 lg:mx-20 flex justify-center items-center"
+          className="LOGO mx-10 lg:mx-20 flex justify-center items-center"
         >
           <img src={Logo} alt="Logo" className="w-11" />
           <h1 className="font-[700] text-xl lg:text-3xl txt-green font-Caveat">
