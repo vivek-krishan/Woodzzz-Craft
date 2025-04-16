@@ -234,26 +234,6 @@ const regenerateRefreshToken = asyncHandler(async (req, res) => {
     );
 });
 
-const ChangeCurrentPassword = asyncHandler(async (req, res) => {
-  const { oldPassword, newPassword } = req.body;
-
-  const user = await User.findById(req.user?._id);
-
-  const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
-
-  if (!isPasswordCorrect) {
-    throw new ApiError(400, "Invalid password");
-  }
-
-  user.password = newPassword;
-
-  await user.save({ validateBeforeSave: false });
-
-  return res
-    .status(200)
-    .json(new ApiResponse(200, {}, "Password changed successfully"));
-});
-
 const GetUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
@@ -378,6 +358,30 @@ const selectActiveAddress = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, { user }, "Address Activated 👍"));
 });
 
+const ChangePassword = asyncHandler(async (req, res) => {
+  const { email, oldPassword, newPassword } = req.body;
+
+  if (!email || !oldPassword || !newPassword) {
+    throw new ApiError(400, "All fields are required");
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  const isValid = await user.isPasswordCorrect(oldPassword);
+  if (!isValid) {
+    throw new ApiError(401, "Invalid password");
+  }
+
+  user.password = newPassword;
+  await user.save({ validateBeforeSave: false });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Password changed successfully"));
+});
+
 export {
   GetUser,
   LogInUser,
@@ -387,6 +391,6 @@ export {
   GetOrderHistory,
   UpdateUserDetails,
   selectActiveAddress,
-  ChangeCurrentPassword,
   regenerateRefreshToken,
+  ChangePassword,
 };

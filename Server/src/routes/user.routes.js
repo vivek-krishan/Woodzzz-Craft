@@ -6,10 +6,10 @@ import {
   RegisterUser,
   GetOrderHistory,
   UpdateUserDetails,
-  ChangeCurrentPassword,
   regenerateRefreshToken,
   AddAddress,
   selectActiveAddress,
+  ChangePassword,
 } from "../controllers/User.controller.js";
 import { VerifyUser } from "../middlewares/auth.middleware.js";
 
@@ -24,11 +24,12 @@ router.route("/login").post(LogInUser);
 
 router.route("/logout").post(VerifyUser, LogOutUser);
 router.route("/refresh-token").post(VerifyUser, regenerateRefreshToken);
-router.route("/change-password").post(VerifyUser, ChangeCurrentPassword);
 router.route("/get-user").get(VerifyUser, GetUser);
 router.route("/update-user-details").patch(VerifyUser, UpdateUserDetails);
 router.route("/get-watch-history").get(VerifyUser, GetOrderHistory);
 router.route("/add-address").post(VerifyUser, AddAddress);
 router.route("/select-address").post(VerifyUser, selectActiveAddress);
+
+router.route("/change-password").post(ChangePassword);
 
 export default router;

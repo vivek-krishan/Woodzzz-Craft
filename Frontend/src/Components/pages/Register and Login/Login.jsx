@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { alertError, alertInfo } from "../../Utils/Alert";
 import { addUser, clearUser } from "../../Utils/Slices/UserInfoSlice";
 import { FetchData } from "../../Utils/fetchFromAPI";
+import PopUp from "../../Genral purpose/PopUpWrapper";
+import Button from "../../Genral purpose/Buttons";
 
 const LogIn = () => {
   // Utility variables
+  const [popup, setPopup] = useState(false);
+  const changePasswordRef = useRef(null);
 
   const [user, setUser] = useState({
     email: "",
@@ -41,6 +45,24 @@ const LogIn = () => {
     } catch (error) {
       console.error(error);
       alertError(error.message);
+    }
+  };
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(changePasswordRef.current);
+
+    try {
+      const response = await FetchData(
+        "user/change-password",
+        "post",
+        formData
+      );
+      console.log(response);
+      alertInfo(response.data.message);
+      setPopup(false);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -92,15 +114,82 @@ const LogIn = () => {
           </div>
         </form>
 
-        <div className="Login-btn flex justify-center m-10">
+        <div className="Login-btn flex justify-evenly my-10 ">
           <button
             onClick={LogInFn}
             className=" bg-green text-white p-3 px-7 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
           >
             LogIn
           </button>
+          <button
+            onClick={() => setPopup(true)}
+            className=" bg-green text-white p-3 px-7 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
+          >
+            Change password
+          </button>
         </div>
       </section>
+
+      {popup && (
+        <PopUp onClose={() => setPopup(false)}>
+          <h2>Change Password</h2>
+          <form
+            ref={changePasswordRef}
+            onSubmit={handleChangePassword}
+            className="Form w-[40vw] p-2  flex flex-col justify-center items-center bg-white rounded-xl"
+          >
+            <div className="UserName w-72 m-5">
+              <label className="block mb-2 text-lg w-fit font-serif txt-Gray">
+                Email
+              </label>
+              <input
+                type="text"
+                className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                placeholder="Email"
+                name="email"
+                required
+              />
+            </div>
+            <div className="Old-password w-72 m-5">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-lg w-fit font-serif txt-Gray"
+              >
+                Old Password
+              </label>
+              <input
+                type="password"
+                className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                placeholder="Old Password"
+                name="oldPassword"
+                required
+              />
+            </div>
+            <div className="password w-72 m-5">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-lg w-fit font-serif txt-Gray"
+              >
+                New Password
+              </label>
+              <input
+                type="password"
+                className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
+                placeholder="New Password"
+                name="newPassword"
+                required
+              />
+            </div>
+
+            <Button
+              type="submit"
+              className="bg-green text-white p-3 px-7 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-L"
+            >
+              Submit
+            </Button>
+          </form>
+        </PopUp>
+      )}
     </div>
   );
 };
