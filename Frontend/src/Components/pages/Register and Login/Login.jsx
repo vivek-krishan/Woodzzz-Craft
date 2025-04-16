@@ -121,12 +121,12 @@ const LogIn = () => {
           >
             LogIn
           </button>
-          <button
+          {/* <button
             onClick={() => setPopup(true)}
             className=" bg-green text-white p-3 px-7 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
           >
             Change password
-          </button>
+          </button> */}
         </div>
       </section>
 

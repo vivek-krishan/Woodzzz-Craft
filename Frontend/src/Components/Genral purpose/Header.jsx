@@ -1,7 +1,15 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Facebook, Instagram, Search, AlignLeft, X, Heart } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Search,
+  AlignLeft,
+  X,
+  Heart,
+  Pen,
+} from "lucide-react";
 import { AiOutlinePinterest } from "react-icons/ai";
 import { alertInfo } from "../Utils/Alert";
 import { clearUser } from "../Utils/Slices/UserInfoSlice";
@@ -107,6 +115,19 @@ const Header = () => {
     [handleSearch]
   );
 
+  const handleAuthentication = () => {
+    navigate("/authentication");
+  };
+
+  // const handleLogout = (() => {
+  //   dispatch(clearUser());
+  //   localStorage.removeItem("AccessToken");
+  //   localStorage.removeItem("RefreshToken");
+  //   alertInfo("You are logged out! Please log in");
+  //   navigate("/authentication");
+  //   localStorage.clear();
+  // });
+
   const handleLogout = useCallback(() => {
     dispatch(clearUser());
     alertInfo("You are logged out! Please log in");
@@ -164,21 +185,30 @@ const Header = () => {
               onClick={() => setShowWishlist(true)}
               className="flex flex-col justify-center items-center"
             >
-              <Heart size={40} fill="#f96635" color="#f96635" />
+              <Heart fill="#f96635" color="#f96635" />
               <span className="text-xs">Wishlist</span>
             </button>
           )}
 
           {user ? (
-            <div className="lg:p-3 lg:px-4 h-20 m-2 lg:mr-20 rounded-full flex flex-col items-center justify-center drop-shadow-lg hover:scale-110 hover:drop-shadow-2xl transition duration-200 ease-in-out">
-              <h1 className="font-thin text-sm text-white cursor-default">
+            <div className="lg:p-3 lg:px-4 h-20 lg:m-2 lg:mr-20 rounded-full flex flex-col items-center justify-center drop-shadow-lg hover:scale-110 hover:drop-shadow-2xl transition duration-200 ease-in-out ">
+              <h1 className="font-thin text-sm text-white cursor-default flex justify-center items-center gap-2">
                 Hello{" "}
                 <span className="lg:text-2xl text-lg truncate txt-green font-Caveat font-bold">
                   {user[0]?.fullName}
                 </span>
+                <span>
+                  <button
+                    className="bg-green px-2 py-1 rounded-lg text-white hover:bg-Lgreen transition duration-200 ease-in-out text-xs lg:text-base flex justify-center items-center lg:gap-1"
+                    onClick={handleAuthentication}
+                  >
+                    <Pen className="lg:h-5 h-4" />
+                    Password
+                  </button>
+                </span>
               </h1>
               <button
-                className="bg-green px-3 rounded-lg text-white hover:bg-Lgreen transition duration-200 ease-in-out text-sm lg:text-lg"
+                className="bg-green px-3 rounded-lg text-white hover:bg-Lgreen transition duration-200 ease-in-out text-sm lg:text-lg mt-2"
                 onClick={handleLogout}
               >
                 LogOut
