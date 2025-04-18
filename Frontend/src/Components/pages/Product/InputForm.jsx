@@ -14,8 +14,14 @@ import {
 import { useDispatch } from "react-redux";
 import PopUp from "../../Genral purpose/PopUpWrapper";
 import Button from "../../Genral purpose/Buttons";
+import LoadingUI from "../../Genral purpose/Loading";
 
-const ProductUpdationForm = ({ onClose, productId }) => {
+const ProductUpdationForm1 = ({
+  onClose,
+  productId,
+  startLoading,
+  stopLoading,
+}) => {
   // Variable
   const modelRef = useRef();
   const LoadingRef = useRef(null);
@@ -38,18 +44,11 @@ const ProductUpdationForm = ({ onClose, productId }) => {
 
     const handleSubmit = async (event) => {
       event.preventDefault(); // Prevent the default form submission
-
-      setLoading(true); // Show the loading spinner
-
       const formData = new FormData(formRef.current);
 
-      console.log(productId);
       try {
-        const response = FetchData(
-          `products/product-details/${productId}`,
-          "post",
-          formData
-        )
+        startLoading();
+        FetchData(`products/product-details/${productId}`, "post", formData)
           .then((response) => {
             console.log("Product uploaded successfully:", response);
             Dispatch(updateProduct(response.data.data.product));
@@ -60,11 +59,10 @@ const ProductUpdationForm = ({ onClose, productId }) => {
           .catch((error) => {
             console.error("Error uploading product:", error);
           });
-
-        setLoading(false);
       } catch (error) {
         console.error("Error uploading product:", error);
-        setLoading(false);
+      } finally {
+        stopLoading();
       }
     };
 
@@ -74,7 +72,7 @@ const ProductUpdationForm = ({ onClose, productId }) => {
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center text-white text-lg"
       >
-        <div className="" ref={LoadingRef}></div>
+        <div className="" ></div>
         <h2 className="text-xl font-serif text-black underline ">
           Give the updated details
         </h2>
@@ -194,11 +192,6 @@ const ProductUpdationForm = ({ onClose, productId }) => {
     >
       <div className="flex bg-opacity-100 w-full items-center justify-center h-screen">
         <div className="fixed bg-gray-700/30 transform -translate-x-50 -translate-y-50 w-[80vw] h-[90%] rounded-md shadow-md ">
-          {loading && (
-            <div className="absolute w-[50vw] h-[50vh] left-96 top-32 bg-slate-600/40 rounded-3xl flex justify-center items-center">
-              <img src={InfiniteLoading} alt="" />
-            </div>
-          )}
 
           <InputForm productId={productId} />
         </div>
@@ -207,7 +200,7 @@ const ProductUpdationForm = ({ onClose, productId }) => {
   );
 };
 
-const ImageUpdationForm = ({ onClose, productId, imagesRequired }) => {
+const ImageUpdationForm1 = ({ onClose, productId, imagesRequired, startLoading, stopLoading }) => {
   const [images, setImages] = useState([]);
 
   const formRef = useRef(null);
@@ -222,6 +215,7 @@ const ImageUpdationForm = ({ onClose, productId, imagesRequired }) => {
     }
     console.log(productId);
     try {
+      startLoading();
       const response = await FetchData(
         `products/img-update/${productId}`,
         "post",
@@ -234,6 +228,8 @@ const ImageUpdationForm = ({ onClose, productId, imagesRequired }) => {
       onClose();
     } catch (error) {
       console.error("Error uploading images:", error);
+    } finally {
+      stopLoading();
     }
   };
 
@@ -297,5 +293,8 @@ const ImageUpdationForm = ({ onClose, productId, imagesRequired }) => {
     </PopUp>
   );
 };
+
+const ProductUpdationForm = LoadingUI(ProductUpdationForm1);
+const ImageUpdationForm = LoadingUI(ImageUpdationForm1);
 
 export { ProductUpdationForm, ImageUpdationForm };

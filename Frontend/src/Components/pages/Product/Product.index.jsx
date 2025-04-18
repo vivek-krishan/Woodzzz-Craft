@@ -18,8 +18,9 @@ import { FetchData } from "../../Utils/fetchFromAPI";
 import { addWishlist, popFromWishlist } from "../../Utils/Slices/WishListSlice";
 // import optionImage from "../../../assets/img/options.png";
 import { motion, AnimatePresence } from "framer-motion";
+import LoadingUI from "../../Genral purpose/Loading";
 
-const Product = () => {
+const Product = ({ startLoading, stopLoading }) => {
   const [isReadMoreDescription, setIsReadMoreDescription] = useState(false);
   const [isReadMoreSpecification, setIsReadMoreSpecification] = useState(false);
   const maxLength = 100;
@@ -53,6 +54,7 @@ const Product = () => {
   async function HandelDeleteProduct() {
     console.log("Delete btn", product);
     try {
+      startLoading();
       const result = await FetchData(
         `products/product-details/${product?._id}`,
         "delete"
@@ -63,6 +65,8 @@ const Product = () => {
     } catch (error) {
       console.error(error);
       alertError(error.message);
+    } finally {
+      stopLoading();
     }
   }
 
@@ -85,22 +89,21 @@ const Product = () => {
   const HandelAddToCart = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
-    setLoading(true);
-
     try {
+      setLoading(true);
       const response = await FetchData(
         `carts/cart/${product.productId}`,
         "post"
       );
 
       console.log("Added to your cart:", response.data);
-      setLoading(false);
       setAddedToCart(true);
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-      setLoading(false);
       alertError();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -110,39 +113,39 @@ const Product = () => {
     setLoading(true);
 
     try {
+      startLoading();
       const response = await FetchData(
         `carts/wishlist/${product.productId}`,
         "post"
       );
 
       console.log("Added to your wishlist:", response);
-      setLoading(false);
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-      setLoading(false);
       // alertError();
+    } finally {
+      stopLoading();
     }
   };
 
   const HandelRemoveToWishlist = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
-    setLoading(true);
-
     try {
+      startLoading();
       const response = await FetchData(
         `carts/wishlist/${product.productId}`,
         "delete"
       );
 
       console.log("Removed from wishlist:", response);
-      setLoading(false);
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error in removing product from wishlist:", error);
-      setLoading(false);
       // alertError();
+    } finally {
+      stopLoading();
     }
   };
 
@@ -159,6 +162,7 @@ const Product = () => {
         setLike(response.data.data);
       } catch (error) {
         console.error("Error checking if liked:", error);
+      } finally {
       }
     };
     const IsAddedToCart = async () => {
@@ -171,6 +175,7 @@ const Product = () => {
         setAddedToCart(response.data.data);
       } catch (error) {
         console.error("Error checking if liked:", error);
+      } finally {
       }
     };
 
@@ -509,4 +514,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default LoadingUI(Product);

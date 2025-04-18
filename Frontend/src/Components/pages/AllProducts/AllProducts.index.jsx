@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ProductCardAI } from "../../Genral purpose/product-card";
 
-const AllProducts = ({ data = null }) => {
+const AllProducts = ({ data = null, startLoading, stopLoading }) => {
   // Get products from Redux store
   const reduxProducts = useSelector((store) => store.ProductsList.products);
 
@@ -42,4 +42,4 @@ const AllProducts = ({ data = null }) => {
   );
 };
 
-export default AllProducts;
+export default LoadingUI(AllProducts);

@@ -10,9 +10,8 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
   const handelAddQuantity = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
-    startLoading();
-
     try {
+      startLoading();
       const response = await FetchData(
         `carts/cart/${item.cartProduct.productId}`,
         "post"
@@ -20,18 +19,17 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
 
       console.log("Added to your cart:", response.data);
       setUpdatedItem(response.data.data);
-      stopLoading();
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-      stopLoading();
+
       alertError();
+    } finally {
+      stopLoading();
     }
   };
   const handelSubtractQuantity = async (event) => {
     event.preventDefault(); // Prevent the default form submission
-
-    startLoading();
 
     if (item.quantity <= 1) {
       alertInfo("It's the minimum quantity!");
@@ -40,6 +38,7 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
     }
 
     try {
+      startLoading();
       const response = await FetchData(
         `carts/cart/subtract/${item.cartProduct.productId}`,
         "post"
@@ -47,21 +46,20 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
 
       console.log("Added to your cart:", response.data);
       setUpdatedItem(response.data.data);
-      stopLoading();
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-      stopLoading();
       alertError();
+    } finally {
+      stopLoading();
     }
   };
 
   const handelDeleteItemFromCart = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
-    startLoading();
-
     try {
+      startLoading();
       const response = await FetchData(
         `carts/cart/${item.cartProduct.productId}`,
         "delete"
@@ -69,12 +67,12 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
 
       console.log("Deleted from your cart:", response);
       setUpdatedItem({});
-      stopLoading();
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-      stopLoading();
       alertError();
+    } finally {
+      stopLoading();
     }
   };
 

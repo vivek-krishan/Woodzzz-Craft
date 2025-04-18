@@ -3,19 +3,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import { formatDate } from "../../Utils/FormatDateTime";
 import { FetchData } from "../../Utils/fetchFromAPI";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import LoadingUI from "../../Genral purpose/Loading";
 
-export default function AllOrders() {
+function AllOrders({ startLoading, stopLoading }) {
   const [allOrders, setAllOrders] = useState([]);
   const [handlePopup, setHandlePopup] = useState({});
 
   useEffect(() => {
     const FetchAllOrders = async () => {
       try {
+        startLoading();
         const response = await FetchData("orders/get-my-orders", "get");
         setAllOrders(response.data.data);
         console.log(response);
       } catch (error) {
         console.log(error);
+      } finally {
+        stopLoading();
       }
     };
 
@@ -199,3 +203,5 @@ export default function AllOrders() {
     </div>
   );
 }
+
+export default LoadingUI(AllOrders);

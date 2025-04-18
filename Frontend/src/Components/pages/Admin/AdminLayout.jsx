@@ -1,13 +1,14 @@
 import { Layers3, ShoppingBasket, ShoppingCart, Users } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { PopUp } from "./PopUp";
+import PopUp from "./PopUp";
 import { useSelector } from "react-redux";
 import { FetchData } from "../../Utils/fetchFromAPI";
 import { formatDate } from "../../Utils/FormatDateTime";
 import Button from "../../Genral purpose/Buttons";
 import { alertSuccess } from "../../Utils/Alert";
+import LoadingUI from "../../Genral purpose/Loading";
 
-const AdminLayout = () => {
+const AdminLayout = ({ startLoading, stopLoading }) => {
   // Variables
   const [showPopup, setShowPopup] = useState(false);
   const [allOrders, setAllOrders] = useState([]);
@@ -22,14 +23,18 @@ const AdminLayout = () => {
   useEffect(() => {
     const fetchAllOrders = async () => {
       try {
+        startLoading();
         const response = await FetchData("dashboard/all-orders", "get");
         setAllOrders(response.data.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        stopLoading();
       }
     };
     const fetchCounting = async () => {
       try {
+        startLoading();
         const response = await FetchData("dashboard/counting", "get");
         setCounting(() => {
           return {
@@ -39,6 +44,8 @@ const AdminLayout = () => {
         });
       } catch (error) {
         console.log(error);
+      } finally {
+        stopLoading();
       }
     };
 
@@ -48,6 +55,7 @@ const AdminLayout = () => {
 
   const handleMarkCompleted = async (orderId) => {
     try {
+      startLoading();
       const response = await FetchData(
         `dashboard/complete-order/${orderId}`,
         "post",
@@ -57,6 +65,8 @@ const AdminLayout = () => {
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error marking order as completed:", error);
+    } finally {
+      stopLoading();
     }
   };
 
@@ -74,8 +84,6 @@ const AdminLayout = () => {
       </div>
     );
   };
-
-  console.log(allOrders);
 
   const OrderTable = () => {
     return (
@@ -181,4 +189,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default LoadingUI(AdminLayout);

@@ -27,6 +27,7 @@ const Cart = ({ startLoading, stopLoading }) => {
     const formData = new FormData(AddressFormRef.current);
 
     try {
+      startLoading();
       const response = await FetchData("user/add-address", "post", formData);
       console.log(response);
       // Storing data inside redux store
@@ -37,11 +38,13 @@ const Cart = ({ startLoading, stopLoading }) => {
       console.log(error);
     } finally {
       setAddAddress(false);
+      stopLoading();
     }
   };
 
   const handleActiveAddress = async (_id) => {
     try {
+      startLoading();
       const response = await FetchData("user/select-address", "post", {
         addressId: _id,
       });
@@ -54,6 +57,7 @@ const Cart = ({ startLoading, stopLoading }) => {
     } catch (error) {
       console.log(error);
     } finally {
+      stopLoading();
     }
   };
 
@@ -82,6 +86,9 @@ const Cart = ({ startLoading, stopLoading }) => {
       stopLoading();
     } catch (error) {
       console.log(error);
+      
+    }
+    finally {
       stopLoading();
     }
   };
@@ -92,11 +99,14 @@ const Cart = ({ startLoading, stopLoading }) => {
 
   const getCartProducts = async () => {
     try {
+      startLoading();
       const response = await FetchData(`carts/cart`, "get");
       console.log(response);
       SetCartProducts(response.data.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      stopLoading();
     }
   };
 

@@ -4,6 +4,7 @@ import axios from "axios";
 import { alertError, alertSuccess } from "../../Utils/Alert";
 import InfiniteLoading from "../../../assets/img/Infinite-Loading.svg";
 import { useSelector } from "react-redux";
+import LoadingUI from "../../Genral purpose/Loading";
 
 const PopUp = ({ onClose }) => {
   // Variable
@@ -325,4 +326,4 @@ const PopUp = ({ onClose }) => {
   );
 };
 
-export { PopUp };
+export default LoadingUI(PopUp);
