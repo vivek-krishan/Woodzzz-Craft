@@ -136,11 +136,11 @@ const LogInUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  if (!user) throw new ApiError(404, "Provided email is not found");
+  if (!user) throw new ApiError(404, "User not found");
 
   const isValid = await user.isPasswordCorrect(passkey);
 
-  if (!isValid) throw new ApiError(401, "Entered Credential is not correct");
+  if (!isValid) throw new ApiError(401, "Password is not correct!!!");
 
   const { AccessToken, RefreshToken } = await generateAccessAndRefreshTokens(
     user?._id

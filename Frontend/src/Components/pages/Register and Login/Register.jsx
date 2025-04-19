@@ -6,8 +6,9 @@ import { addUser, clearUser } from "../../Utils/Slices/UserInfoSlice";
 import { FetchData } from "../../Utils/fetchFromAPI";
 import PopUp from "../../Genral purpose/PopUpWrapper";
 import Button from "../../Genral purpose/Buttons";
+import LoadingUI from "../../Genral purpose/Loading";
 
-const Register = () => {
+const Register = ({ startLoading, stopLoading }) => {
   // All Variables declaration for this components
   const navigate = useNavigate();
   const Dispatch = useDispatch();
@@ -18,10 +19,11 @@ const Register = () => {
   console.log(user);
 
   // All function definition for this components
-  const Register = async () => {
+  const handleRegister = async () => {
     const formData = new FormData(formRef.current);
 
     try {
+      startLoading();
       const response = await FetchData("user/register", "post", formData);
       console.log(response.data);
       // Storing the tokens into browser's local storage
@@ -37,6 +39,8 @@ const Register = () => {
     } catch (error) {
       console.log(error);
       alertError(error.message);
+    } finally {
+      stopLoading();
     }
   };
 
@@ -45,6 +49,7 @@ const Register = () => {
     const formData = new FormData(changePasswordRef.current);
 
     try {
+      startLoading();
       const response = await FetchData(
         "user/change-password",
         "post",
@@ -55,6 +60,8 @@ const Register = () => {
       setPopup(false);
     } catch (error) {
       console.log(error);
+    } finally {
+      stopLoading();
     }
   };
 
@@ -240,7 +247,7 @@ const Register = () => {
 
             <div className="Register-btn flex justify-center m-10">
               <button
-                onClick={Register}
+                onClick={handleRegister}
                 className=" bg-green text-white p-3 px-7 rounded-3xl drop-shadow-xl hover:drop-shadow-2xl hover:bg-Lgreen transition duration-300 hover:scale-105"
               >
                 Register
@@ -253,4 +260,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default LoadingUI(Register);

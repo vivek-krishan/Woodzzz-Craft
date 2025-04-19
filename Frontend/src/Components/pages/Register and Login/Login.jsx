@@ -6,8 +6,9 @@ import { addUser, clearUser } from "../../Utils/Slices/UserInfoSlice";
 import { FetchData } from "../../Utils/fetchFromAPI";
 import PopUp from "../../Genral purpose/PopUpWrapper";
 import Button from "../../Genral purpose/Buttons";
+import LoadingUI from "../../Genral purpose/Loading";
 
-const LogIn = () => {
+const LogIn = ({ startLoading, stopLoading }) => {
   // Utility variables
   const [popup, setPopup] = useState(false);
   const changePasswordRef = useRef(null);
@@ -29,6 +30,7 @@ const LogIn = () => {
 
   const LogInFn = async () => {
     try {
+      startLoading();
       const response = await FetchData("user/login", "post", user);
       console.log(response);
       // Storing the tokens into browser's local storage
@@ -45,6 +47,8 @@ const LogIn = () => {
     } catch (error) {
       console.error(error);
       alertError(error.message);
+    } finally {
+      stopLoading();
     }
   };
 
@@ -53,6 +57,7 @@ const LogIn = () => {
     const formData = new FormData(changePasswordRef.current);
 
     try {
+      startLoading();
       const response = await FetchData(
         "user/change-password",
         "post",
@@ -63,6 +68,8 @@ const LogIn = () => {
       setPopup(false);
     } catch (error) {
       console.log(error);
+    } finally {
+      stopLoading();
     }
   };
 
@@ -194,4 +201,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default LoadingUI(LogIn);
