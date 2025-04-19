@@ -3,6 +3,7 @@ import Banner from "../../Genral purpose/Banner";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ProductCardAI } from "../../Genral purpose/product-card";
+import LoadingUI from "../../Genral purpose/Loading";
 
 const AllProducts = ({ data = null, startLoading, stopLoading }) => {
   // Get products from Redux store

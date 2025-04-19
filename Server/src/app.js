@@ -4,17 +4,23 @@ import cors from "cors";
 
 const app = express();
 
-const allowedOrigin = [process.env.ORIGIN_1, process.env.ORIGIN_2];
+const allowedOrigins = [process.env.ORIGIN_1, process.env.ORIGIN_2];
 
 const corsOptions = {
-  origin: allowedOrigin, // Your client app's origin
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Allow request
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
-app.use(express.json({ limit: "16kb" }));
-app.use(express.text({ type: "text/*", limit: "32kb" })); // For plain text format
+app.use(express.json({ limit: "32kb" }));
+app.use(express.text({ type: "text/*", limit: "64kb" })); // For plain text format
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
