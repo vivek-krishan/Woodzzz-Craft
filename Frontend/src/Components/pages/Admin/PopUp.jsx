@@ -48,7 +48,7 @@ const PopUp = ({ onClose }) => {
       const formData = new FormData(formRef.current);
       formData.append("Image", inputImage); // Append the image file to the formData
 
-      const url = "http://localhost:3000/api/v1/products/";
+      const url = `${process.env.DOMAIN_URL}/api/v1/products/`;
       const AccessToken = localStorage.getItem("AccessToken");
 
       //  console.log("AccessToken:", AccessToken);
@@ -76,7 +76,7 @@ const PopUp = ({ onClose }) => {
     useEffect(() => {
       const fetchProductIds = () => {
         // Extract product IDs from the products
-        console.log(AllProducts)
+        console.log(AllProducts);
         AllProducts.map((product) => {
           existingProductIds.push(product.productId);
         });
