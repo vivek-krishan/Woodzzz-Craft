@@ -19,12 +19,14 @@ import { FetchData } from "./Components/Utils/fetchFromAPI";
 import BGImage from "/wooden-bg.png";
 import About from "./Components/pages/About/About.index";
 import Fake_Error from "./Components/Genral purpose/Fake_Error";
+import LoadingUI from "./Components/Genral purpose/Loading";
 
-function App() {
+function App({ startLoading, stopLoading }) {
   const Dispatch = useDispatch();
 
   async function getProducts() {
     try {
+      startLoading();
       const response = await FetchData("products/", "get");
 
       // Axios automatically parses the response, so no need to call .json()
@@ -35,6 +37,8 @@ function App() {
     } catch (error) {
       console.error("Error fetching products:", error);
       return [];
+    } finally {
+      stopLoading();
     }
   }
 
@@ -92,4 +96,4 @@ function App() {
   );
 }
 
-export default App;
+export default LoadingUI(App);
