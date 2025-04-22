@@ -9,6 +9,7 @@ function AllOrders({ startLoading, stopLoading }) {
   const [allOrders, setAllOrders] = useState([]);
   const [handlePopup, setHandlePopup] = useState({});
 
+  
   useEffect(() => {
     const FetchAllOrders = async () => {
       try {
@@ -145,6 +146,9 @@ function AllOrders({ startLoading, stopLoading }) {
           </tbody>
         </table>
       </div>
+
+
+
 
       {/* {handlePopup.allCategoryPopup && (
         <div className="backdrop-blur-3xl absolute top-0 h-full w-full left-0 px-10 py-5">

@@ -86,61 +86,69 @@ const AdminLayout = ({ startLoading, stopLoading }) => {
   };
 
   const OrderTable = () => {
-    return (
-      <div className=" w-full  z-10 ">
-        <table className="w-full h-[50vh] text-left text-sm lg:rounded-2xl bg-white text-black p-3 shadow-lg drop-shadow-2xl">
-          <thead>
-            <tr className="text-gray-600 text-lg select-none font-Caveat ">
-              <th className="p-2 border-b border-[#D2B48C]">Customer Name</th>
-              <th className="p-2 border-b border-[#D2B48C]">Product ID</th>
-              <th className="p-2 border-b border-[#D2B48C]">Address</th>
-              <th className="p-2 border-b border-[#D2B48C]">Date</th>
-              <th className="p-2 border-b border-[#D2B48C]">Status</th>
-              <th className="p-2 border-b border-[#D2B48C]">Actions</th>
-            </tr>
-          </thead>
+    const orders = [
+      {
+        customerName: "John Doe",
+        productId: "P1234",
+        address: "123 Main St, New York, NY",
+        date: "2025-04-21",
+        status: "Shipped",
+      },
+      {
+        customerName: "Jane Smith",
+        productId: "P5678",
+        address: "456 Elm St, San Francisco, CA",
+        date: "2025-04-20",
+        status: "Processing",
+      },
+      // Add more entries as needed
+    ];
 
-          {allOrders?.map((item, index) => (
-            <tbody key={index} className="   ">
-              <tr className="">
-                <td className="px-2 text-lg border-r border-l">
-                  {item?.user?.fullName}
-                </td>
-                <td className="p-2 text-lg border-r border-l">
-                  {item?.products[0]._id}
-                </td>
-                <td className="p-2 text-lg border-r border-l px-10 truncate">
-                  {`${item?.user?.address[0].street}, ${item?.user?.address[0].city}, ${item?.user?.address[0].country},  ${item?.user?.address[0].pinCode}`}
-                </td>
-                <td className="p-2 text-lg border-r border-l">
-                  {formatDate(item?.createdAt)}
-                </td>
-                <td className="p-2 text-lg border-r border-l">
-                  {item?.status}
-                </td>
-                <td className="p-2 text-lg border-r border-l">
-                  {item?.status === "completed" ? null : (
-                    <Button
-                      onClick={() => handleMarkCompleted(item._id)}
-                      className={"text-sm"}
-                    >
-                      Mark as completed
-                    </Button>
-                  )}
-                </td>
+    return (
+      <div className=" w-full bg-gray-100  z-10 ">
+        <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-md">
+          <table className="min-w-full text-sm text-left">
+            <thead className="sticky top-0 bg-gray-300 text-gray-700 z-10">
+              <tr>
+                <th className="px-4 py-3 border-b">Customer Name</th>
+                <th className="px-4 py-3 border-b">Product ID</th>
+                <th className="px-4 py-3 border-b">Address</th>
+                <th className="px-4 py-3 border-b">Date</th>
+                <th className="px-4 py-3 border-b">Status</th>
+                <th className="px-4 py-3 border-b">Action</th>
               </tr>
+            </thead>
+            <tbody className="text-gray-700 z-0">
+              {allOrders?.map((item, index) => (
+                <tr key={index} className="hover:bg-gray-50">
+                  <td className="px-4 py-2 border-b">{item?.user?.fullName}</td>
+                  <td className="px-4 py-2 border-b">
+                    {item?.products[0]._id}
+                  </td>
+                  <td className="px-4 py-2 border-b">
+                    {" "}
+                    {`${item?.user?.address[0].street}, ${item?.user?.address[0].city}, ${item?.user?.address[0].country},  ${item?.user?.address[0].pinCode}`}
+                  </td>
+                  <td className="px-4 py-2 border-b">
+                    {" "}
+                    {formatDate(item?.createdAt)}
+                  </td>
+                  <td className="px-4 py-2 border-b"> {item?.status}</td>
+                  <td className="px-4 py-2 border-b">
+                    {item?.status === "completed" ? null : (
+                      <Button
+                        onClick={() => handleMarkCompleted(item._id)}
+                        className={"text-sm"}
+                      >
+                        Mark as completed
+                      </Button>
+                    )}
+                  </td>
+                </tr>
+              ))}
             </tbody>
-          ))}
-          {/* <tbody className="text-white">
-            <tr>
-              <td className="p-2 text-lg border-r border-l px-10">{OrderId}</td>
-              <td className="p-2 text-lg border-r border-l">{Name}</td>
-              <td className="p-2 text-lg border-r border-l">{Product}</td>
-              <td className="p-2 text-lg border-r border-l">{Status}</td>
-              <td className="p-2 text-lg border-r border-l">{OrderDate}</td>
-            </tr>
-          </tbody> */}
-        </table>
+          </table>
+        </div>
       </div>
     );
   };
