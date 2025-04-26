@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import PopUp from "../../Genral purpose/PopUpWrapper";
 import Button from "../../Genral purpose/Buttons";
 import LoadingUI from "../../Genral purpose/Loading";
+import { parseErrorMessage } from "../../Utils/ErrorMessageParser";
 
 const ProductUpdationForm1 = ({
   onClose,
@@ -61,6 +62,7 @@ const ProductUpdationForm1 = ({
           });
       } catch (error) {
         console.error("Error uploading product:", error);
+        alertError(parseErrorMessage(error.response.data));
       } finally {
         stopLoading();
       }
@@ -72,7 +74,7 @@ const ProductUpdationForm1 = ({
         onSubmit={handleSubmit}
         className="flex flex-col justify-center items-center text-white text-lg"
       >
-        <div className="" ></div>
+        <div className=""></div>
         <h2 className="text-xl font-serif text-black underline ">
           Give the updated details
         </h2>
@@ -192,7 +194,6 @@ const ProductUpdationForm1 = ({
     >
       <div className="flex bg-opacity-100 w-full items-center justify-center h-screen">
         <div className="fixed bg-gray-700/30 transform -translate-x-50 -translate-y-50 w-[80vw] h-[90%] rounded-md shadow-md ">
-
           <InputForm productId={productId} />
         </div>
       </div>
@@ -200,7 +201,13 @@ const ProductUpdationForm1 = ({
   );
 };
 
-const ImageUpdationForm1 = ({ onClose, productId, imagesRequired, startLoading, stopLoading }) => {
+const ImageUpdationForm1 = ({
+  onClose,
+  productId,
+  imagesRequired,
+  startLoading,
+  stopLoading,
+}) => {
   const [images, setImages] = useState([]);
 
   const formRef = useRef(null);

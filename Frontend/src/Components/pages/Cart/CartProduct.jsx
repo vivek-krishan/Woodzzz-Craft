@@ -3,6 +3,7 @@ import { alertSuccess, alertError, alertInfo } from "../../Utils/Alert";
 import { FetchData } from "../../Utils/fetchFromAPI";
 import LoadingUI from "../../Genral purpose/Loading";
 import { useState } from "react";
+import { parseErrorMessage } from "../../Utils/ErrorMessageParser";
 
 const CartProduct = ({ item, startLoading, stopLoading }) => {
   const [updatedItem, setUpdatedItem] = useState(item);
@@ -22,12 +23,13 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-
+      alertError(parseErrorMessage(error.response.data));
       alertError();
     } finally {
       stopLoading();
     }
   };
+
   const handelSubtractQuantity = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
@@ -49,7 +51,7 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-      alertError();
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }
@@ -70,7 +72,7 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-      alertError();
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }

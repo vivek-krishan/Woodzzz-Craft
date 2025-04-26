@@ -7,6 +7,7 @@ import { FetchData } from "../../Utils/fetchFromAPI";
 import PopUp from "../../Genral purpose/PopUpWrapper";
 import Button from "../../Genral purpose/Buttons";
 import LoadingUI from "../../Genral purpose/Loading";
+import { parseErrorMessage } from "../../Utils/ErrorMessageParser";
 
 const Register = ({ startLoading, stopLoading }) => {
   // All Variables declaration for this components
@@ -38,7 +39,7 @@ const Register = ({ startLoading, stopLoading }) => {
       navigate("/");
     } catch (error) {
       console.log(error);
-      alertError(error.message);
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }
@@ -60,6 +61,7 @@ const Register = ({ startLoading, stopLoading }) => {
       setPopup(false);
     } catch (error) {
       console.log(error);
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }

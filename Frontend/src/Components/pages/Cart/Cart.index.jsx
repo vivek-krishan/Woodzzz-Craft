@@ -10,6 +10,7 @@ import { alertInfo, alertSuccess } from "../../Utils/Alert";
 import LoadingUI from "../../Genral purpose/Loading";
 import Button from "../../Genral purpose/Buttons";
 import AllOrders from "./all-orders";
+import { parseErrorMessage } from "../../Utils/ErrorMessageParser";
 
 const Cart = ({ startLoading, stopLoading }) => {
   const [isvisible, SetIsVisible] = useState("account");
@@ -36,6 +37,7 @@ const Cart = ({ startLoading, stopLoading }) => {
       alertInfo(response.data.message);
     } catch (error) {
       console.log(error);
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       setAddAddress(false);
       stopLoading();
@@ -56,6 +58,7 @@ const Cart = ({ startLoading, stopLoading }) => {
       alertInfo(response.data.message);
     } catch (error) {
       console.log(error);
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }
@@ -86,9 +89,8 @@ const Cart = ({ startLoading, stopLoading }) => {
       stopLoading();
     } catch (error) {
       console.log(error);
-      
-    }
-    finally {
+      alertError(parseErrorMessage(error.response.data));
+    } finally {
       stopLoading();
     }
   };
@@ -105,6 +107,7 @@ const Cart = ({ startLoading, stopLoading }) => {
       SetCartProducts(response.data.data);
     } catch (error) {
       console.log(error);
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }

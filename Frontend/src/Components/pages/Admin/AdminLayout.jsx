@@ -86,24 +86,6 @@ const AdminLayout = ({ startLoading, stopLoading }) => {
   };
 
   const OrderTable = () => {
-    const orders = [
-      {
-        customerName: "John Doe",
-        productId: "P1234",
-        address: "123 Main St, New York, NY",
-        date: "2025-04-21",
-        status: "Shipped",
-      },
-      {
-        customerName: "Jane Smith",
-        productId: "P5678",
-        address: "456 Elm St, San Francisco, CA",
-        date: "2025-04-20",
-        status: "Processing",
-      },
-      // Add more entries as needed
-    ];
-
     return (
       <div className=" w-full bg-gray-100  z-10 ">
         <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-md">

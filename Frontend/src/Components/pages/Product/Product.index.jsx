@@ -19,6 +19,7 @@ import { addWishlist, popFromWishlist } from "../../Utils/Slices/WishListSlice";
 // import optionImage from "../../../assets/img/options.png";
 import { motion, AnimatePresence } from "framer-motion";
 import LoadingUI from "../../Genral purpose/Loading";
+import { parseErrorMessage } from "../../Utils/ErrorMessageParser";
 
 const Product = ({ startLoading, stopLoading }) => {
   const [isReadMoreDescription, setIsReadMoreDescription] = useState(false);
@@ -50,7 +51,6 @@ const Product = ({ startLoading, stopLoading }) => {
   // console.log(productId, product, allProducts);
 
   // Utility functions
-
   async function HandelDeleteProduct() {
     console.log("Delete btn", product);
     try {
@@ -64,7 +64,7 @@ const Product = ({ startLoading, stopLoading }) => {
       window.location.href("/");
     } catch (error) {
       console.error(error);
-      alertError(error.message);
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }
@@ -101,7 +101,7 @@ const Product = ({ startLoading, stopLoading }) => {
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-      alertError();
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       setLoading(false);
     }
@@ -123,7 +123,7 @@ const Product = ({ startLoading, stopLoading }) => {
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-      // alertError();
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }
@@ -143,7 +143,7 @@ const Product = ({ startLoading, stopLoading }) => {
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error in removing product from wishlist:", error);
-      // alertError();
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }
@@ -162,6 +162,7 @@ const Product = ({ startLoading, stopLoading }) => {
         setLike(response.data.data);
       } catch (error) {
         console.error("Error checking if liked:", error);
+        alertError(parseErrorMessage(error.response.data));
       } finally {
       }
     };

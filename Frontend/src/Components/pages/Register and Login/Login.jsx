@@ -7,6 +7,7 @@ import { FetchData } from "../../Utils/fetchFromAPI";
 import PopUp from "../../Genral purpose/PopUpWrapper";
 import Button from "../../Genral purpose/Buttons";
 import LoadingUI from "../../Genral purpose/Loading";
+import { parseErrorMessage } from "../../Utils/ErrorMessageParser";
 
 const LogIn = ({ startLoading, stopLoading }) => {
   // Utility variables
@@ -46,7 +47,7 @@ const LogIn = ({ startLoading, stopLoading }) => {
       navigate("/");
     } catch (error) {
       console.error(error);
-      alertError(error.message);
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }
@@ -68,6 +69,7 @@ const LogIn = ({ startLoading, stopLoading }) => {
       setPopup(false);
     } catch (error) {
       console.log(error);
+      alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
     }
