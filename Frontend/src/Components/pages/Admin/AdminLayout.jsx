@@ -101,11 +101,16 @@ const AdminLayout = ({ startLoading, stopLoading }) => {
               </tr>
             </thead>
             <tbody className="text-gray-700 z-0">
+              {/* {console.log(allOrders)} */}
               {allOrders?.map((item, index) => (
                 <tr key={index} className="hover:bg-gray-50">
                   <td className="px-4 py-2 border-b">{item?.user?.fullName}</td>
                   <td className="px-4 py-2 border-b">
-                    {item?.products[0]._id}
+                    <img
+                      src={item?.products[0].productId?.images[0].url}
+                      className="lg:w-20"
+                      alt="No image available"
+                    />
                   </td>
                   <td className="px-4 py-2 border-b">
                     {" "}

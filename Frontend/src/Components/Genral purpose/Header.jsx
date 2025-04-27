@@ -18,7 +18,6 @@ import {
   List,
   User,
 } from "lucide-react";
-import { AiOutlinePinterest } from "react-icons/ai";
 import { alertInfo } from "../Utils/Alert";
 import { clearUser } from "../Utils/Slices/UserInfoSlice";
 import Logo from "/Logo.png";
@@ -27,6 +26,8 @@ import { FetchData } from "../Utils/fetchFromAPI";
 import { ProductCardAI } from "./product-card";
 import { addWishlist, setWishlist } from "../Utils/Slices/WishListSlice";
 import { motion } from "framer-motion";
+import { RiFacebookCircleFill, RiInstagramFill } from "react-icons/ri";
+import { FaPinterest } from "react-icons/fa";
 
 const HamburgerMenu = ({ onClose }) => {
   const modelRef = useRef();
@@ -38,7 +39,9 @@ const HamburgerMenu = ({ onClose }) => {
     { path: "/about", label: "About us", icon: <ListCollapse /> },
     { path: "/cart", label: "Cart", icon: <ShoppingCart /> },
     { path: "/authentication", label: "Edit Password", icon: <Pen /> },
-    ...(user?.[0]?.admin ? [{ path: "/admin", label: "Admin" }] : []),
+    ...(user?.[0]?.admin
+      ? [{ path: "/admin", label: "Admin", icon: <User /> }]
+      : []),
     // { path: "#", label: "Wishlist" },
   ];
 
@@ -224,12 +227,18 @@ const Header = () => {
   ];
 
   const socialLinks = [
-    { icon: <Facebook />, url: "https://www.facebook.com/share/1A8VoVe2Ko/" },
     {
-      icon: <AiOutlinePinterest className="text-2xl" />,
+      icon: <RiFacebookCircleFill className="text-3xl text-blue-500" />,
+      url: "https://www.facebook.com/share/1A8VoVe2Ko/",
+    },
+    {
+      icon: <FaPinterest className="text-3xl text-red-500" />,
       url: "https://pin.it/1wy5DS6DE",
     },
-    { icon: <Instagram />, url: "https://www.instagram.com/WOODZZZCRAFT" },
+    {
+      icon: <RiInstagramFill className="text-3xl text-pink-500" />,
+      url: "https://www.instagram.com/WOODZZZCRAFT",
+    },
   ];
 
   return (
@@ -334,9 +343,9 @@ const Header = () => {
       )}
 
       {/* Navigation Bar */}
-      <div className="w-full flex justify-evenly pb-5 shadow-xl rounded-xl">
+      <div className="w-full flex justify-between items-center pb-5 shadow-xl rounded-xl ">
         {/* Desktop Navigation */}
-        <div className="Navigation w-1/2 hidden lg:flex">
+        <div className="Navigation w-3/4 hidden lg:flex">
           <nav className="w-full flex justify-evenly items-center">
             {navItems.map((item) => (
               <NavLink
@@ -350,7 +359,7 @@ const Header = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="Search-bar p-2 rounded-full border border-black relative color flex justify-center items-center gap-10 w-96 mx-2">
+        <div className="Search-bar p-2 rounded-full border border-black relative color flex justify-center items-center gap-10 w-96">
           <button onClick={handleSearch}>
             <Search width={20} />
           </button>
@@ -365,7 +374,7 @@ const Header = () => {
         </div>
 
         {/* Social Media Links */}
-        <div className="SocialMedia w-1/6 justify-evenly mx-3 hidden lg:flex">
+        <div className="SocialMedia justify-evenly hidden lg:flex gap-5 px-3 ">
           {socialLinks.map((link, index) => (
             <Link
               key={index}

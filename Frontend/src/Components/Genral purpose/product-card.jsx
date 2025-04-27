@@ -3,12 +3,33 @@ import { Card, CardContent, CardFooter } from "./card";
 import Button from "./Buttons";
 import { ShoppingCart } from "lucide-react";
 import { useSelector } from "react-redux";
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa"; // install react-icons if not already
+import Rating from "./Ratings";
 
 export function ProductCardAI({ index, product }) {
   const allProduct = useSelector((store) => store.ProductsList.products);
   if (!allProduct) return null;
 
   if (!product) return null;
+  // const RatingStars = ({ rating }) => {
+  //   const totalStars = product?.rating;
+  //   const fullStars = Math.floor(rating);
+  //   const hasHalfStar = rating % 1 >= 0.5;
+
+  //   return (
+  //     <div className="flex">
+  //       {Array.from({ length: totalStars }).map((_, i) => {
+  //         if (i < fullStars) {
+  //           return <FaStar key={i} color="#EA5B2A" />;
+  //         } else if (i === fullStars && hasHalfStar) {
+  //           return <FaStarHalfAlt key={i} color="#EA5B2A" />;
+  //         } else {
+  //           return <FaRegStar key={i} color="#EA5B2A" />;
+  //         }
+  //       })}
+  //     </div>
+  //   );
+  // };
 
   return (
     // <Card className="Card overflow-hidden transition-all duration-300 drop-shadow-md hover:drop-shadow-xl bg-[#dadada] hover:scale-105">
@@ -57,13 +78,19 @@ export function ProductCardAI({ index, product }) {
         </h3>
         <div className="flex items-center justify-between w-full">
           <p className="text-sm font-medium">₹{product?.price.currentPrice}</p>
-          <div className="flex">
+          {/* <div className="flex">
             {Array.from({ length: product?.rating }).map((_, i) => (
               <span key={i} className="text-[#EA5B2A]">
                 ★
               </span>
             ))}
-          </div>
+          </div> */}
+          {/* <RatingStars /> */}
+          <Rating
+            value={product?.rating}
+            readOnly={true}
+            starColor="text-[#EB5A2A]"
+          />
         </div>
       </CardFooter>
     </Card>

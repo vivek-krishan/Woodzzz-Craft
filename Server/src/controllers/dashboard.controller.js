@@ -9,7 +9,7 @@ const getAllOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({})
     .populate({
       path: "products.productId",
-      select: "name",
+      // select: "name",
     })
     .populate({
       path: "user",

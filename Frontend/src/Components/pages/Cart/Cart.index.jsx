@@ -30,7 +30,7 @@ const Cart = ({ startLoading, stopLoading }) => {
     try {
       startLoading();
       const response = await FetchData("user/add-address", "post", formData);
-      console.log(response);
+      // console.log(response);
       // Storing data inside redux store
       Dispatch(clearUser());
       Dispatch(addUser(response.data.data.user));
@@ -50,7 +50,7 @@ const Cart = ({ startLoading, stopLoading }) => {
       const response = await FetchData("user/select-address", "post", {
         addressId: _id,
       });
-      console.log(response);
+      // console.log(response);
       // Storing data inside redux store
       Dispatch(clearUser());
       Dispatch(addUser(response.data.data.user));
@@ -103,7 +103,7 @@ const Cart = ({ startLoading, stopLoading }) => {
     try {
       startLoading();
       const response = await FetchData(`carts/cart`, "get");
-      console.log(response);
+      // console.log(response);
       SetCartProducts(response.data.data);
     } catch (error) {
       console.log(error);
@@ -137,18 +137,22 @@ const Cart = ({ startLoading, stopLoading }) => {
         <h1 className="font-bold text-3xl lg:absolute lg:left-1/2  transform lg:-translate-x-1/2">
           Check Out
         </h1>
-        <div
-          className=" ml-auto whitespace-nowrap cursor-pointer flex flex-col  transition duration-150 ease-in-out bg-white drop-shadow-lg px-2 py-2 rounded-xl"
-          onClick={() => setSelectAddress(true)}
-        >
-          <span className=" txt-orange hover:txt-orange text-right  underline ">
-            {activeAddress?.street}, {activeAddress?.city},{" "}
-            {activeAddress?.state},{activeAddress?.pinCode}
-          </span>
-          <span className="text-xs text-center">
-            Click here to select/add address
-          </span>
-        </div>
+        {user === null || user.length === 0 ? (
+          <div></div>
+        ) : (
+          <div
+            className=" ml-auto whitespace-nowrap cursor-pointer flex flex-col  transition duration-150 ease-in-out bg-white drop-shadow-lg px-2 py-2 rounded-xl"
+            onClick={() => setSelectAddress(true)}
+          >
+            <span className=" txt-orange hover:txt-orange text-right  underline ">
+              {activeAddress?.street}, {activeAddress?.city},{" "}
+              {activeAddress?.state},{activeAddress?.pinCode}
+            </span>
+            <span className="text-xs text-center">
+              Click here to select/add address
+            </span>
+          </div>
+        )}
       </div>
 
       {user === null || user.length === 0 ? (
@@ -427,43 +431,45 @@ const Cart = ({ startLoading, stopLoading }) => {
 
             {selectAddress && (
               <PopUp onClose={() => setSelectAddress(false)}>
-                <div className="w-[50vw] h-52 -right-80 -top-2 rounded-xl flex flex-col items-center bg-Tan text-black overflow-y-scroll  border">
-                  <div className="w-5/6">
-                    {console.log(user[0])}
+                <div className="lg:w-[50vw] lg:h-52 lg:-right-80 lg:-top-2 rounded-xl flex flex-col items-center bg-Tan py-5 text-black border">
+                  <div className="lg:w-5/6">
+                    {/* {console.log(user[0])} */}
                     {user[0].address.map((address) => {
                       return (
                         <div
                           key={address.street}
-                          className="flex justify-between items-center p-2 mb-2 border-b-2 "
+                          className="flex justify-between items-center p-2 mb-2 border-b-2"
                         >
                           <div className="flex items-center gap-3 min-h-10 w-[80%] h-fit bg-white px-4 rounded-xl drop-shadow-lg">
-                            <span className="text-sm font-serif col-span-3">
+                            <span className="text-sm lg:text-base col-span-3">
                               {address.street},
                             </span>
-                            <span className="text-sm font-serif row-start-2">
+                            <span className="text-sm lg:text-base row-start-2">
                               {address.city},
                             </span>
-                            <span className="text-sm font-serif row-start-2">
+                            <span className="text-sm lg:text-base row-start-2">
                               {address.state},
                             </span>
-                            <span className="text-sm font-serif row-start-2">
+                            <span className="text-sm lg:text-base row-start-2">
                               {address.pinCode}
                             </span>
                           </div>
                           <button
                             onClick={() => handleActiveAddress(address._id)}
                             className={`${
-                              address.activated ? "bg-Lgreen" : "bg-gray-200"
-                            } text-black px-2 font-extralight rounded-2xl`}
+                              address.activated
+                                ? "bg-Lgreen p-2 text-white"
+                                : "bg-gray-200 border-[#EB5A2A] border p-2"
+                            } text-black px-2 font-light rounded-2xl`}
                           >
-                            {address.activated ? "Selected" : "select"}
+                            {address.activated ? "Selected" : "Select"}
                           </button>
                         </div>
                       );
                     })}
                   </div>
                   <button
-                    className="bg-Lgreen text-black w-40 px-1 py-1 font-extralight rounded-2xl drop-shadow-lg hover:bg-green hover:drop-shadow-2xl transition duration-150 ease-in-out"
+                    className="bg-Lgreen text-white w-40 px-1 py-1 font-light rounded-2xl drop-shadow-lg hover:bg-green hover:drop-shadow-2xl transition duration-150 ease-in-out"
                     onClick={() => setAddAddress(true)}
                   >
                     Add Address

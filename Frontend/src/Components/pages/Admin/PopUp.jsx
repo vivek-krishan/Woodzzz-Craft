@@ -271,11 +271,12 @@ const PopUp = ({ onClose }) => {
               type="number"
               name="rating"
               id="rating"
-              required={true}
+              required
               placeholder="Rating"
-              className="px-3 py-2 rounded-xl  text-black"
+              className="px-3 py-2 rounded-xl text-black"
               min="1"
               max="5"
+              step="0.5"
             />
           </div>
         </section>
