@@ -8,11 +8,16 @@ import PopUp from "../../Genral purpose/PopUpWrapper";
 import Button from "../../Genral purpose/Buttons";
 import LoadingUI from "../../Genral purpose/Loading";
 import { parseErrorMessage } from "../../Utils/ErrorMessageParser";
+import { Eye, EyeOff } from "lucide-react";
 
 const LogIn = ({ startLoading, stopLoading }) => {
   // Utility variables
   const [popup, setPopup] = useState(false);
   const changePasswordRef = useRef(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const [user, setUser] = useState({
     email: "",
@@ -111,7 +116,25 @@ const LogIn = ({ startLoading, stopLoading }) => {
             >
               Password
             </label>
-            <input
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 pr-10 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black"
+                placeholder="Password"
+                name="passkey"
+                value={user.passkey}
+                onChange={HandelInputChange}
+                required
+              />
+              <button
+                type="button"
+                onClick={toggleShowPassword}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-gray-600 hover:text-black focus:outline-none"
+              >
+                {showPassword ? <Eye /> : <EyeOff />}
+              </button>
+            </div>
+            {/* <input
               type="password"
               className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
               placeholder="Password"
@@ -119,7 +142,7 @@ const LogIn = ({ startLoading, stopLoading }) => {
               value={user.passkey}
               onChange={HandelInputChange}
               required
-            />
+            /> */}
           </div>
         </form>
 

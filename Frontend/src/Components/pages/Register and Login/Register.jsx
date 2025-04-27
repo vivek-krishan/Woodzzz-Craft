@@ -8,6 +8,7 @@ import PopUp from "../../Genral purpose/PopUpWrapper";
 import Button from "../../Genral purpose/Buttons";
 import LoadingUI from "../../Genral purpose/Loading";
 import { parseErrorMessage } from "../../Utils/ErrorMessageParser";
+import { Eye, EyeOff } from "lucide-react";
 
 const Register = ({ startLoading, stopLoading }) => {
   // All Variables declaration for this components
@@ -17,7 +18,11 @@ const Register = ({ startLoading, stopLoading }) => {
   const user = useSelector((store) => store.UserInfo.user);
   const [popup, setPopup] = useState(false);
   const changePasswordRef = useRef(null);
-  console.log(user);
+  const [showPassword, setShowPassword] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+  // console.log(user);
 
   // All function definition for this components
   const handleRegister = async () => {
@@ -113,13 +118,31 @@ const Register = ({ startLoading, stopLoading }) => {
                   >
                     Old Password
                   </label>
-                  <input
+                  {/* <input
                     type="password"
                     className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
                     placeholder="Old Password"
                     name="oldPassword"
                     required
-                  />
+                  /> */}
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 pr-10 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black"
+                      placeholder="Password"
+                      name="passkey"
+                      // value={passkey}
+                      // onChange={HandelInputChange}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={toggleShowPassword}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-gray-600 hover:text-black focus:outline-none"
+                    >
+                      {showPassword ? <Eye /> : <EyeOff />}
+                    </button>
+                  </div>
                 </div>
                 <div className="password w-72 m-5">
                   <label
@@ -128,13 +151,31 @@ const Register = ({ startLoading, stopLoading }) => {
                   >
                     New Password
                   </label>
-                  <input
+                  {/* <input
                     type="password"
                     className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
                     placeholder="New Password"
                     name="newPassword"
                     required
-                  />
+                  /> */}
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 pr-10 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black"
+                      placeholder="Password"
+                      name="passkey"
+                      // value={passkey}
+                      // onChange={HandelInputChange}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={toggleShowPassword}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-gray-600 hover:text-black focus:outline-none"
+                    >
+                      {showPassword ? <Eye /> : <EyeOff />}
+                    </button>
+                  </div>
                 </div>
 
                 <Button
@@ -195,13 +236,31 @@ const Register = ({ startLoading, stopLoading }) => {
                   required
                 />
 
-                <input
+                {/* <input
                   type="password"
                   className="lg:row-start-2 bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black "
                   placeholder="Password"
                   name="passkey"
                   required
-                />
+                /> */}
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 pr-10 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black"
+                    placeholder="Password"
+                    name="passkey"
+                    // value={passkey}
+                    // onChange={HandelInputChange}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleShowPassword}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-gray-600 hover:text-black focus:outline-none"
+                  >
+                    {showPassword ? <Eye /> : <EyeOff />}
+                  </button>
+                </div>
               </div>
               <div className="Address w-full  lg:mx-10">
                 <label className="block mb-2 text-lg w-fit font-serif txt-Gray">

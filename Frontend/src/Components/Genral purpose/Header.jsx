@@ -13,6 +13,10 @@ import {
   ShoppingCart,
   ListCollapse,
   Package,
+  Pencil,
+  Store,
+  List,
+  User,
 } from "lucide-react";
 import { AiOutlinePinterest } from "react-icons/ai";
 import { alertInfo } from "../Utils/Alert";
@@ -33,12 +37,16 @@ const HamburgerMenu = ({ onClose }) => {
     { path: "/all-products", label: "Collection", icon: <Package /> },
     { path: "/about", label: "About us", icon: <ListCollapse /> },
     { path: "/cart", label: "Cart", icon: <ShoppingCart /> },
+    { path: "/authentication", label: "Edit Password", icon: <Pen /> },
     ...(user?.[0]?.admin ? [{ path: "/admin", label: "Admin" }] : []),
     // { path: "#", label: "Wishlist" },
   ];
 
   const handleClickOutside = (e) => {
     if (modelRef.current === e.target) onClose();
+  };
+  const handleAuthentication = () => {
+    navigate("/authentication");
   };
 
   return (
@@ -75,6 +83,15 @@ const HamburgerMenu = ({ onClose }) => {
             </Link>
           ))}
         </section>
+        {/* <span>
+          <button
+            className="bg-green px-2 py-1 rounded-lg text-white hover:bg-Lgreen transition duration-200 ease-in-out text-xs lg:text-base flex justify-center items-center lg:gap-1"
+            onClick={handleAuthentication}
+          >
+            <Pen className="lg:h-5 h-4" />
+            Password
+          </button>
+        </span> */}
       </div>
     </motion.div>
   );
@@ -148,11 +165,62 @@ const Header = () => {
   }, [dispatch, navigate]);
 
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/all-products", label: "Collection" },
-    { path: "/about", label: "About us" },
-    { path: "/cart", label: "Cart" },
-    ...(user?.[0]?.admin ? [{ path: "/admin", label: "Admin" }] : []),
+    {
+      path: "/",
+      label: (
+        <h1 className="flex justify-center items-center gap-1">
+          <Home />
+          Home
+        </h1>
+      ),
+    },
+    {
+      path: "/all-products",
+      label: (
+        <h1 className="flex justify-center items-center gap-1">
+          <List />
+          Collections
+        </h1>
+      ),
+    },
+    {
+      path: "/about",
+      label: (
+        <h1 className="flex justify-center items-center gap-1">
+          <Store />
+          About us
+        </h1>
+      ),
+    },
+    {
+      path: "/cart",
+      label: (
+        <h1 className="flex justify-center items-center gap-1">
+          <ShoppingCart />
+          Cart
+        </h1>
+      ),
+    },
+    {
+      path: "/authentication",
+      label: (
+        <h1 className="flex justify-center items-center gap-1">
+          <Pencil /> Edit Password
+        </h1>
+      ),
+    },
+    ...(user?.[0]?.admin
+      ? [
+          {
+            path: "/admin",
+            label: (
+              <h1 className="flex justify-center items-center gap-1">
+                <User /> Admin
+              </h1>
+            ),
+          },
+        ]
+      : []),
   ];
 
   const socialLinks = [
@@ -209,7 +277,7 @@ const Header = () => {
                 <span className="lg:text-2xl text-lg truncate txt-green font-Caveat font-bold">
                   {user[0]?.fullName}
                 </span>
-                <span>
+                {/* <span>
                   <button
                     className="bg-green px-2 py-1 rounded-lg text-white hover:bg-Lgreen transition duration-200 ease-in-out text-xs lg:text-base flex justify-center items-center lg:gap-1"
                     onClick={handleAuthentication}
@@ -217,7 +285,7 @@ const Header = () => {
                     <Pen className="lg:h-5 h-4" />
                     Password
                   </button>
-                </span>
+                </span> */}
               </h1>
               <button
                 className="bg-green px-3 rounded-lg text-white hover:bg-Lgreen transition duration-200 ease-in-out text-sm lg:text-lg mt-2"
