@@ -303,7 +303,7 @@ const productUI = ({ image, name, quantity }) => {
                                                                     "
                                                                     width="79.09324208725407"
                                                                     height="105.859375"
-                                                                    alt="${image}"
+                                                                    alt="product-image"
                                                                     src="${image.url}"
                                                                   />
                                                                 </div>

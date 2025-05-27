@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
   return {
     define: {
       "process.env.DOMAIN_URL": JSON.stringify(env.DOMAIN_URL),
+      "process.env.razorpay_key_id": JSON.stringify(env.razorpay_key_id),
     },
     plugins: [react()],
   };

@@ -10,10 +10,17 @@ import { UploadImages } from "../utils/imageKit.io.js";
 
 // This will upload a new product to the database
 const UploadNewProduct = asyncHandler(async (req, res) => {
-  const { productId, name, description, summery, oldPrice, newPrice, rating } =
-    req.body;
-
-  console.log(req.body);
+  const {
+    productId,
+    name,
+    description,
+    summery,
+    oldPrice,
+    newPrice,
+    rating,
+    customization,
+    customizationType,
+  } = req.body;
 
   if ([name, description, summery].some((field) => field.trim() === ""))
     throw new ApiError(400, "All fields are required");
@@ -51,6 +58,14 @@ const UploadNewProduct = asyncHandler(async (req, res) => {
       "Failed to Upload due to some internal error ! Please try again"
     );
 
+  let customizationData = {};
+  if (customization) {
+    customizationData = {
+      status: customization,
+      customizationType: customizationType,
+    };
+  }
+
   const newProduct = await Product.create({
     productId,
     name,
@@ -62,6 +77,7 @@ const UploadNewProduct = asyncHandler(async (req, res) => {
     },
     rating,
     images: [{ url: Image.url, fileId: Image.fileId }],
+    customization: customizationData,
   });
 
   const createdProduct = await Product.findById(newProduct._id);
@@ -196,7 +212,7 @@ const AddImages = asyncHandler(async (req, res) => {
 
   // Validate the images in request
   const images = req.files;
-  console.log("Image file------------",req.files);
+  console.log("Image file------------", req.files);
   if (!images || images.length === 0) {
     throw new ApiError(400, "Images not found! Please upload the images.");
   }
@@ -309,6 +325,27 @@ const DeleteProduct = asyncHandler(async (req, res) => {
     );
 });
 
+const toggleStockStatus = asyncHandler(async (req, res) => {
+  const { productId } = req.params;
+
+  if (!productId) throw new ApiError(400, "Product Id not found!");
+
+  const product = await Product.findById(productId);
+  if (!product) throw new ApiError(404, "Product not found!");
+  product.inStock = !product.inStock; // Toggle the inStock status
+  await product.save();
+
+  res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        product,
+        `Product stock status updated to ${product.inStock ? "in stock" : "out of stock"}`
+      )
+    );
+});
+
 export {
   AddImages,
   DeleteProduct,
@@ -317,4 +354,5 @@ export {
   GetProductDetails,
   UpdateProductDetails,
   ClearAndUpdateImages,
+  toggleStockStatus,
 };

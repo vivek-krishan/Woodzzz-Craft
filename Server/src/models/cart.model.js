@@ -10,11 +10,19 @@ const cartSchema = new Schema(
     cartProduct: {
       type: Schema.Types.ObjectId,
       ref: "Product",
-      required: true
+      required: true,
     },
     quantity: {
       type: Number,
       default: 1,
+    },
+    customization: {
+      data: {
+        type: String,
+      },
+      fileId: {
+        type: String,
+      },
     },
   },
   { timestamps: true }

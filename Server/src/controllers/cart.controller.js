@@ -5,6 +5,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import { Product } from "../models/product.model.js";
 import { Cart } from "../models/cart.model.js";
 import { User } from "../models/user.model.js";
+import { UploadImages } from "../utils/imageKit.io.js";
 
 const AddToCart = asyncHandler(async (req, res) => {
   const { productId } = req.params;
@@ -29,9 +30,44 @@ const AddToCart = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, populatedCartItem, "Added successfully"));
   }
 
+  let customizationData = {};
+  if (product.customization.status) {
+    if (product.customization.customizationType === "text") {
+      customizationData = { data: req.body.data };
+      console.log(req.body);
+      if (!customizationData.data)
+        throw new ApiError(404, "Customization data is required!");
+    } else if (product.customization.customizationType === "image") {
+      const imageFile = req.file;
+      console.log(req.file);
+      if (!imageFile)
+        throw new ApiError(404, "Customization Image file not found!");
+
+      Image = await UploadImages(
+        imageFile.filename,
+        {
+          root: "woodz-craft",
+          name: `${product.name.split(" ").join("-")}/${req.user.fullName.split(" ").join("-")}-customization`,
+        },
+        [req.user.fullName]
+      );
+
+      if (!Image)
+        throw new ApiError(500, "Failed to upload the customization file");
+
+      customizationData = {
+        data: Image.url,
+        fileId: Image.fileId,
+      };
+    }
+
+    await product.save();
+  }
+
   const newCartItem = await Cart.create({
     user: req.user._id,
     cartProduct: product._id,
+    customization: customizationData,
   });
 
   const createdCart = await Cart.findById(newCartItem._id);

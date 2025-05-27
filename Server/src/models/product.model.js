@@ -37,6 +37,20 @@ const productSchema = new Schema(
       type: Number,
       required: true,
     },
+    customization: {
+      status: {
+        type: Boolean,
+        default: false,
+      },
+      customizationType: {
+        type: String,
+        enum: ["text", "image"],
+      },
+    },
+    inStock: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );

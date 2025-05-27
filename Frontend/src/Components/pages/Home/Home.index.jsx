@@ -26,11 +26,8 @@ function Home() {
         <div className="Players overflow-hidden overflow-x-scroll no-scrollbar flex flex-col justify-center items-start">
           <div className="flex gap-5 m-5 lg:ml-10 mt-10 lg:mt-20 ">
             <Banner
-              images={10}
-              start={10}
-              details={true}
-              width={"10vw"}
-              height={"20vh"}
+              images={[0,10]}
+              
             />
           </div>
         </div>

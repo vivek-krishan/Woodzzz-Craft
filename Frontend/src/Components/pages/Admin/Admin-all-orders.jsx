@@ -4,27 +4,45 @@ import { formatDate } from "../../Utils/FormatDateTime";
 import { FetchData } from "../../Utils/fetchFromAPI";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import LoadingUI from "../../Genral purpose/Loading";
+import { alertSuccess } from "../../Utils/Alert";
+import Button from "../../Genral purpose/Buttons";
 
-function AllOrders({ startLoading, stopLoading }) {
-  const [allOrders, setAllOrders] = useState([]);
+function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
+  // const [allOrders, setAllOrders] = useState([]);
   const [handlePopup, setHandlePopup] = useState({});
 
-  useEffect(() => {
-    const FetchAllOrders = async () => {
-      try {
-        startLoading();
-        const response = await FetchData("orders/get-my-orders", "get");
-        setAllOrders(response.data.data);
-        console.log("All orders", response);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        stopLoading();
-      }
-    };
+  const handleMarkCompleted = async (orderId) => {
+    try {
+      startLoading();
+      const response = await FetchData(
+        `dashboard/complete-order/${orderId}`,
+        "post",
+        {}
+      );
+      console.log("Marked order as completed:", response.data);
+      alertSuccess(response.data.message);
+    } catch (error) {
+      console.error("Error marking order as completed:", error);
+    } finally {
+      stopLoading();
+    }
+  };
 
-    FetchAllOrders();
-  }, []);
+  // useEffect(() => {
+  //   const fetchAllOrders = async () => {
+  //     try {
+  //       startLoading();
+  //       const response = await FetchData("dashboard/all-orders", "get");
+  //       setAllOrders(response.data.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       stopLoading();
+  //     }
+  //   };
+
+  //   fetchAllOrders();
+  // }, []);
 
   const countTotalItems = (order) => {
     order.products.map((product) => {});
@@ -38,9 +56,9 @@ function AllOrders({ startLoading, stopLoading }) {
         </div>
       </div>
 
-      <div className='mt-16 text-black bg-gradient-to-b from-white/95 to-white/80 rounded-lg overflow-hidden border border-white/10 shadow-2xl'>
-        <table className='w-full'>
-          <tbody>
+      <div className='h-[80vh]  overflow-y-scroll  mt-16 text-black bg-gradient-to-b from-white/95 to-white/80 rounded-lg overflow-hidden border border-white/10 shadow-2xl  '>
+        <table className='w-full  '>
+          <tbody className=''>
             <AnimatePresence>
               {allOrders?.map((order, index) => (
                 <motion.tr
@@ -48,7 +66,7 @@ function AllOrders({ startLoading, stopLoading }) {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className='group relative  cursor-pointer hover:bg-white/50 transition-colors hover:drop-shadow-2xl duration-150 ease-in-out border flex flex-wrap '
+                  className='group relative  cursor-pointer hover:bg-white/50 transition-colors hover:drop-shadow-2xl duration-150 ease-in-out border flex flex-wrap'
                   onClick={() =>
                     setHandlePopup((prev) => ({
                       ...prev,
@@ -56,15 +74,22 @@ function AllOrders({ startLoading, stopLoading }) {
                     }))
                   }
                 >
-                  <td className='relative p-4 w-20'>
+                  <td className='relative p-4 w-5 '>
                     <div className='flex items-center gap-2'>
                       <span className='text-black font-bold'>{index + 1}</span>
                     </div>
                   </td>
-                  <td className='p-4 w-1/5 '>
+                  <td className='relative p-4 w-52 '>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-black text-lg font-bold'>
+                        {order?.user?.fullName}
+                      </span>
+                    </div>
+                  </td>
+                  <td className='p-4 w-fit  '>
                     <div className='flex items-center gap-3'>
                       <div className='flex flex-col'>
-                        <span className='text-black font-medium'>
+                        <span className='text-black text-sm font-medium'>
                           Ordered on {formatDate(order.createdAt)}
                         </span>
                         <span className='text-black/40 text-xs'>
@@ -73,33 +98,24 @@ function AllOrders({ startLoading, stopLoading }) {
                       </div>
                     </div>
                   </td>
-                  <td className='p-4 w-1/5'>
+                  <td className='p-4 w-40 '>
                     <div className='flex items-center gap-3'>
                       <div className='flex flex-col'>
-                        <span className='text-black font-medium'>
-                          Total Products {formatDate(order.createdAt)}
+                        <span className='text-black text-sm'>
+                          {`${order?.user?.address[0].street}, ${order?.user?.address[0].city},`}
+                          <br />
+                          {`${order?.user?.address[0].country},  ${order?.user?.address[0].pinCode}`}
                         </span>
                       </div>
                     </div>
                   </td>
-                  <td className='p-4 w-1/5'>
+
+                  <td className='p-4 '>
                     <div className='flex items-center gap-3'>
                       <div className='flex flex-col'>
-                        <span className='font-bold'>Payment Details</span>
-                        <span className='text-gray-600 text-sm'>
-                          payment Status: {order.paymentStatus}
+                        <span className='text-black text-sm'>
+                          {order?.status}
                         </span>
-                        <span className='text-gray-600 text-sm'>
-                          payment Method: {order.paymentMethod}
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className='p-4 w-1/5'>
-                    <div className='flex items-center gap-3'>
-                      <div className='flex flex-col items-center'>
-                        <span className='font-bold'>Order Status:</span>
-                        <span className="font-sm text-gray-600">{order.status}</span>
                       </div>
                     </div>
                   </td>
@@ -111,6 +127,28 @@ function AllOrders({ startLoading, stopLoading }) {
                             <ChevronUp />
                           ) : (
                             <ChevronDown />
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td className='p-4 w-64 '>
+                    <div className='flex items-center justify-center gap-3'>
+                      <div className='flex flex-col'>
+                        <span className='text-black font-medium'>
+                          {order?.status === "completed" ? (
+                            <Button
+                              className={"text-sm cursor-not-allowed"}
+                            >
+                              completed
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={() => handleMarkCompleted(order._id)}
+                              className={"text-sm"}
+                            >
+                              Mark as completed
+                            </Button>
                           )}
                         </span>
                       </div>
@@ -225,4 +263,4 @@ function AllOrders({ startLoading, stopLoading }) {
   );
 }
 
-export default LoadingUI(AllOrders);
+export default LoadingUI(AdminAllOrders);

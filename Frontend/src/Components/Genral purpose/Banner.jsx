@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const Banner = ({ images }) => {
   const Products = useSelector((store) => store.ProductsList.products);
 
-  const productSubset = Products && Products.slice(0, images);
+  const productSubset = Products && Products.slice(images[0], images[1]);
   // console.log(productSubset);
 
   return productSubset?.map((item, index) => {

@@ -11,6 +11,7 @@ import {
   SubtractFromCart,
 } from "../controllers/cart.controller.js";
 import { VerifyUser } from "../middlewares/auth.middleware.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
 
@@ -21,7 +22,7 @@ router.route("/cart").get(GetCart);
 router
   .route("/cart/:productId")
   .get(IsAddedToCart)
-  .post(AddToCart)
+  .post(upload.single("customization"), AddToCart)
   .delete(DeleteFromCart);
 
 router.route("/cart/subtract/:productId").post(SubtractFromCart);

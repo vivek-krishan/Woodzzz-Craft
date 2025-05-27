@@ -18,6 +18,14 @@ const orderSchema = new Schema(
           type: Number,
           required: true,
         },
+        customization: {
+          data: {
+            type: String,
+          },
+          fileId: {
+            type: String,
+          },
+        },
       },
     ],
     totalPrice: {
@@ -27,7 +35,17 @@ const orderSchema = new Schema(
     status: {
       type: String,
       default: "pending",
-      enum: ["pending", "completed"],
+      enum: ["pending", "confirmed", "completed"],
+    },
+    paymentStatus: {
+      type: String,
+      default: "pending",
+      enum: ["pending", "completed", "failed"],
+    },
+    paymentMethod: {
+      type: String,
+      default: "cod",
+      enum: ["cod", "online"],
     },
   },
   { timestamps: true }

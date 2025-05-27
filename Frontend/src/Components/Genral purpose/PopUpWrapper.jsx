@@ -17,9 +17,9 @@ const PopUp = ({ children, onClose }) => {
       className="Popup-div  fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50 "
     >
       <div className=" flex flex-col gap-5 text-white">
-        <div className=" Close-Btn place-self-end flex flex-row-reverse gap-5">
+        <div className=" Close-Btn place-self-end flex flex-row-reverse gap-5 ">
           <button onClick={onClose}>
-            <X size={30} />
+            <X color="black" size={30} />
           </button>
         </div>
         {children}

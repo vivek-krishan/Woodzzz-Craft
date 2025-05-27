@@ -7,6 +7,7 @@ import {
   GetProductDetails,
   UpdateProductDetails,
   ClearAndUpdateImages,
+  toggleStockStatus,
 } from "../controllers/product.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { VerifyAdmin } from "../middlewares/checkAdmin.middleware.js";
@@ -26,6 +27,8 @@ router
 router
   .route("/update-all-images/:productId")
   .patch(VerifyAdmin, upload.array("images"), ClearAndUpdateImages);
+
+router.route("/toggle-stock/:productId").patch(VerifyAdmin, toggleStockStatus);
 
 router
   .route("/product-details/:productId")
