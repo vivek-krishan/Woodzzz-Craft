@@ -1005,8 +1005,7 @@ export const OrderConformation = (
                                                   "
                                                 >
                                                   Your order is being processed
-                                                  by UPS and is on its way to
-                                                  Amsterdam. You will receive an
+                                                  by UPS and is on its way . You will receive an
                                                   update from us regarding the
                                                   status of your order and the
                                                   delivery of the parcel.
