@@ -95,8 +95,8 @@ const RegisterUser = asyncHandler(async (req, res) => {
 
   const emailBodyText = emailBody(
     fullName,
-    `${process.env.FRONTEND_URL}/login`,
-    `${process.env.FRONTEND_URL}/support`
+    `${process.env.ORIGIN_1}/login`,
+    `${process.env.ORIGIN_1}/support`
   );
 
   SendMail(
