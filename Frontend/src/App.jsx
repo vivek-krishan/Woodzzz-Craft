@@ -20,6 +20,7 @@ import BGImage from "/wooden-bg.png";
 import About from "./Components/pages/About/About.index";
 import Fake_Error from "./Components/Genral purpose/Fake_Error";
 import LoadingUI from "./Components/Genral purpose/Loading";
+import ContactUs from "./Components/pages/Contact/contactUs";
 
 function App({ startLoading, stopLoading }) {
   const Dispatch = useDispatch();
@@ -87,6 +88,7 @@ function App({ startLoading, stopLoading }) {
           <Route path="/search/:input" element={<SearchPage />} />
           <Route path="/authentication" element={<Authentication />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<ContactUs />} />
           <Route path="/admin" element={<AdminLayout />} />
           <Route path="/error" element={<Fake_Error />} />
         </Routes>
