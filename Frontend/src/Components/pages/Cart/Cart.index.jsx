@@ -118,9 +118,9 @@ const Cart = ({ startLoading, stopLoading }) => {
     const order = await FetchData("payment/create-new-paymentId", "post", {
       options: {
         // amount: (getTotalPayablePrice() * 1.1).toFixed(2),
-        amount: 100,
+        amount: totalPrice,
         currency: "INR",
-        receipt: `Woodz-craft receipt_ + orderId`, // Ensure receipt is unique
+        receipt: `Woodz-craft receipt_${orderId}`, // Ensure receipt is unique
       },
     });
 
@@ -153,7 +153,6 @@ const Cart = ({ startLoading, stopLoading }) => {
         } else if (isValidated.status === 201) {
           alertSuccess("Payment Successful😊");
           setPaymentPopup(false);
-          
         }
       },
     };

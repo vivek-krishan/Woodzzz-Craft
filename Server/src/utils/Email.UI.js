@@ -479,7 +479,7 @@ export const OrderConformation = (
   address = [],
   products = []
 ) => {
-  console.log(products);
+  // console.log(products);
 
   const allProductsUI = products.map((product) => productUI(product));
 

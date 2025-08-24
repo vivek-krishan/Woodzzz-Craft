@@ -14,33 +14,30 @@ const CreatePaymentId = asyncHandler(async (req, res) => {
   // Ensure amount is in paise (multiply by 100)
   const paymentOptions = {
     // amount: options.amount * 100, // Convert to paise
-    amount: 100, // For testing, set a fixed amount of 100 paise (1 INR)
+    amount: options.amount, // For testing, set a fixed amount of 100 paise (1 INR)
     currency: options.currency,
-    receipt: `receipt_${Date.now()}`, // Ensure a receipt is always there
+    receipt: `${options.receipt}_${Date.now()}`, // Ensure a receipt is always there
     payment_capture: 1, // Auto-capture payment
   };
 
-  console.log("Creating Razorpay Order with options:", paymentOptions);
+  console.log("Razorpay options:", paymentOptions);
 
   const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_SECRET,
   });
 
-  try {
-    const order = await razorpay.orders.create(paymentOptions);
+  if (!razorpay) throw new ApiError(402, "Razorpay instance not created");
 
-    console.log("Razorpay Order Created:", order);
+  const order = await razorpay.orders.create(paymentOptions);
 
-    if (!order || !order.id) throw new ApiError(500, "Order not created");
+  console.log("Razorpay Order:", { order });
 
-    res
-      .status(200)
-      .json(new ApiResponse(200, order, "Order created successfully"));
-  } catch (error) {
-    console.error("Error Creating Order:", error);
-    throw new ApiError(500, "Failed to create order");
-  }
+  if (!order || !order.id) throw new ApiError(500, "Order not created");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, order, "Order created successfully"));
 });
 
 const ValidatePayment = asyncHandler(async (req, res) => {
