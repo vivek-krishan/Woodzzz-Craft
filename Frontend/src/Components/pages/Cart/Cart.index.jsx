@@ -294,6 +294,7 @@ const Cart = ({ startLoading, stopLoading }) => {
                 </div>
               </PopUp>
             )}
+
             {addAddress && (
               <>
                 <PopUp onClose={() => setAddAddress(false)}>
@@ -357,7 +358,7 @@ const Cart = ({ startLoading, stopLoading }) => {
               <PopUp onClose={() => setPaymentPopup(false)}>
                 <div className='lg:w-[40vw] lg:h-40 lg:-right-80 lg:-top-2 rounded-xl flex justify-center items-center bg-Tan py-5 text-black border'>
                   <div className='lg:w-5/6 flex justify-evenly items-center'>
-                    <Button onClick={handleOrder}>Cash on delivery</Button>
+                    {/* <Button onClick={handleOrder}>Cash on delivery</Button> */}
                     <Button onClick={OnlinePayment}>Online payment</Button>
                   </div>
                 </div>
