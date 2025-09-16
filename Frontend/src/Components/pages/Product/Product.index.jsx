@@ -118,6 +118,7 @@ const Product = ({ startLoading, stopLoading }) => {
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
+     
       alertError(parseErrorMessage(error.response.data));
     } finally {
       setLoading(false);
