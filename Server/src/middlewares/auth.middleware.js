@@ -18,11 +18,13 @@ export const VerifyUser = asyncHandler(async (req, res, next) => {
       "-password -refreshToken"
     );
 
-    if (!user) throw new ApiError(400, "Invalid Token");
+    if (!user) throw new ApiError(400, "Please Login User not found !");
 
     req.user = user;
     next();
   } catch (error) {
-    throw new ApiError(401, error.message || "Invalid Token");
+    console.log(error);
+    throw new ApiError(401, "Please Login User not found !");
+    // throw new ApiError(401, error.message || "Invalid Token");
   }
 });
