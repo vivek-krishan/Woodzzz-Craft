@@ -103,7 +103,7 @@ const Product = ({ startLoading, stopLoading }) => {
       return;
     }
 
-    let formData = null;
+    var formData = {};
     if (product.customization?.status) {
       formData = new FormData(customizationFormRef.current);
     }
