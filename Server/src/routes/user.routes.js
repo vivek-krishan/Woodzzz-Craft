@@ -30,6 +30,6 @@ router.route("/get-watch-history").get(VerifyUser, GetOrderHistory);
 router.route("/add-address").post(VerifyUser, AddAddress);
 router.route("/select-address").post(VerifyUser, selectActiveAddress);
 
-router.route("/change-password").post(ChangePassword);
+router.route("/change-password").post(VerifyUser, ChangePassword);
 
 export default router;

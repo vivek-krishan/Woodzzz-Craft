@@ -11,6 +11,7 @@ const AddToCart = asyncHandler(async (req, res) => {
   const { productId } = req.params;
 
   if (!productId) throw new ApiError(400, "Product Id not found");
+  if (!req.user) throw new ApiError(401, "Please login to add to cart");
 
   const product = await Product.findOne({ productId });
 

@@ -98,7 +98,12 @@ const Product = ({ startLoading, stopLoading }) => {
   const HandelAddToCart = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
-    let formData;
+    if (!user || user.length === 0) {
+      alertError("Please Log in");
+      return;
+    }
+
+    let formData = null;
     if (product.customization?.status) {
       formData = new FormData(customizationFormRef.current);
     }
@@ -109,7 +114,7 @@ const Product = ({ startLoading, stopLoading }) => {
         `carts/cart/${product.productId}`,
         "post",
         formData,
-        true
+        formData ? true : false
       );
 
       console.log("Added to your cart:", response.data);
@@ -118,7 +123,7 @@ const Product = ({ startLoading, stopLoading }) => {
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
-     
+
       alertError(parseErrorMessage(error.response.data));
     } finally {
       setLoading(false);
