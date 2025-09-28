@@ -248,11 +248,16 @@ const DeleteFromWishlist = asyncHandler(async (req, res) => {
 
   // deleting liked item from user's likedProduct section
   const user = await User.findById(req.user._id);
-  const index = user.likedProduct.findIndex(deletedItem._id);
+  const index = user.likedProduct.findIndex(
+    (item) => item.toString() === deletedItem._id.toString()
+  );
+  console.log({ index });
   user.likedProduct.splice(index);
   await user.save();
 
-  res.status(200).json(new ApiResponse(200, deletedItem, "Added successfully"));
+  res
+    .status(200)
+    .json(new ApiResponse(200, deletedItem, "removed successfully"));
 });
 
 const CheckIfLiked = asyncHandler(async (req, res) => {

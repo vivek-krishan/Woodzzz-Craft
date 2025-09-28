@@ -105,26 +105,36 @@ const ValidatePayment = asyncHandler(async (req, res) => {
     throw new ApiError(405, "Authentication failed!!! Please reverify");
   }
 
+  // Check if the orderId is valid and belongs to the user and also updating the order's payment status
+  const order = await mongoose.model("Order").findById(orderId);
+  if (!order) {
+    order.paymentStatus = "failed";
+    order.paymentMethod = "online";
+    order.status = "failed"; // Update order status to confirmed
+    await order.save();
+    throw new ApiError(404, "Order not found !");
+  }
+
+  if (!order.user.equals(req.user._id)) {
+    order.paymentStatus = "failed";
+    order.paymentMethod = "online";
+    order.status = "failed"; // Update order status to confirmed
+    await order.save();
+    throw new ApiError(403, "Unauthorized access to this order");
+  }
+
   const sha = Crypto.createHmac("sha256", process.env.RAZORPAY_SECRET);
   sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
   const digest = sha.digest("hex");
   if (digest !== razorpay_signature) {
+    order.paymentStatus = "failed";
+    order.paymentMethod = "online";
+    order.status = "failed"; // Update order status to confirmed
+    await order.save();
     return res
       .status(450)
       .json(new ApiResponse(450, {}, "Transaction is not legit!"));
   }
-
-  // Check if the orderId is valid and belongs to the user and also updating the order's payment status
-  const order = await mongoose.model("Order").findById(orderId);
-  if (!order) throw new ApiError(404, "Order not found !");
-
-  if (!order.user.equals(req.user._id))
-    throw new ApiError(403, "Unauthorized access to this order");
-
-  order.paymentStatus = "completed";
-  order.paymentMethod = "online";
-  order.status = "confirmed"; // Update order status to confirmed
-  await order.save();
 
   const newTransaction = new paymentTransaction({
     razorpay_payment_id,
@@ -136,6 +146,11 @@ const ValidatePayment = asyncHandler(async (req, res) => {
   });
 
   newTransaction.save();
+
+  order.paymentStatus = "completed";
+  order.paymentMethod = "online";
+  order.status = "confirmed"; // Update order status to confirmed
+  await order.save();
 
   res.status(201).json(
     new ApiResponse(

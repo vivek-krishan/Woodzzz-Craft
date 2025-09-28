@@ -97,6 +97,8 @@ const Cart = ({ startLoading, stopLoading }) => {
   };
 
   const OnlinePayment = async (e) => {
+    setPaymentPopup(false);
+
     let orderId;
     try {
       orderId = await handleOrder(e);
@@ -148,6 +150,7 @@ const Cart = ({ startLoading, stopLoading }) => {
           body
         );
 
+        console.log({ isValidated });
         if (isValidated.status === 450) {
           alert("Payment Failed");
         } else if (isValidated.status === 201) {

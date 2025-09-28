@@ -147,6 +147,7 @@ const Product = ({ startLoading, stopLoading }) => {
     } catch (error) {
       console.error("Error uploading product:", error);
       alertError(parseErrorMessage(error.response.data));
+      setLike(false);
     } finally {
       stopLoading();
     }
@@ -167,6 +168,7 @@ const Product = ({ startLoading, stopLoading }) => {
     } catch (error) {
       console.error("Error in removing product from wishlist:", error);
       alertError(parseErrorMessage(error.response.data));
+      setLike(true);
     } finally {
       stopLoading();
     }
@@ -469,7 +471,7 @@ const Product = ({ startLoading, stopLoading }) => {
                   </button>
 
                   {showOption.updationOpt && (
-                    <div className='absolute flex flex-col lg:top-12 lg:left-20 gap-5 lg:mt-5 bg-white shadow-2xl p-4 z-20 lg:z-0 rounded-xl'>
+                    <div className='absolute flex flex-col lg:top-12 lg:left-20 gap-5 lg:mt-5 bg-white shadow-2xl p-4 lg:z-50 rounded-xl z-50'>
                       <button
                         onClick={handelUpdateImages}
                         className='px-4 py-2 hover:drop-shadow-xl scale-105 drop-shadow-lg border hover:bg-[#EB5A2A] hover:text-white rounded-full transition duration-150 ease-in-out border-[#EB5A2A]'
