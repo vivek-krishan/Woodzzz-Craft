@@ -51,15 +51,10 @@ const PopUp = ({ onClose }) => {
       formData.append("Image", inputImage); // Append the image file to the formData
       // Set the customization field based on isCustomizable
       formData.set("customization", isCustomizable);
-      // Log all FormData entries for debugging
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
+      
       
       const url = `${process.env.DOMAIN_URL}/api/v1/products/`;
       const AccessToken = localStorage.getItem("AccessToken");
-
-      //  console.log("AccessToken:", AccessToken);
 
       try {
         const response = await axios.post(url, formData, {
@@ -70,7 +65,7 @@ const PopUp = ({ onClose }) => {
           withCredentials: true,
         });
 
-        console.log("Product uploaded successfully:", response.data);
+       
         setLoading(false);
         alertSuccess(response.data.message);
         formRef.current = "";
@@ -84,7 +79,7 @@ const PopUp = ({ onClose }) => {
     useEffect(() => {
       const fetchProductIds = () => {
         // Extract product IDs from the products
-        console.log(AllProducts);
+       
         AllProducts.map((product) => {
           existingProductIds.push(product.productId);
         });
@@ -95,11 +90,6 @@ const PopUp = ({ onClose }) => {
 
     const handleProductIdChange = (event) => {
       const value = Number(event.target.value); // Convert to number
-
-      // Debugging logs
-      console.log("All Products:", AllProducts);
-      console.log("Existing Product IDs:", existingProductIds);
-      console.log("Entered Product ID:", value);
 
       // Check if the entered product ID is unique
       if (existingProductIds.includes(value)) {

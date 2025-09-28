@@ -35,12 +35,12 @@ const AddToCart = asyncHandler(async (req, res) => {
   if (product.customization.status) {
     if (product.customization.customizationType === "text") {
       customizationData = { data: req.body.data };
-      console.log(req.body);
+     
       if (!customizationData.data)
         throw new ApiError(404, "Customization data is required!");
     } else if (product.customization.customizationType === "image") {
       const imageFile = req.file;
-      console.log(req.file);
+    
       if (!imageFile)
         throw new ApiError(404, "Customization Image file not found!");
 
@@ -136,7 +136,7 @@ const DeleteFromCart = asyncHandler(async (req, res) => {
     user: req.user._id,
   });
 
-  console.log(deletedItem);
+ 
 
   if (!deletedItem)
     throw new ApiError(
@@ -154,7 +154,7 @@ const DeleteFromCart = asyncHandler(async (req, res) => {
     user.cart.splice(index, 1); // Remove the item at the found index
     await user.save();
   } else {
-    console.log("Item not found in the cart.");
+  
   }
 
   res
@@ -208,8 +208,7 @@ const AddToWishlist = asyncHandler(async (req, res) => {
 
   const createdLikedCard = await Like.findById(newLikedProduct._id);
 
-  console.log("newLikedProduct", newLikedProduct);
-  console.log("createdLikedCard", createdLikedCard);
+
   if (!createdLikedCard)
     throw new ApiError(
       500,
@@ -251,7 +250,7 @@ const DeleteFromWishlist = asyncHandler(async (req, res) => {
   const index = user.likedProduct.findIndex(
     (item) => item.toString() === deletedItem._id.toString()
   );
-  console.log({ index });
+ 
   user.likedProduct.splice(index);
   await user.save();
 

@@ -181,9 +181,6 @@ const LogOutUser = asyncHandler(async (req, res) => {
 
   LogedOutUser.save();
 
-  console.log(LogedOutUser);
-  console.log("reached Logout");
-
   const options = {
     httpOnly: true,
     secure: true,

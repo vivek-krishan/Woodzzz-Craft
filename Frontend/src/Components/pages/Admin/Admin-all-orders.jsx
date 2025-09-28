@@ -19,7 +19,7 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
         "post",
         {}
       );
-      console.log("Marked order as completed:", response.data);
+      
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error marking order as completed:", error);

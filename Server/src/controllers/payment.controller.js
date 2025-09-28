@@ -20,24 +20,17 @@ import mongoose from "mongoose";
 //   payment_capture: 1, // Auto-capture payment
 // };
 
-//   console.log("Razorpay options:", paymentOptions);
+
 
 //   const razorpay = new Razorpay({
 //     key_id: process.env.RAZORPAY_KEY_ID,
 //     key_secret: process.env.RAZORPAY_SECRET,
 //   });
-//   console.log("Keyid", process.env.RAZORPAY_KEY_ID);
-//   console.log("secretkey", process.env.RAZORPAY_KEY_ID);
-//   console.log("razorpay instance", razorpay);
+//
 
 //   if (!razorpay) throw new ApiError(402, "Razorpay instance not created");
 
 //   const order = await razorpay.orders.create(paymentOptions);
-
-//   console.log(
-//     "------------------------------------------------Razorpay Order:",
-//     order
-//   );
 
 //   if (!order || !order.id) throw new ApiError(500, "Order not created");
 
@@ -58,8 +51,6 @@ const CreatePaymentId = asyncHandler(async (req, res) => {
     // ensure the length should not exceed 40 characters, including spaces or special characters, i have removed some part of the recipt to make it work..
     payment_capture: 1,
   };
-
-  console.log("Razorpay options:", paymentOptions);
 
   const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,

@@ -30,7 +30,7 @@ const Cart = ({ startLoading, stopLoading }) => {
     try {
       startLoading();
       const response = await FetchData("user/add-address", "post", formData);
-      // console.log(response);
+      
       // Storing data inside redux store
       Dispatch(clearUser());
       Dispatch(addUser(response.data.data.user));
@@ -50,7 +50,7 @@ const Cart = ({ startLoading, stopLoading }) => {
       const response = await FetchData("user/select-address", "post", {
         addressId: _id,
       });
-      // console.log(response);
+      
       // Storing data inside redux store
       Dispatch(clearUser());
       Dispatch(addUser(response.data.data.user));
@@ -65,7 +65,7 @@ const Cart = ({ startLoading, stopLoading }) => {
   };
 
   const getActivatedAddress = (user) => {
-    // console.log(user);
+    
     if (user === null) return null;
     return user[0]?.address.find((addr) => addr.activated === true) || null;
   };
@@ -83,7 +83,7 @@ const Cart = ({ startLoading, stopLoading }) => {
       const response = await FetchData("orders/", "post", {
         totalPrice,
       });
-      // console.log(response);
+      
       alertSuccess(response.data.message);
       SetCartProducts([]);
       stopLoading();
@@ -107,7 +107,7 @@ const Cart = ({ startLoading, stopLoading }) => {
         return;
       }
     } catch (error) {
-      console.log("Error in creating order:", error);
+      
       alertError(parseErrorMessage(error.response.data));
       return;
     }
@@ -126,8 +126,6 @@ const Cart = ({ startLoading, stopLoading }) => {
       },
     });
 
-    console.log(order);
-
     var options = {
       key: process.env.razorpay_key_id, // Enter the Key ID generated from the Dashboard
       order_id: order.data.data.id, // ✅ Correct key for order-based payments
@@ -135,8 +133,7 @@ const Cart = ({ startLoading, stopLoading }) => {
       description: "Monthly Test Plan",
       image: "/Logo.png",
       handler: async function (response) {
-        console.log(response); // Check response
-
+      
         const body = {
           ...response,
           amount: order.data.data.amount, // Pass correct amount
@@ -150,9 +147,8 @@ const Cart = ({ startLoading, stopLoading }) => {
           body
         );
 
-        console.log({ isValidated });
         if (isValidated.status === 450) {
-          alert("Payment Failed");
+          alertError("Payment Failed");
         } else if (isValidated.status === 201) {
           alertSuccess("Payment Successful😊");
           setPaymentPopup(false);
@@ -173,7 +169,7 @@ const Cart = ({ startLoading, stopLoading }) => {
     try {
       startLoading();
       const response = await FetchData(`carts/cart`, "get");
-      // console.log(response);
+      
       SetCartProducts(response.data.data);
     } catch (error) {
       console.log(error);
@@ -253,7 +249,7 @@ const Cart = ({ startLoading, stopLoading }) => {
               <PopUp onClose={() => setSelectAddress(false)}>
                 <div className='lg:w-[50vw] lg:h-52 lg:-right-80 lg:-top-2 rounded-xl flex flex-col items-center bg-Tan py-5 text-black border'>
                   <div className='lg:w-5/6'>
-                    {/* {console.log(user[0])} */}
+                    
                     {user[0].address.map((address) => {
                       return (
                         <div

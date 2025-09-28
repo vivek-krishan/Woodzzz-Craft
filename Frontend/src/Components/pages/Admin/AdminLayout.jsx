@@ -62,7 +62,7 @@ const AdminLayout = ({ startLoading, stopLoading }) => {
         "post",
         {}
       );
-      console.log("Marked order as completed:", response.data);
+     
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error marking order as completed:", error);
@@ -102,7 +102,7 @@ const AdminLayout = ({ startLoading, stopLoading }) => {
               </tr>
             </thead>
             <tbody className='text-gray-700 z-0'>
-              {/* {console.log(allOrders)} */}
+             
               {allOrders?.map((item, index) => (
                 <tr key={index} className='hover:bg-gray-50'>
                   <td className='px-4 py-2 border-b'>{item?.user?.fullName}</td>

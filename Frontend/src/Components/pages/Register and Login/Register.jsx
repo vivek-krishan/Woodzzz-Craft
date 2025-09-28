@@ -22,7 +22,7 @@ const Register = ({ startLoading, stopLoading }) => {
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
-  // console.log(user);
+ 
 
   // All function definition for this components
   const handleRegister = async () => {
@@ -31,7 +31,7 @@ const Register = ({ startLoading, stopLoading }) => {
     try {
       startLoading();
       const response = await FetchData("user/register", "post", formData);
-      console.log(response.data);
+    
       // Storing the tokens into browser's local storage
       localStorage.setItem("AccessToken", response.data.data.AccessToken);
       localStorage.setItem("RefreshToken", response.data.data.RefreshToken);
@@ -43,7 +43,7 @@ const Register = ({ startLoading, stopLoading }) => {
       alertInfo(response.data.message);
       navigate("/");
     } catch (error) {
-      console.log(error);
+    
       alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
@@ -61,7 +61,7 @@ const Register = ({ startLoading, stopLoading }) => {
         "post",
         formData
       );
-      console.log(response);
+    
       alertInfo(response.data.message);
       setPopup(false);
     } catch (error) {

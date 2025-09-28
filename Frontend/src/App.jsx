@@ -50,7 +50,7 @@ function App({ startLoading, stopLoading }) {
         RefreshToken,
       });
 
-      console.log("at re-login:", response.data);
+      
 
       // Storing the tokens into browser's local storage
       localStorage.setItem("AccessToken", response.data.data.AccessToken);
@@ -60,7 +60,7 @@ function App({ startLoading, stopLoading }) {
       Dispatch(clearUser());
       Dispatch(addUser(response.data.data.User));
 
-      // console.log(response);
+      
     } catch (error) {
       console.error(error);
     }

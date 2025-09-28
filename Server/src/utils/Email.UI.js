@@ -205,7 +205,6 @@ text-decoration: none
 </html>`;
 
 const productUI = ({ image, name, quantity }) => {
-  console.log(image, name, quantity);
   return ` <tr>
                                   <td align="center">
                                     <table
@@ -479,7 +478,6 @@ export const OrderConformation = (
   address = [],
   products = []
 ) => {
-  // console.log(products);
 
   const allProductsUI = products.map((product) => productUI(product));
 

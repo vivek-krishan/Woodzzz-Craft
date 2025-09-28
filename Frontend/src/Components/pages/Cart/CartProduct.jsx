@@ -18,7 +18,6 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
         "post"
       );
 
-      console.log("Added to your cart:", response.data);
       setUpdatedItem(response.data.data);
       alertSuccess(response.data.message);
     } catch (error) {
@@ -46,7 +45,6 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
         "post"
       );
 
-      console.log("Added to your cart:", response.data);
       setUpdatedItem(response.data.data);
       alertSuccess(response.data.message);
     } catch (error) {
@@ -67,7 +65,6 @@ const CartProduct = ({ item, startLoading, stopLoading }) => {
         "delete"
       );
 
-      console.log("Deleted from your cart:", response);
       setUpdatedItem({});
       alertSuccess(response.data.message);
     } catch (error) {

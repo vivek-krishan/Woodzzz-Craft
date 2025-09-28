@@ -133,8 +133,6 @@ const GetAllProducts = asyncHandler(async (req, res) => {
 const ClearAndUpdateImages = asyncHandler(async (req, res) => {
   const { productId } = req.params;
 
-  // console.log(req);
-
   if (!productId)
     throw new ApiError(
       400,
@@ -169,7 +167,7 @@ const ClearAndUpdateImages = asyncHandler(async (req, res) => {
 
   const uploadPromises = req.files.map(async (image) => {
     const UploadedImg = await UploadFileToCloudinary(image.path);
-    console.log(image.originalname, " is uploaded");
+   
     product.images.push(UploadedImg.url);
   });
 
@@ -212,7 +210,7 @@ const AddImages = asyncHandler(async (req, res) => {
 
   // Validate the images in request
   const images = req.files;
-  console.log("Image file------------", req.files);
+ 
   if (!images || images.length === 0) {
     throw new ApiError(400, "Images not found! Please upload the images.");
   }
@@ -263,8 +261,6 @@ const UpdateProductDetails = asyncHandler(async (req, res) => {
   const { productId } = req.params;
   const { name, description, summery, oldPrice, newPrice, rating } = req.body;
 
-  console.log(productId);
-
   if (
     [name, description, summery].some((field) => !field || field.trim() === "")
   ) {
@@ -272,8 +268,6 @@ const UpdateProductDetails = asyncHandler(async (req, res) => {
   }
 
   if (!productId) throw new ApiError(400, "product Id isn't found!");
-
-  console.log("price", newPrice, typeof newPrice);
 
   if (!newPrice || !rating)
     throw new ApiError(400, "Price and Rating both are required");
@@ -296,16 +290,12 @@ const UpdateProductDetails = asyncHandler(async (req, res) => {
 
   await product.save();
 
-  console.log("Updated product:", product);
-
   res.status(200).json(new ApiResponse(200, { product }, "Updation completed"));
 });
 
 // Deletion of one product using product Id
 const DeleteProduct = asyncHandler(async (req, res) => {
   const { productId } = req.params;
-
-  // console.log(req);
 
   if (!productId) throw new ApiError(400, "Product Id not found!");
 

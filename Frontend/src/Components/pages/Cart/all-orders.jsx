@@ -15,7 +15,7 @@ function AllOrders({ startLoading, stopLoading }) {
         startLoading();
         const response = await FetchData("orders/get-my-orders", "get");
         setAllOrders(response.data.data);
-        console.log("All orders", response);
+        
       } catch (error) {
         console.log(error);
       } finally {

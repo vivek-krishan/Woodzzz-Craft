@@ -23,7 +23,6 @@ export const VerifyAdmin = asyncHandeler(async (req, res, next) => {
       throw new ApiError(401, "Unauthorized request by the user");
 
     req.user = user;
-    console.log("admin verified");
     next();
   } catch (error) {
     throw new ApiError(401, error.message || "Invalid Token");

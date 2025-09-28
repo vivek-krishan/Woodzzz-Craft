@@ -57,18 +57,18 @@ const Product = ({ startLoading, stopLoading }) => {
 
   const product =
     allProducts && allProducts.find((item) => item.productId == productId);
-  // console.log(productId, product, allProducts);
+ 
 
   // Utility functions
   async function HandelDeleteProduct() {
-    console.log("Delete btn", product);
+   
     try {
       startLoading();
       const result = await FetchData(
         `products/product-details/${product?._id}`,
         "delete"
       );
-      console.log(result);
+    
       alertInfo(result.message);
       window.location.href("/");
     } catch (error) {
@@ -117,7 +117,7 @@ const Product = ({ startLoading, stopLoading }) => {
         formData ? true : false
       );
 
-      console.log("Added to your cart:", response.data);
+    
       setAddedToCart(true);
       setCustomizationPopup(false);
       alertSuccess(response.data.message);
@@ -142,7 +142,7 @@ const Product = ({ startLoading, stopLoading }) => {
         "post"
       );
 
-      console.log("Added to your wishlist:", response);
+     
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error uploading product:", error);
@@ -163,7 +163,7 @@ const Product = ({ startLoading, stopLoading }) => {
         "delete"
       );
 
-      console.log("Removed from wishlist:", response);
+    
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error in removing product from wishlist:", error);
@@ -184,7 +184,7 @@ const Product = ({ startLoading, stopLoading }) => {
         "patch"
       );
 
-      console.log("Stock status updated:", response);
+    
       alertSuccess(response.data.message);
       window.location.reload();
     } catch (error) {
@@ -560,7 +560,7 @@ const Product = ({ startLoading, stopLoading }) => {
                             });
                           };
                           reader.readAsDataURL(file);
-                          // console.log(images);
+                        
                         }}
                       />
                     </label>

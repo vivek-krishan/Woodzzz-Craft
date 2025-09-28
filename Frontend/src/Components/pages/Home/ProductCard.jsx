@@ -14,7 +14,7 @@ const ProductCard = ({ index, width, height }) => {
         //  height ? height : "20vh"
         className={`w-[${width}]  h-[${height}] rounded-xl bg-white    overflow-hidden`}
       >
-        {console.log(allProduct[index]?.images[0].url)}
+        
         <img
           key={index + "img"}
           src={allProduct[index]?.images[0].url}

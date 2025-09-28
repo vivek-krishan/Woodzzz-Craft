@@ -38,8 +38,7 @@ const LogIn = ({ startLoading, stopLoading }) => {
     try {
       startLoading();
       const response = await FetchData("user/login", "post", user);
-      console.log(response);
-      // Storing the tokens into browser's local storage
+    
       localStorage.setItem("AccessToken", response.data.data.AccessToken);
       localStorage.setItem("RefreshToken", response.data.data.RefreshToken);
 
@@ -47,7 +46,7 @@ const LogIn = ({ startLoading, stopLoading }) => {
       Dispatch(clearUser());
       Dispatch(addUser(response.data.data.User));
 
-      // console.log(response);
+     
       alertInfo(response.data.message);
       navigate("/");
     } catch (error) {
@@ -69,11 +68,11 @@ const LogIn = ({ startLoading, stopLoading }) => {
         "post",
         formData
       );
-      console.log(response);
+     
       alertInfo(response.data.message);
       setPopup(false);
     } catch (error) {
-      console.log(error);
+    
       alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();

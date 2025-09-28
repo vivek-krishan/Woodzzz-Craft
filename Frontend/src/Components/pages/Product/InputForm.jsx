@@ -40,8 +40,7 @@ const ProductUpdationForm1 = ({
   const InputForm = ({ productId }) => {
     // Variables
     const formRef = useRef(null);
-    console.log("productId from input form", productId);
-    // Utility Functions
+  
 
     const handleSubmit = async (event) => {
       event.preventDefault(); // Prevent the default form submission
@@ -51,7 +50,7 @@ const ProductUpdationForm1 = ({
         startLoading();
         FetchData(`products/product-details/${productId}`, "post", formData)
           .then((response) => {
-            console.log("Product uploaded successfully:", response);
+          
             Dispatch(updateProduct(response.data.data.product));
             alertSuccess(response.data.message);
             formRef.current.reset();
@@ -217,10 +216,6 @@ const ImageUpdationForm1 = ({
 
     const formData = new FormData(formRef.current);
 
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-    console.log(productId);
     try {
       startLoading();
       const response = await FetchData(
@@ -230,7 +225,6 @@ const ImageUpdationForm1 = ({
         true
       );
 
-      console.log("Image uploaded", response.data);
       alertSuccess(response.data.message);
       onClose();
     } catch (error) {
@@ -286,7 +280,7 @@ const ImageUpdationForm1 = ({
                             ]);
                           };
                           reader.readAsDataURL(file);
-                          // console.log(images);
+                          
                         }}
                       />
                     </label>
