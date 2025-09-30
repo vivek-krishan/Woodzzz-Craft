@@ -15,7 +15,6 @@ function AllOrders({ startLoading, stopLoading }) {
         startLoading();
         const response = await FetchData("orders/get-my-orders", "get");
         setAllOrders(response.data.data);
-        
       } catch (error) {
         console.log(error);
       } finally {
@@ -61,7 +60,7 @@ function AllOrders({ startLoading, stopLoading }) {
                       <span className='text-black font-bold'>{index + 1}</span>
                     </div>
                   </td>
-                  <td className='p-4 w-1/5 '>
+                  <td className='p-4 w-1/6 '>
                     <div className='flex items-center gap-3'>
                       <div className='flex flex-col'>
                         <span className='text-black font-medium'>
@@ -73,7 +72,7 @@ function AllOrders({ startLoading, stopLoading }) {
                       </div>
                     </div>
                   </td>
-                  <td className='p-4 w-1/5'>
+                  <td className='p-4 w-1/6'>
                     <div className='flex items-center gap-3'>
                       <div className='flex flex-col'>
                         <span className='text-black font-medium'>
@@ -82,7 +81,7 @@ function AllOrders({ startLoading, stopLoading }) {
                       </div>
                     </div>
                   </td>
-                  <td className='p-4 w-1/5'>
+                  <td className='p-4 w-1/6'>
                     <div className='flex items-center gap-3'>
                       <div className='flex flex-col'>
                         <span className='font-bold'>Payment Details</span>
@@ -95,14 +94,31 @@ function AllOrders({ startLoading, stopLoading }) {
                       </div>
                     </div>
                   </td>
-                  <td className='p-4 w-1/5'>
+                  <td className='p-4 w-1/6'>
                     <div className='flex items-center gap-3'>
                       <div className='flex flex-col items-center'>
                         <span className='font-bold'>Order Status:</span>
-                        <span className="font-sm text-gray-600">{order.status}</span>
+                        <span className='font-sm text-gray-600'>
+                          {order.status}
+                        </span>
                       </div>
                     </div>
                   </td>
+                  {order.address?.pinCode && (
+                    <td className='p-4 w-1/6'>
+                      <div className='flex items-center gap-3'>
+                        <div className='flex flex-col items-center'>
+                          <span className='font-bold'>Order Address:</span>
+                          <span className='font-sm text-gray-600'>
+                            {order.address?.street}, {order.address?.city},{" "}
+                            {order.address?.state}, {order.address?.country},{" "}
+                            {order.address?.pinCode}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+                  )}
+
                   <td className='p-4 '>
                     <div className='flex items-center gap-3'>
                       <div className='flex flex-col'>

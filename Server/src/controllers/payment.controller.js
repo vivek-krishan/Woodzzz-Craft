@@ -20,8 +20,6 @@ import mongoose from "mongoose";
 //   payment_capture: 1, // Auto-capture payment
 // };
 
-
-
 //   const razorpay = new Razorpay({
 //     key_id: process.env.RAZORPAY_KEY_ID,
 //     key_secret: process.env.RAZORPAY_SECRET,
@@ -91,6 +89,8 @@ const ValidatePayment = asyncHandler(async (req, res) => {
   ) {
     throw new ApiError(401, "all fields are required!");
   }
+
+  console.log("reached validate payment");
 
   if (!req.user._id) {
     throw new ApiError(405, "Authentication failed!!! Please reverify");

@@ -22,10 +22,13 @@ const CreateOrder = asyncHandler(async (req, res) => {
     quantity: item.quantity,
   }));
 
+  const address = user.address.findIndex((ads) => ads.activated === true);
+
   const order = await Order.create({
     user: user._id,
     products: products,
     totalPrice,
+    address: user.address[address] || user.address[0],
   });
 
   if (!order)
@@ -33,8 +36,6 @@ const CreateOrder = asyncHandler(async (req, res) => {
       404,
       "Failed to create order due to some internal error! Please try again later."
     );
-
-  const address = user.address.findIndex((ads) => ads.activated === true);
 
   // this address is for sending user from mail.
   const UserAddress = [

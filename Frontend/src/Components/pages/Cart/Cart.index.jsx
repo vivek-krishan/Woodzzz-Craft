@@ -30,7 +30,7 @@ const Cart = ({ startLoading, stopLoading }) => {
     try {
       startLoading();
       const response = await FetchData("user/add-address", "post", formData);
-      
+
       // Storing data inside redux store
       Dispatch(clearUser());
       Dispatch(addUser(response.data.data.user));
@@ -50,7 +50,7 @@ const Cart = ({ startLoading, stopLoading }) => {
       const response = await FetchData("user/select-address", "post", {
         addressId: _id,
       });
-      
+
       // Storing data inside redux store
       Dispatch(clearUser());
       Dispatch(addUser(response.data.data.user));
@@ -65,7 +65,6 @@ const Cart = ({ startLoading, stopLoading }) => {
   };
 
   const getActivatedAddress = (user) => {
-    
     if (user === null) return null;
     return user[0]?.address.find((addr) => addr.activated === true) || null;
   };
@@ -83,8 +82,8 @@ const Cart = ({ startLoading, stopLoading }) => {
       const response = await FetchData("orders/", "post", {
         totalPrice,
       });
-      
-      alertSuccess(response.data.message);
+
+      // alertSuccess(response.data.message);
       SetCartProducts([]);
       stopLoading();
       return response.data.data._id;
@@ -107,7 +106,6 @@ const Cart = ({ startLoading, stopLoading }) => {
         return;
       }
     } catch (error) {
-      
       alertError(parseErrorMessage(error.response.data));
       return;
     }
@@ -133,7 +131,6 @@ const Cart = ({ startLoading, stopLoading }) => {
       description: "Monthly Test Plan",
       image: "/Logo.png",
       handler: async function (response) {
-      
         const body = {
           ...response,
           amount: order.data.data.amount, // Pass correct amount
@@ -147,11 +144,13 @@ const Cart = ({ startLoading, stopLoading }) => {
           body
         );
 
+        console.log({isValidated});
+
         if (isValidated.status === 450) {
-          alertError("Payment Failed");
+          alertError("Payment Failed, Order is cancelled");
         } else if (isValidated.status === 201) {
           alertSuccess("Payment Successful😊");
-          setPaymentPopup(false);
+          // setPaymentPopup(false);
         }
       },
     };
@@ -169,7 +168,7 @@ const Cart = ({ startLoading, stopLoading }) => {
     try {
       startLoading();
       const response = await FetchData(`carts/cart`, "get");
-      
+
       SetCartProducts(response.data.data);
     } catch (error) {
       console.log(error);
@@ -249,7 +248,6 @@ const Cart = ({ startLoading, stopLoading }) => {
               <PopUp onClose={() => setSelectAddress(false)}>
                 <div className='lg:w-[50vw] lg:h-52 lg:-right-80 lg:-top-2 rounded-xl flex flex-col items-center bg-Tan py-5 text-black border'>
                   <div className='lg:w-5/6'>
-                    
                     {user[0].address.map((address) => {
                       return (
                         <div

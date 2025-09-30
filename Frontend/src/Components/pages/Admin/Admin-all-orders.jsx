@@ -19,7 +19,7 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
         "post",
         {}
       );
-      
+
       alertSuccess(response.data.message);
     } catch (error) {
       console.error("Error marking order as completed:", error);
@@ -98,17 +98,19 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
                       </div>
                     </div>
                   </td>
-                  <td className='p-4 w-40 '>
-                    <div className='flex items-center gap-3'>
-                      <div className='flex flex-col'>
-                        <span className='text-black text-sm'>
-                          {`${order?.user?.address[0].street}, ${order?.user?.address[0].city},`}
-                          <br />
-                          {`${order?.user?.address[0].country},  ${order?.user?.address[0].pinCode}`}
-                        </span>
+                  {order.address.pinCode && (
+                    <td className='p-4 w-40 '>
+                      <div className='flex items-center gap-3'>
+                        <div className='flex flex-col'>
+                          <span className='text-black text-sm'>
+                            {`${order?.address?.street}, ${order?.address?.city},`}
+                            <br />
+                            {`${order?.address?.country},  ${order?.address?.pinCode}`}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
+                  )}
 
                   <td className='p-4 '>
                     <div className='flex items-center gap-3'>
@@ -136,19 +138,25 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
                     <div className='flex items-center justify-center gap-3'>
                       <div className='flex flex-col'>
                         <span className='text-black font-medium'>
-                          {order?.status === "completed" ? (
-                            <Button
-                              className={"text-sm cursor-not-allowed"}
-                            >
-                              completed
+                          {order?.status === ("completed" || "failed") ? (
+                            <Button className={"text-sm cursor-not-allowed"}>
+                              {order?.status}
                             </Button>
                           ) : (
-                            <Button
-                              onClick={() => handleMarkCompleted(order._id)}
-                              className={"text-sm"}
-                            >
-                              Mark as completed
-                            </Button>
+                            <div className='flex items-center gap-2'>
+                              <Button
+                                onClick={() => handleMarkCompleted(order._id)}
+                                className={"text-sm"}
+                              >
+                                Mark as completed
+                              </Button>
+                              <Button
+                                // onClick={() => handleMarkCompleted(order._id)}
+                                className={"text-xs "}
+                              >
+                                Cancel Order
+                              </Button>
+                            </div>
                           )}
                         </span>
                       </div>
