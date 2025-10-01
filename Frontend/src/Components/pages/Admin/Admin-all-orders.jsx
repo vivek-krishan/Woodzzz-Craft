@@ -98,7 +98,7 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
                       </div>
                     </div>
                   </td>
-                  {order.address.pinCode ? (
+                  {order.address.pinCode && (
                     <td className="p-4 w-40 ">
                       <div className="flex items-center gap-3">
                         <div className="flex flex-col">
@@ -110,8 +110,6 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
                         </div>
                       </div>
                     </td>
-                  ) : (
-                    "N/A"
                   )}
 
                   <td className="p-4 ">
