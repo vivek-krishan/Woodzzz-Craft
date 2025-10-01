@@ -49,16 +49,16 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
   };
 
   return (
-    <div className='w-full max-w-5xl mx-auto'>
-      <div className='relative mb-4 flex items-center justify-between'>
-        <div className='absolute -skew-x-12 bg-gradient-to-r from-yellow-300 to-yellow-500 text-black font-bold px-6 py-2 -left-2 shadow-lg'>
+    <div className="w-full max-w-5xl mx-auto">
+      <div className="relative mb-4 flex items-center justify-between">
+        <div className="absolute -skew-x-12 bg-gradient-to-r from-yellow-300 to-yellow-500 text-black font-bold px-6 py-2 -left-2 shadow-lg">
           All Orders
         </div>
       </div>
 
-      <div className='h-[80vh]  overflow-y-scroll  mt-16 text-black bg-gradient-to-b from-white/95 to-white/80 rounded-lg overflow-hidden border border-white/10 shadow-2xl  '>
-        <table className='w-full  '>
-          <tbody className=''>
+      <div className="h-[80vh]  overflow-y-scroll  mt-16 text-black bg-gradient-to-b from-white/95 to-white/80 rounded-lg overflow-hidden border border-white/10 shadow-2xl  ">
+        <table className="w-full  ">
+          <tbody className="">
             <AnimatePresence>
               {allOrders?.map((order, index) => (
                 <motion.tr
@@ -66,7 +66,7 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className='group relative  cursor-pointer hover:bg-white/50 transition-colors hover:drop-shadow-2xl duration-150 ease-in-out border flex flex-wrap'
+                  className="group relative  cursor-pointer hover:bg-white/50 transition-colors hover:drop-shadow-2xl duration-150 ease-in-out border flex flex-wrap"
                   onClick={() =>
                     setHandlePopup((prev) => ({
                       ...prev,
@@ -74,35 +74,35 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
                     }))
                   }
                 >
-                  <td className='relative p-4 w-5 '>
-                    <div className='flex items-center gap-2'>
-                      <span className='text-black font-bold'>{index + 1}</span>
+                  <td className="relative p-4 w-5 ">
+                    <div className="flex items-center gap-2">
+                      <span className="text-black font-bold">{index + 1}</span>
                     </div>
                   </td>
-                  <td className='relative p-4 w-52 '>
-                    <div className='flex items-center gap-2'>
-                      <span className='text-black text-lg font-bold'>
+                  <td className="relative p-4 w-52 ">
+                    <div className="flex items-center gap-2">
+                      <span className="text-black text-lg font-bold">
                         {order?.user?.fullName}
                       </span>
                     </div>
                   </td>
-                  <td className='p-4 w-fit  '>
-                    <div className='flex items-center gap-3'>
-                      <div className='flex flex-col'>
-                        <span className='text-black text-sm font-medium'>
+                  <td className="p-4 w-fit  ">
+                    <div className="flex items-center gap-3">
+                      <div className="flex flex-col">
+                        <span className="text-black text-sm font-medium">
                           Ordered on {formatDate(order.createdAt)}
                         </span>
-                        <span className='text-black/40 text-xs'>
+                        <span className="text-black/40 text-xs">
                           Id: {order._id}
                         </span>
                       </div>
                     </div>
                   </td>
-                  {order.address.pinCode && (
-                    <td className='p-4 w-40 '>
-                      <div className='flex items-center gap-3'>
-                        <div className='flex flex-col'>
-                          <span className='text-black text-sm'>
+                  {order.address.pinCode ? (
+                    <td className="p-4 w-40 ">
+                      <div className="flex items-center gap-3">
+                        <div className="flex flex-col">
+                          <span className="text-black text-sm">
                             {`${order?.address?.street}, ${order?.address?.city},`}
                             <br />
                             {`${order?.address?.country},  ${order?.address?.pinCode}`}
@@ -110,21 +110,23 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
                         </div>
                       </div>
                     </td>
+                  ) : (
+                    "N/A"
                   )}
 
-                  <td className='p-4 '>
-                    <div className='flex items-center gap-3'>
-                      <div className='flex flex-col'>
-                        <span className='text-black text-sm'>
+                  <td className="p-4 ">
+                    <div className="flex items-center gap-3">
+                      <div className="flex flex-col">
+                        <span className="text-black text-sm">
                           {order?.status}
                         </span>
                       </div>
                     </div>
                   </td>
-                  <td className='p-4 '>
-                    <div className='flex items-center gap-3'>
-                      <div className='flex flex-col'>
-                        <span className='text-black font-medium'>
+                  <td className="p-4 ">
+                    <div className="flex items-center gap-3">
+                      <div className="flex flex-col">
+                        <span className="text-black font-medium">
                           {handlePopup[order._id] ? (
                             <ChevronUp />
                           ) : (
@@ -134,16 +136,16 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
                       </div>
                     </div>
                   </td>
-                  <td className='p-4 w-64 '>
-                    <div className='flex items-center justify-center gap-3'>
-                      <div className='flex flex-col'>
-                        <span className='text-black font-medium'>
+                  <td className="p-4 w-64 ">
+                    <div className="flex items-center justify-center gap-3">
+                      <div className="flex flex-col">
+                        <span className="text-black font-medium">
                           {order?.status === ("completed" || "failed") ? (
                             <Button className={"text-sm cursor-not-allowed"}>
                               {order?.status}
                             </Button>
                           ) : (
-                            <div className='flex items-center gap-2'>
+                            <div className="flex items-center gap-2">
                               <Button
                                 onClick={() => handleMarkCompleted(order._id)}
                                 className={"text-sm"}
@@ -166,37 +168,37 @@ function AdminAllOrders({ startLoading, stopLoading, allOrders }) {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className='mx-20 w-full  border '
+                      className="mx-20 w-full  border "
                     >
-                      <div className='flex flex-col gap-2'>
+                      <div className="flex flex-col gap-2">
                         {order.products.map((product) => (
                           <div
                             key={product._id}
-                            className='grid grid-cols-4 grid-rows-1 gap-4'
+                            className="grid grid-cols-4 grid-rows-1 gap-4"
                           >
-                            <div className='flex flex-col'>
+                            <div className="flex flex-col">
                               <img
                                 src={product?.productId?.images[0]?.url}
-                                alt='Product'
-                                className='w-20'
+                                alt="Product"
+                                className="w-20"
                               />
                             </div>
-                            <div className='flex items-center gap-3'>
-                              <div className='flex flex-col'>
-                                <span className='text-black font-medium'>
+                            <div className="flex items-center gap-3">
+                              <div className="flex flex-col">
+                                <span className="text-black font-medium">
                                   {product?.productId?.name}
                                 </span>
-                                <span className='text-black/40 text-xs'>
+                                <span className="text-black/40 text-xs">
                                   Id: {product?.productId?._id}
                                 </span>
                               </div>
                             </div>
-                            <div className='flex items-center gap-3'>
-                              <div className='flex flex-col'>
-                                <span className='text-black font-medium'>
+                            <div className="flex items-center gap-3">
+                              <div className="flex flex-col">
+                                <span className="text-black font-medium">
                                   {product?.productId?.price.currentPrice}
                                 </span>
-                                <span className='text-black/40 text-xs'>
+                                <span className="text-black/40 text-xs">
                                   Qt: {product?.quantity}
                                 </span>
                               </div>
