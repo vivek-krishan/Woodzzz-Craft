@@ -22,7 +22,6 @@ const Register = ({ startLoading, stopLoading }) => {
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
- 
 
   // All function definition for this components
   const handleRegister = async () => {
@@ -31,7 +30,7 @@ const Register = ({ startLoading, stopLoading }) => {
     try {
       startLoading();
       const response = await FetchData("user/register", "post", formData);
-    
+
       // Storing the tokens into browser's local storage
       localStorage.setItem("AccessToken", response.data.data.AccessToken);
       localStorage.setItem("RefreshToken", response.data.data.RefreshToken);
@@ -43,7 +42,6 @@ const Register = ({ startLoading, stopLoading }) => {
       alertInfo(response.data.message);
       navigate("/");
     } catch (error) {
-    
       alertError(parseErrorMessage(error.response.data));
     } finally {
       stopLoading();
@@ -61,7 +59,7 @@ const Register = ({ startLoading, stopLoading }) => {
         "post",
         formData
       );
-    
+
       alertInfo(response.data.message);
       setPopup(false);
     } catch (error) {
@@ -130,7 +128,7 @@ const Register = ({ startLoading, stopLoading }) => {
                       type={showPassword ? "text" : "password"}
                       className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 pr-10 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black"
                       placeholder="Password"
-                      name="passkey"
+                      name="oldPassword"
                       // value={passkey}
                       // onChange={HandelInputChange}
                       required
@@ -163,7 +161,7 @@ const Register = ({ startLoading, stopLoading }) => {
                       type={showPassword ? "text" : "password"}
                       className="bg-white border-l-2 border-b-2 backdrop-blur-xl border-gray-300/30 text-gray-900 text-sm rounded-lg block w-full p-2.5 pr-10 dark:placeholder-gray-700 dark:text-black focus:outline-none focus:border-b-2 focus:border-black"
                       placeholder="Password"
-                      name="passkey"
+                      name="newPassword"
                       // value={passkey}
                       // onChange={HandelInputChange}
                       required
