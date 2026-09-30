@@ -6,13 +6,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./carousel";
+import Banner0 from "../../assets/bannerImages/Banner0.jpg";
 import Banner1 from "../../assets/bannerImages/Banner1.jpg";
 import Banner2 from "../../assets/bannerImages/Banner2.jpg";
 import Banner3 from "../../assets/bannerImages/Banner3.jpg";
 import Banner4 from "../../assets/bannerImages/Banner4.jpg";
 import Banner5 from "../../assets/bannerImages/Banner5.jpg";
 
-const BannerImgs = [Banner1, Banner2, Banner3, Banner4, Banner5];
+const BannerImgs = [Banner0, Banner1, Banner2, Banner3, Banner4, Banner5];
 
 export function BannerSlider() {
   return (
@@ -38,9 +39,7 @@ export function BannerSlider() {
                   <p className="text-white text-lg sm:text-xl mb-6 max-w-md">
                     Handcrafted wooden art pieces for your home
                   </p>
-                  <Button>
-                    Shop Now
-                  </Button>
+                  <Button>Shop Now</Button>
                 </div>
               </div>
             </CarouselItem>
